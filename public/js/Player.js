@@ -12,6 +12,7 @@ var Player = function(startX, startY) {
 		frameBack1,
 		frame = 0,
 		framesAmount = 0,
+		playerXposition = 100,
 		back = false; 
 	
     frame0 = new Image();
@@ -55,9 +56,19 @@ var Player = function(startX, startY) {
 
 		// Up key takes priority over down
 		if (keys.up) {
-			y -= moveAmount;
+			if (y <= 195){
+				y += moveAmount-9;
+			}
+			else{
+				y -= moveAmount;
+			}
 		} else if (keys.down) {
+			if (y >= canvas.height){
+				y -= moveAmount-9;
+			}
+			else{
 			y += moveAmount;
+			}
 		};
 
 		// Left key takes priority over right
@@ -91,7 +102,7 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		var imageX = 100-frame0.width/2,
+		var imageX = playerXposition-frame0.width/2,
 			imageY = y-frame0.height/2;
 
 		if (frame == 1){
@@ -115,7 +126,7 @@ var Player = function(startX, startY) {
 	// Draw player
 	var drawAsRemote = function(ctx, localPlayer) {
 
-		var imageX = 100-(localPlayer.getX()-x)-frame0.width/2,
+		var imageX = playerXposition-(localPlayer.getX()-x)-frame0.width/2,
 			imageY = y-frame0.height/2;
 
 		if (frame == 1){
