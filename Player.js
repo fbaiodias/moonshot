@@ -4,7 +4,8 @@
 var Player = function(startX, startY) {
 	var x = startX,
 		y = startY,
-		id;
+		id,
+		objectId = "";
 
 	// Getters and setters
 	var getX = function() {
@@ -29,7 +30,8 @@ var Player = function(startX, startY) {
 		getY: getY,
 		setX: setX,
 		setY: setY,
-		id: id
+		id: id,
+		objectId: objectId
 	}
 };
 

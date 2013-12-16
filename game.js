@@ -52,7 +52,7 @@ function init() {
 		objects.push(newMatches);
 	}
 
-	util.log(JSON.stringify(objects));
+	//util.log(JSON.stringify(objects));
 
 
 	// Start listening for events
@@ -164,8 +164,31 @@ function onCatchObject(data) {
 		util.log("Object not found: "+data.objectId);
 		return;
 	};
+
+	console.log("CATCHED THE", catchObject.id);
+
+	var dropObject = objectById(catchPlayer.objectId);
+
+	var atum = this;
+
+	if(dropObject) {
+		dropObject.onPlayer = false;
+		var tmpX = catchPlayer.getX()-100;
+		var tmpY = catchPlayer.getY()+100;
+
+		dropObject.setX(tmpX);
+		dropObject.setY(tmpY);
+
+		console.log("DROP THE", dropObject.id, "IN", tmpX, tmpY);
+
+		this.emit("drop object", {id: catchPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+		this.broadcast.emit("drop object", {id: catchPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	};
 	
 	catchObject.onPlayer = true;
+	catchPlayer.objectId = catchObject.id;
+
+	//console.log(JSON.stringify(catchPlayer));
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("catch object", {id: catchPlayer.id, objectId: catchObject.id});

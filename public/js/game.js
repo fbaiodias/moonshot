@@ -79,8 +79,11 @@ var setEventHandlers = function() {
 	// Player removed message received
 	socket.on("remove player", onRemovePlayer);
 
-	// Player move message received
+	// Player catch object received
 	socket.on("catch object", onCatchObject);
+
+	// Player drop object received
+	socket.on("drop object", onDropObject);
 };
 
 // Keyboard key down
@@ -131,7 +134,7 @@ function onNewPlayer(data) {
 
 // New object
 function onNewObject(data) {
-	console.log("New object!")
+	//console.log("New object!")
 	if(data.id.charAt(0) == "G") {
 		console.log("New gun!", data.id);
 		// Initialise the new gun
@@ -187,6 +190,17 @@ function onCatchObject(data) {
 	};
 	player.objectId = catchObject.id;
 	catchObject.setOn(true);
+};
+
+// Drop Object
+function onDropObject(data) {
+	var dropObject = objectById(data.objectId);
+
+	if(dropObject) {
+		dropObject.setOn(false);
+		dropObject.setX(data.x);
+		dropObject.setY(data.y);
+	};
 };
 
 // Remove player
@@ -304,7 +318,7 @@ function checkCollision(player, object) {
 		object.setOn(true);
 		player.objectId = object.id;
 
-		console.log(JSON.stringify(player))
+		//console.log(JSON.stringify(player))
 
 		// Send local player data to the game server
 		socket.emit("catch object", {objectId: object.id});
