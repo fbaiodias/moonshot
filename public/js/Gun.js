@@ -9,6 +9,9 @@ var Gun = function(startX, startY) {
 
 	image = new Image();
 	image.src = "images/gun.png";
+
+	var width = 60,
+		height = 60;
 	
 
 	// Getters and setters
@@ -32,15 +35,20 @@ var Gun = function(startX, startY) {
 		y = newY;
 	};
 
-	var setOnPlayer = function(newState) {
+	var setOn = function(newState) {
 		onPlayer = newState;
 	};
 
 	var draw = function(ctx, localPlayer) {
-		var imageX = 100-(localPlayer.getX()-x)-image.width/2,
-			imageY = y-image.height/2;
+		if (onPlayer == false){
+			var imageX = 100-(localPlayer.getX()-x)-image.width/2,
+				imageY = y-image.height/2;
 
-		ctx.drawImage(image, imageX, imageY);
+			ctx.drawImage(image, imageX, imageY);
+		}
+		else {
+			
+		}	
 	};	
 
 	// Define which variables and methods can be accessed
@@ -50,7 +58,9 @@ var Gun = function(startX, startY) {
 		isOnPlayer: isOnPlayer,
 		setX: setX,
 		setY: setY,
-		setOnPlayer: setOnPlayer,
-		draw: draw
+		setOn: setOn,
+		draw: draw,
+		height: height,
+		width: width
 	}
 };

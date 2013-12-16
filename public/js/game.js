@@ -150,7 +150,7 @@ function onNewMatches(data) {
 	newMatches.setOnPlayer = data.onPlayer;
 
 	// Add new gun to the guns array
-	guns.push(newMatches);
+	matches.push(newMatches);
 };
 
 // Move player
@@ -203,6 +203,18 @@ function update() {
 	if (localPlayer.update(keys)) {
 		// Send local player data to the game server
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
+	};
+
+	//console.log("players", remotePlayers.length, "guns", guns.length, "matches", matches.length);
+	var i;
+	for (i = 0; i < remotePlayers.length; i++) {
+		//remotePlayers[i].drawAsRemote(ctx, localPlayer);
+	};
+	for (i = 0; i < guns.length; i++) {
+		checkColision(localPlayer, guns[i]);
+	};
+	for (i = 0; i < matches.length; i++) {
+		checkColision(localPlayer, matches[i]);
 	};
 };
 
@@ -257,3 +269,12 @@ function playerById(id) {
 	
 	return false;
 };
+
+function checkColision(player, object) {
+	//console.log(object.getX(), object.getY(), object.width, object.height)
+	if (!object.isOnPlayer() && player.getX() < object.getX() + object.width  && player.getX() + player.width  > object.getX() &&
+    player.getY() < object.getY() + object.height && player.getY() + player.height > object.getY()) {
+		// The objects are touching
+		object.setOn(true);
+	}
+}

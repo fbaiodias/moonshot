@@ -31,10 +31,13 @@ var Player = function(startX, startY) {
 	
 		frame0.src = "images/astronaut1.png";
 		frame1.src = "images/astronaut2.png";
-		frameBack0.src = "images/astronautBack1.png" 
-		frameBack1.src = "images/astronautBack2.png"
-		frameJump.src = "images/astronautJump.png" 
-		frameBackJump.src = "images/astronautBackJump.png"  
+		frameBack0.src = "images/astronautBack1.png";
+		frameBack1.src = "images/astronautBack2.png";
+		frameJump.src = "images/astronautJump.png";
+		frameBackJump.src = "images/astronautBackJump.png";  
+
+	var width = 70,
+		height = 100;
 
 	// Getters and setters
 	var getX = function() {
@@ -211,6 +214,8 @@ var Player = function(startX, startY) {
 		setY: setY,
 		update: update,
 		draw: draw,
-		drawAsRemote: drawAsRemote
+		drawAsRemote: drawAsRemote,
+		height: height,
+		width: width
 	}
 };
