@@ -178,16 +178,7 @@ var Player = function(startX, startY) {
 		var imageX = playerXposition-(localPlayer.getX()-x)-frame0.width/2,
 			imageY = y-frame0.height/2;
 
-		if (frame == 1){
-			if (back == false){
-				ctx.drawImage(frame0, imageX, imageY)
-			}
-			else{
-				ctx.drawImage(frameBack0, imageX, imageY)
-			}
-		}
-
-		if (frame == 2){
+		if (jumpTicks < jumpTime){
 			if (back == false){
 				ctx.drawImage(frameJump, imageX, imageY)
 			}
@@ -195,13 +186,22 @@ var Player = function(startX, startY) {
 				ctx.drawImage(frameBackJump, imageX, imageY)
 			}
 		}
-
-		else{
-			if (back == false){
-				ctx.drawImage(frame1, imageX, imageY)
+		else {
+			if (frame == 1){
+				if (back == false){
+					ctx.drawImage(frame0, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack0, imageX, imageY)
+				}
 			}
 			else{
-				ctx.drawImage(frameBack1, imageX, imageY)
+				if (back == false){
+					ctx.drawImage(frame1, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack1, imageX, imageY)
+				}
 			}
 		}
 	};
