@@ -10,6 +10,7 @@ var canvas,			// Canvas DOM element
 	socket,			// Socket connection
 	moon;
 
+var playerXposition = 666;
 
 /**************************************************
 ** GAME INITIALISATION

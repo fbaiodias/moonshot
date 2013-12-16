@@ -6,6 +6,7 @@ var Matches = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		image,
+		playerXposition = 666,
 		id;
 
 	image = new Image();
@@ -43,14 +44,14 @@ var Matches = function(startX, startY) {
 
 	var draw = function(ctx, localPlayer) {
 		if (onPlayer == false){
-			var imageX = 100-(localPlayer.getX()-x)-image.width/2,
+			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
 				imageY = y-image.height/2;
 
 			ctx.drawImage(image, imageX, imageY);
 		}
 		else if(localPlayer.objectId == this.id){
-			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120);
-			ctx.drawImage(image, 19, localPlayer.getY()-117);
+			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-117);
 		}
 
 	};	

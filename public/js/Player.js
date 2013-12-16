@@ -12,7 +12,7 @@ var Player = function(startX, startY) {
 		frameBack1,
 		frame = 0,
 		framesAmount = 0,
-		playerXposition = 100,
+		playerXposition = 666,
 		objectId = "",
 		
 		jumpTime = 500,
@@ -218,6 +218,7 @@ var Player = function(startX, startY) {
 		drawAsRemote: drawAsRemote,
 		height: height,
 		width: width,
-		objectId: objectId
+		objectId: objectId,
+		playerXposition: playerXposition
 	}
 };
