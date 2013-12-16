@@ -5,7 +5,7 @@ var Player = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		id,
-		moveAmount = 2;
+		moveAmount = 10;
 	
 	// Getters and setters
 	var getX = function() {
@@ -49,7 +49,7 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var draw = function(ctx) {
-		ctx.fillRect(x-5, y-5, 10, 10);
+		ctx.fillRect(100, y-5, 10, 10);
 	};
 
 	// Define which variables and methods can be accessed

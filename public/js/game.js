@@ -6,7 +6,8 @@ var canvas,			// Canvas DOM element
 	keys,			// Keyboard input
 	localPlayer,	// Local player
 	remotePlayers,	// Remote players
-	socket;			// Socket connection
+	socket,			// Socket connection
+	moon;
 
 
 /**************************************************
@@ -31,13 +32,16 @@ function init() {
 		startY = Math.round(Math.random()*(canvas.height-5));
 
 	// Initialise the local player
-	localPlayer = new Player(startX, startY);
+	localPlayer = new Player(0, startY);
 
 	// Initialise socket connection
 	socket = io.connect("http://franciscodias.net", {port: 8000, transports: ["websocket"]});
 
 	// Initialise remote players array
 	remotePlayers = [];
+
+	moon = new Image();
+	moon.src = "images/moon.png";
 
 	// Start listening for events
 	setEventHandlers();
@@ -174,10 +178,25 @@ function update() {
 /**************************************************
 ** GAME DRAW
 **************************************************/
-function draw() {
-	// Wipe the canvas clean
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+function drawBackground(player) {
+	ctx.fillStyle = "rgb(0,0,50)";
+  	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	var moonStart = Math.floor(player.getX() / moon.width);
+	var moonRepeats = Math.floor(canvas.width / moon.width)+1;
 
+	for(var i=moonStart; i<moonStart+moonRepeats; i++) {
+		var moonX = -player.getX()+i*moon.width;
+		var moonY = canvas.height - moon.height;
+		ctx.drawImage(moon,moonX,moonY);		
+	}
+
+	
+}
+
+function draw() {
+	// Draw the background
+	drawBackground(localPlayer)
 	// Draw the local player
 	localPlayer.draw(ctx);
 
