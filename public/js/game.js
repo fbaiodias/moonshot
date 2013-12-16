@@ -12,6 +12,10 @@ var canvas,			// Canvas DOM element
 
 var playerXposition = 666;
 
+var life = 1000,
+	oxygenTank = 1000,
+	hunger = 1000;
+
 /**************************************************
 ** GAME INITIALISATION
 **************************************************/
@@ -249,16 +253,28 @@ function update() {
 	if (localPlayer.update(keys)) {
 		// Send local player data to the game server
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
+		hunger--;
+		oxygenTank--;
 	};
 
-	//console.log("players", remotePlayers.length, "guns", guns.length, "matches", matches.length);
 	var i;
-	for (i = 0; i < remotePlayers.length; i++) {
-		//remotePlayers[i].drawAsRemote(ctx, localPlayer);
-	};
 	for (i = 0; i < objects.length; i++) {
 		checkCollision(localPlayer, objects[i]);
 	};
+
+	oxygenTank--;
+
+	switch(localPlayer.objectId.charAt(0)) {
+		case "O":
+			oxygenTank = 1000;
+			break;
+		case "F":
+			life = 1000;
+			break;
+		case "A":
+			hunger = 1000;
+			break;
+	}
 };
 
 
@@ -279,9 +295,19 @@ function drawBackground(player) {
 	}	
 }
 
+function drawInformation(x,y) {
+	ctx.fillStyle = "rgb(0,0,255)";
+  	ctx.fillRect(x, y, oxygenTank/5, 20);
+	ctx.fillStyle = "rgb(255,0,0)";
+  	ctx.fillRect(x, y+30, life/5, 20);
+	ctx.fillStyle = "rgb(255,255,0)";
+  	ctx.fillRect(x, y+60, hunger/5, 20);
+}
+
 function draw() {
 	// Draw the background
 	drawBackground(localPlayer)
+	drawInformation(50,50)
 	// Draw the local player
 	localPlayer.draw(ctx);
 
