@@ -183,7 +183,7 @@ function drawBackground(player) {
   	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	
 	var moonStart = Math.floor(player.getX() / moon.width);
-	var moonRepeats = Math.floor(canvas.width / moon.width)+1;
+	var moonRepeats = Math.floor(canvas.width / moon.width)+2;
 
 	for(var i=moonStart; i<moonStart+moonRepeats; i++) {
 		var moonX = -player.getX()+i*moon.width;
