@@ -4,12 +4,14 @@
 var util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
+	Gun = require("./Gun").Gun;				// Gun class
 
 
 /**************************************************
 ** GAME VARIABLES
 **************************************************/
 var socket,		// Socket controller
+	guns,	// Array of guns
 	players;	// Array of connected players
 
 
@@ -19,6 +21,9 @@ var socket,		// Socket controller
 function init() {
 	// Create an empty array to store players
 	players = [];
+
+	// Create empty arrays to store objects
+	guns = [];
 
 	// Set up Socket.IO to listen on port 8000
 	socket = io.listen(8000);
@@ -31,6 +36,12 @@ function init() {
 		// Restrict log output
 		socket.set("log level", 2);
 	});
+
+	// Place guns randomly
+	for(var i=0; i < Math.round(Math.random()*(10)); i++) {
+		guns.push(new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
+	}
+	
 
 	// Start listening for events
 	setEventHandlers();
@@ -93,7 +104,13 @@ function onNewPlayer(data) {
 		existingPlayer = players[i];
 		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY()});
 	};
-		
+	
+	var existingGun;
+	for (i = 0; i < guns.length; i++) {
+		existingGun = guns[i];
+		this.emit("new gun", {x: existingGun.getX(), y: existingGun.getY(), onPlayer: existingGun.isOnPlayer()});
+	};
+
 	// Add new player to the players array
 	players.push(newPlayer);
 };
