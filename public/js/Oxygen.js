@@ -49,9 +49,9 @@ var Oxygen = function(startX, startY) {
 
 			ctx.drawImage(image, imageX, imageY);
 		}
-		else {
-			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120)
-			ctx.drawImage(image, playerXposition-86, localPlayer.getY()-110)
+		else if(localPlayer.objectId == this.id){
+			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
 		}	
 	};	
 
