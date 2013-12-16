@@ -8,14 +8,21 @@ var Player = function(startX, startY) {
 		moveAmount = 10,
 		frame0,
 		frame1,
+		frameBack0,
+		frameBack1,
 		frame = 0,
-		cont = 0; 
+		framesAmount = 0,
+		back = false; 
 	
     frame0 = new Image();
     frame1 = new Image();
+    frameBack0 = new Image();
+    frameBack1 = new Image(); 
 	
 	frame0.src = "images/astronaut1.png";
-	frame1.src = "images/astronaut2.png"; 
+	frame1.src = "images/astronaut2.png";
+	frameBack0.src = "images/astronautBack1.png" 
+	frameBack1.src = "images/astronautBack2.png" 
 
 	// Getters and setters
 	var getX = function() {
@@ -49,25 +56,27 @@ var Player = function(startX, startY) {
 
 		// Left key takes priority over right
 		if (keys.left) {
+			back = true;
 			x -= moveAmount;
 		} else if (keys.right) {
+			back = false;
 			x += moveAmount;
 		};
 
 		if (prevX != x || prevY != y){
 			if (frame == 1){
-				cont ++
-				if ( cont == 5){
+				framesAmount ++
+				if ( framesAmount == 7){
 					frame = 0
-					cont = 0
+					framesAmount = 0
 				}
 				
 			}
 			else{
-				cont ++
-				if ( cont == 5){
+				framesAmount ++
+				if ( framesAmount == 7){
 					frame = 1
-					cont = 0
+					framesAmount = 0
 				}
 			}
 		}
@@ -80,11 +89,20 @@ var Player = function(startX, startY) {
 			imageY = y-frame0.height/2;
 
 		if (frame == 1){
-			ctx.drawImage(frame0, imageX, imageY)
+			if (back == false){
+				ctx.drawImage(frame0, imageX, imageY)
+			}
+			else{
+				ctx.drawImage(frameBack0, imageX, imageY)
+			}
 		}
 		else{
-			ctx.drawImage(frame1, imageX, imageY)
-
+			if (back == false){
+				ctx.drawImage(frame1, imageX, imageY)
+			}
+			else{
+				ctx.drawImage(frameBack1, imageX, imageY)
+			}
 		}
 	};
 
@@ -95,11 +113,20 @@ var Player = function(startX, startY) {
 			imageY = y-frame0.height/2;
 
 		if (frame == 1){
-			ctx.drawImage(frame0, imageX, imageY)
+			if (back == false){
+				ctx.drawImage(frame0, imageX, imageY)
+			}
+			else{
+				ctx.drawImage(frameBack0, imageX, imageY)
+			}
 		}
 		else{
-			ctx.drawImage(frame1, imageX, imageY)
-
+			if (back == false){
+				ctx.drawImage(frame1, imageX, imageY)
+			}
+			else{
+				ctx.drawImage(frameBack1, imageX, imageY)
+			}
 		}
 	};
 
