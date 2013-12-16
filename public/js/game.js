@@ -283,7 +283,7 @@ function update() {
 			break;
 		case "G":
 			if (keys.shift){
-				shoot == true;
+				objectById(localPlayer.objectId).shoot(localPlayer);
 			}
 			break;
 	}

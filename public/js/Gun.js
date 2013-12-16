@@ -6,6 +6,7 @@ var Gun = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		image,
+		bullet,
 		//playerXposition = 666,
 		id;
 
@@ -43,6 +44,10 @@ var Gun = function(startX, startY) {
 		onPlayer = newState;
 	};
 
+	var shoot = function(localPlayer) {
+		bullet = new Bullet(localPlayer.getX(), localPlayer.getY());
+	};
+
 	var draw = function(ctx, localPlayer) {
 		if (onPlayer == false){
 			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
@@ -53,6 +58,11 @@ var Gun = function(startX, startY) {
 		else if(localPlayer.objectId == this.id){
 			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120)
 			ctx.drawImage(image, playerXposition-86, localPlayer.getY()-110)
+		}
+
+		if(bullet) {
+			bullet.update();
+			bullet.draw(ctx, localPlayer);
 		}	
 	};	
 
@@ -65,6 +75,7 @@ var Gun = function(startX, startY) {
 		setY: setY,
 		setOn: setOn,
 		draw: draw,
+		shoot: shoot,
 		height: height,
 		width: width,
 		id: id

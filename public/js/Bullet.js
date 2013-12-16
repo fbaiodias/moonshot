@@ -1,17 +1,18 @@
 /**************************************************
-** GAME Oxygen CLASS
+** GAME Bullet CLASS
 **************************************************/
-var Oxygen = function(startX, startY) {
+var Bullet = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
 		image,
+		ticks = 0,
+		time = 200,
+		speed = 20,
 		id;
 
 	image = new Image();
-	imageBalon = new Image();
-	image.src = "images/oxygen.png";
-	imageBalon.src = "images/balon.png";
+	image.src = "images/bullet.png";
 
 	var width = 60,
 		height = 60;
@@ -26,10 +27,6 @@ var Oxygen = function(startX, startY) {
 		return y;
 	};
 
-	var isOnPlayer = function() {
-		return onPlayer;
-	};
-
 	var setX = function(newX) {
 		x = newX;
 	};
@@ -38,31 +35,28 @@ var Oxygen = function(startX, startY) {
 		y = newY;
 	};
 
-	var setOn = function(newState) {
-		onPlayer = newState;
+	var update = function() {
+		if(ticks < time) {
+			x += speed; 
+			ticks++;
+		}
 	};
 
 	var draw = function(ctx, localPlayer) {
-		if (onPlayer == false){
-			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
-				imageY = y-image.height/2;
+		if(ticks < time) {
+			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
 
-			ctx.drawImage(image, imageX, imageY);
+			ctx.drawImage(image, imageX, y);	
 		}
-		else if(localPlayer.objectId == this.id){
-			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
-			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
-		}	
 	};	
 
 	// Define which variables and methods can be accessed
 	return {
 		getX: getX,
 		getY: getY,
-		isOnPlayer: isOnPlayer,
 		setX: setX,
 		setY: setY,
-		setOn: setOn,
+		update: update,
 		draw: draw,
 		height: height,
 		width: width,
