@@ -5,8 +5,18 @@ var Player = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		id,
-		moveAmount = 10;
+		moveAmount = 10,
+		frame0,
+		frame1,
+		frame = 0,
+		cont = 0; 
 	
+    frame0 = new Image();
+    frame1 = new Image();
+	
+	frame0.src = "images/astronaut1.png";
+	frame1.src = "images/astronaut2.png"; 
+
 	// Getters and setters
 	var getX = function() {
 		return x;
@@ -44,18 +54,53 @@ var Player = function(startX, startY) {
 			x += moveAmount;
 		};
 
+		if (prevX != x || prevY != y){
+			if (frame == 1){
+				cont ++
+				if ( cont == 5){
+					frame = 0
+					cont = 0
+				}
+				
+			}
+			else{
+				cont ++
+				if ( cont == 5){
+					frame = 1
+					cont = 0
+				}
+			}
+		}
 		return (prevX != x || prevY != y) ? true : false;
 	};
 
 	// Draw player
 	var draw = function(ctx) {
-		ctx.fillRect(100, y-5, 10, 10);
+		var imageX = 100-frame0.width/2,
+			imageY = y-frame0.height/2;
+
+		if (frame == 1){
+			ctx.drawImage(frame0, imageX, imageY)
+		}
+		else{
+			ctx.drawImage(frame1, imageX, imageY)
+
+		}
 	};
 
 	// Draw player
 	var drawAsRemote = function(ctx, localPlayer) {
 
-		ctx.fillRect(100-(localPlayer.getX()-x), y-5, 10, 10);
+		var imageX = 100-(localPlayer.getX()-x)-frame0.width/2,
+			imageY = y-frame0.height/2;
+
+		if (frame == 1){
+			ctx.drawImage(frame0, imageX, imageY)
+		}
+		else{
+			ctx.drawImage(frame1, imageX, imageY)
+
+		}
 	};
 
 	// Define which variables and methods can be accessed
