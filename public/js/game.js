@@ -310,5 +310,8 @@ function checkColision(player, object) {
     player.getY() < object.getY() + object.height && player.getY() + player.height > object.getY()) {
 		// The objects are touching
 		object.setOn(true);
+
+		// Send local player data to the game server
+		socket.emit("catch object", {objectId: object.id});
 	}
 }
