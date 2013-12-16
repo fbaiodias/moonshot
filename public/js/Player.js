@@ -14,23 +14,27 @@ var Player = function(startX, startY) {
 		framesAmount = 0,
 		playerXposition = 100,
 		
-		jumpTime = 200,
-		jumpTicks = 200,
-		jumpSpeed = 20,
-		jumpAcceleration = 2,
+		jumpTime = 500,
+		jumpTicks = 500,
+		jumpSpeed = 10,
+		jumpAcceleration = 0.5,
 		baseY = startY,
 		
 		back = false; 
 	
-    frame0 = new Image();
-    frame1 = new Image();
-    frameBack0 = new Image();
-    frameBack1 = new Image(); 
+    	frame0 = new Image();
+   		frame1 = new Image();
+    	frameBack0 = new Image();
+    	frameBack1 = new Image();
+    	frameJump = new Image();
+    	frameBackJump = new Image(); 
 	
-	frame0.src = "images/astronaut1.png";
-	frame1.src = "images/astronaut2.png";
-	frameBack0.src = "images/astronautBack1.png" 
-	frameBack1.src = "images/astronautBack2.png" 
+		frame0.src = "images/astronaut1.png";
+		frame1.src = "images/astronaut2.png";
+		frameBack0.src = "images/astronautBack1.png" 
+		frameBack1.src = "images/astronautBack2.png"
+		frameJump.src = "images/astronautJump.png" 
+		frameBackJump.src = "images/astronautBackJump.png"  
 
 	// Getters and setters
 	var getX = function() {
@@ -112,7 +116,7 @@ var Player = function(startX, startY) {
 		if (prevX != x || prevY != y){
 			updateFrames();
 		}
-		return (prevX != x || prevY != y) ? true : false;
+ 		return (prevX != x || prevY != y) ? true : false;
 	};
 
 	var updateFrames = function() {
@@ -136,21 +140,31 @@ var Player = function(startX, startY) {
 	var draw = function(ctx) {
 		var imageX = playerXposition-frame0.width/2,
 			imageY = y-frame0.height/2;
-
-		if (frame == 1){
+		
+		if (jumpTicks < jumpTime){
 			if (back == false){
-				ctx.drawImage(frame0, imageX, imageY)
+				ctx.drawImage(frameJump, imageX, imageY)
 			}
 			else{
-				ctx.drawImage(frameBack0, imageX, imageY)
+				ctx.drawImage(frameBackJump, imageX, imageY)
 			}
 		}
-		else{
-			if (back == false){
-				ctx.drawImage(frame1, imageX, imageY)
+		else {
+			if (frame == 1){
+				if (back == false){
+					ctx.drawImage(frame0, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack0, imageX, imageY)
+				}
 			}
 			else{
-				ctx.drawImage(frameBack1, imageX, imageY)
+				if (back == false){
+					ctx.drawImage(frame1, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack1, imageX, imageY)
+				}
 			}
 		}
 	};
@@ -169,6 +183,16 @@ var Player = function(startX, startY) {
 				ctx.drawImage(frameBack0, imageX, imageY)
 			}
 		}
+
+		if (frame == 2){
+			if (back == false){
+				ctx.drawImage(frameJump, imageX, imageY)
+			}
+			else{
+				ctx.drawImage(frameBackJump, imageX, imageY)
+			}
+		}
+
 		else{
 			if (back == false){
 				ctx.drawImage(frame1, imageX, imageY)
