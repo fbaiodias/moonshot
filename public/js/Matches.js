@@ -8,7 +8,9 @@ var Matches = function(startX, startY) {
 		image;
 
 	image = new Image();
+	imageBalon = new Image();
 	image.src = "images/matches.png";
+	imageBalon.src = "images/balon.png";
 	
 	var width = 60,
 		height = 60;
@@ -46,7 +48,8 @@ var Matches = function(startX, startY) {
 			ctx.drawImage(image, imageX, imageY);
 		}
 		else {
-			
+			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120)
+			ctx.drawImage(image, 19, localPlayer.getY()-117)
 		}
 
 	};	

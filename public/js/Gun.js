@@ -5,10 +5,13 @@ var Gun = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		image;
+		image,
+		id;
 
 	image = new Image();
+	imageBalon = new Image();
 	image.src = "images/gun.png";
+	imageBalon.src = "images/balon.png";
 
 	var width = 60,
 		height = 60;
@@ -47,7 +50,8 @@ var Gun = function(startX, startY) {
 			ctx.drawImage(image, imageX, imageY);
 		}
 		else {
-			
+			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120)
+			ctx.drawImage(image, 14, localPlayer.getY()-110)
 		}	
 	};	
 
@@ -61,6 +65,7 @@ var Gun = function(startX, startY) {
 		setOn: setOn,
 		draw: draw,
 		height: height,
-		width: width
+		width: width,
+		id: id
 	}
 };
