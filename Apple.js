@@ -1,21 +1,11 @@
 /**************************************************
-** GAME GUN CLASS
+** GAME APPLE CLASS
 **************************************************/
 var Apple = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		image,
 		id;
-
-	image = new Image();
-	imageBalon = new Image();
-	image.src = "images/apple.png";
-	imageBalon.src = "images/balon.png";
-
-	var width = 60,
-		height = 60;
-	
 
 	// Getters and setters
 	var getX = function() {
@@ -42,18 +32,7 @@ var Apple = function(startX, startY) {
 		onPlayer = newState;
 	};
 
-	var draw = function(ctx, localPlayer) {
-		if (onPlayer == false){
-			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
-				imageY = y-image.height/2;
 
-			ctx.drawImage(image, imageX, imageY);
-		}
-		else {
-			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120)
-			ctx.drawImage(image, playerXposition-86, localPlayer.getY()-110)
-		}	
-	};	
 
 	// Define which variables and methods can be accessed
 	return {
@@ -63,9 +42,11 @@ var Apple = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		setOn: setOn,
-		draw: draw,
-		height: height,
-		width: width,
-		id: id
+		id: id,
+		onPlayer: onPlayer
 	}
 };
+
+// Export the Player class so you can use it in
+// other files by using require("Player").Player
+exports.Apple = Apple;

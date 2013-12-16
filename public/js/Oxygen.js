@@ -1,7 +1,7 @@
 /**************************************************
-** GAME GUN CLASS
+** GAME Oxygen CLASS
 **************************************************/
-var FirstAid = function(startX, startY) {
+var Oxygen = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
@@ -10,7 +10,7 @@ var FirstAid = function(startX, startY) {
 
 	image = new Image();
 	imageBalon = new Image();
-	image.src = "images/firstAid.png";
+	image.src = "images/oxygen.png";
 	imageBalon.src = "images/balon.png";
 
 	var width = 60,

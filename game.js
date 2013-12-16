@@ -5,7 +5,10 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
 	Gun = require("./Gun").Gun;				// Gun class
-	Matches = require("./Matches").Matches;	// Matches class
+	Matches = require("./Matches").Matches,	// Matches class
+	Apple = require("./Apple").Apple,		// Apple class
+	FirstAid = require("./FirstAid").FirstAid,	// FirstAid class
+	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
 
 /**************************************************
@@ -40,16 +43,37 @@ function init() {
 
 	// Place guns randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newGun = new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
-		newGun.id = "G"+i;
-		objects.push(newGun);
+		var newObject = new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newObject.id = "G"+i;
+		objects.push(newObject);
 	}
 
 	// Place matches randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newMatches = new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
-		newMatches.id = "M"+i;
-		objects.push(newMatches);
+		var newObject = new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newObject.id = "M"+i;
+		objects.push(newObject);
+	}
+
+	// Place Apple randomly
+	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
+		var newObject = new Apple(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newObject.id = "A"+i;
+		objects.push(newObject);
+	}
+
+	// Place FirstAid randomly
+	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
+		var newObject = new FirstAid(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newObject.id = "F"+i;
+		objects.push(newObject);
+	}
+
+	// Place Oxygen randomly
+	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
+		var newObject = new Oxygen(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newObject.id = "O"+i;
+		objects.push(newObject);
 	}
 
 	//util.log(JSON.stringify(objects));

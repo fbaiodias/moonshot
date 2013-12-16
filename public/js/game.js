@@ -137,27 +137,33 @@ function onNewPlayer(data) {
 
 // New object
 function onNewObject(data) {
-	//console.log("New object!")
-	if(data.id.charAt(0) == "G") {
-		console.log("New gun!", data.id);
-		// Initialise the new gun
-		var newGun = new Gun(data.x, data.y);
-		newGun.setOn(data.onPlayer);
-		newGun.id = data.id;
+	console.log("New object!", data.id);
+	var newObject;
 
-		// Add new gun to the objects array
-		objects.push(newGun);
-	} 
-	else if(data.id.charAt(0) == "M") {
-		console.log("New matches!", data.id);
-		// Initialise the new gun
-		var newMatches = new Matches(data.x, data.y);
-		newMatches.setOn(data.onPlayer);
-		newMatches.id = data.id;
-
-		// Add new gun to the objects array
-		objects.push(newMatches);
+	switch(data.id.charAt(0)) {
+		case "G":
+			newObject = new Gun(data.x, data.y);
+			break;
+		case "M":
+			newObject = new Matches(data.x, data.y);
+			break;
+		case "A":
+			newObject = new Apple(data.x, data.y);
+			break;
+		case "F":
+			newObject = new FirstAid(data.x, data.y);
+			break;
+		case "O":
+			newObject = new Oxygen(data.x, data.y);
+			break;
 	}
+
+	newObject.setOn(data.onPlayer);
+	newObject.id = data.id;
+
+	// Add new object to the objects array
+	objects.push(newObject);
+
 };
 
 // Move player
