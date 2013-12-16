@@ -5,6 +5,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	io = require("socket.io"),				// Socket.IO
 	Player = require("./Player").Player;	// Player class
 	Gun = require("./Gun").Gun;				// Gun class
+	Matches = require("./Matches").Matches;	// Matches class
 
 
 /**************************************************
@@ -12,6 +13,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 **************************************************/
 var socket,		// Socket controller
 	guns,	// Array of guns
+	matches,	// Array of matches
 	players;	// Array of connected players
 
 
@@ -24,6 +26,7 @@ function init() {
 
 	// Create empty arrays to store objects
 	guns = [];
+	matches = [];
 
 	// Set up Socket.IO to listen on port 8000
 	socket = io.listen(8000);
@@ -40,6 +43,11 @@ function init() {
 	// Place guns randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
 		guns.push(new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
+	}
+
+	// Place matches randomly
+	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
+		matches.push(new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
 	}
 	
 
@@ -109,6 +117,12 @@ function onNewPlayer(data) {
 	for (i = 0; i < guns.length; i++) {
 		existingGun = guns[i];
 		this.emit("new gun", {x: existingGun.getX(), y: existingGun.getY(), onPlayer: existingGun.isOnPlayer()});
+	};
+	
+	var existingMatches;
+	for (i = 0; i < matches.length; i++) {
+		existingMatches = matches[i];
+		this.emit("new matches", {x: existingMatches.getX(), y: existingMatches.getY(), onPlayer: existingMatches.isOnPlayer()});
 	};
 
 	// Add new player to the players array
