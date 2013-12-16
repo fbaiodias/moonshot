@@ -34,6 +34,12 @@ var Player = function(startX, startY) {
 	};
 
 	var setX = function(newX) {
+		if (newX < x) {
+			back = true;
+		} else {
+			back = false;
+		};
+
 		x = newX;
 	};
 
