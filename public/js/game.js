@@ -185,7 +185,7 @@ function onCatchObject(data) {
 		util.log("Object not found: "+data.objectId);
 		return;
 	};
-	
+	player.objectId = catchObject.id;
 	catchObject.setOn(true);
 };
 
@@ -232,7 +232,7 @@ function update() {
 		//remotePlayers[i].drawAsRemote(ctx, localPlayer);
 	};
 	for (i = 0; i < objects.length; i++) {
-		checkColision(localPlayer, objects[i]);
+		checkCollision(localPlayer, objects[i]);
 	};
 };
 
@@ -296,14 +296,18 @@ function objectById(id) {
 	return false;
 };
 
-function checkColision(player, object) {
+function checkCollision(player, object) {
 	//console.log(object.getX(), object.getY(), object.width, object.height)
 	if (!object.isOnPlayer() && player.getX() < object.getX() + object.width  && player.getX() + player.width  > object.getX() &&
     player.getY() < object.getY() + object.height && player.getY() + player.height > object.getY()) {
 		// The objects are touching
 		object.setOn(true);
+		player.objectId = object.id;
+
+		console.log(JSON.stringify(player))
 
 		// Send local player data to the game server
 		socket.emit("catch object", {objectId: object.id});
 	}
 }
+

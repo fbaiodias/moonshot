@@ -1,7 +1,7 @@
 /**************************************************
-** GAME Matches CLASS
+** GAME GUN CLASS
 **************************************************/
-var Matches = function(startX, startY) {
+var Apple = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
@@ -10,11 +10,12 @@ var Matches = function(startX, startY) {
 
 	image = new Image();
 	imageBalon = new Image();
-	image.src = "images/matches.png";
+	image.src = "images/apple.png";
 	imageBalon.src = "images/balon.png";
-	
+
 	var width = 60,
 		height = 60;
+	
 
 	// Getters and setters
 	var getX = function() {
@@ -37,8 +38,8 @@ var Matches = function(startX, startY) {
 		y = newY;
 	};
 
-	var setOn = function(newY) {
-		onPlayer = newY;
+	var setOn = function(newState) {
+		onPlayer = newState;
 	};
 
 	var draw = function(ctx, localPlayer) {
@@ -48,11 +49,10 @@ var Matches = function(startX, startY) {
 
 			ctx.drawImage(image, imageX, imageY);
 		}
-		else if(localPlayer.objectId == this.id){
-			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120);
-			ctx.drawImage(image, 19, localPlayer.getY()-117);
-		}
-
+		else {
+			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120)
+			ctx.drawImage(image, 14, localPlayer.getY()-110)
+		}	
 	};	
 
 	// Define which variables and methods can be accessed

@@ -49,7 +49,7 @@ var Gun = function(startX, startY) {
 
 			ctx.drawImage(image, imageX, imageY);
 		}
-		else {
+		else if(localPlayer.objectId == this.id){
 			ctx.drawImage(imageBalon, 10, localPlayer.getY()-120)
 			ctx.drawImage(image, 14, localPlayer.getY()-110)
 		}	
