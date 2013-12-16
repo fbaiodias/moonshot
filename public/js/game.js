@@ -188,8 +188,10 @@ function onCatchObject(data) {
 		util.log("Object not found: "+data.objectId);
 		return;
 	};
-	player.objectId = catchObject.id;
+	catchPlayer.objectId = catchObject.id;
 	catchObject.setOn(true);
+
+	console.log(JSON.stringify(catchObject));
 };
 
 // Drop Object
