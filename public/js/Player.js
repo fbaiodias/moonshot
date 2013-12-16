@@ -12,7 +12,7 @@ var Player = function(startX, startY) {
 		frameBack1,
 		frame = 0,
 		framesAmount = 0,
-		playerXposition = 666,
+		//playerXposition = 666,
 		objectId = "",
 		
 		jumpTime = 500,

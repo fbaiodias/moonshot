@@ -46,6 +46,8 @@ function init() {
 	moon = new Image();
 	moon.src = "images/moon.png";
 
+	playerXposition = canvas.width/3;
+
 	// Start listening for events
 	setEventHandlers();
 };

@@ -6,7 +6,7 @@ var Matches = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		image,
-		playerXposition = 666,
+		//playerXposition = 666,
 		id;
 
 	image = new Image();
