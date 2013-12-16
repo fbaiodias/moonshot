@@ -42,6 +42,10 @@ var Player = function(startX, startY) {
 	};
 
 	var setX = function(newX) {
+		if (newX != x) {
+			updateFrames();
+		};
+
 		if (newX < x) {
 			back = true;
 		} else {
@@ -102,28 +106,31 @@ var Player = function(startX, startY) {
       		else{
         		y = baseY
         		jumpTicks = jumpTime;
-      			}
+      		}
     	}
 
 		if (prevX != x || prevY != y){
-			if (frame == 1){
-				framesAmount ++
-				if ( framesAmount == 7){
-					frame = 0
-					framesAmount = 0
-				}
-				
-			}
-			else{
-				framesAmount ++
-				if ( framesAmount == 7){
-					frame = 1
-					framesAmount = 0
-				}
-			}
+			updateFrames();
 		}
 		return (prevX != x || prevY != y) ? true : false;
 	};
+
+	var updateFrames = function() {
+		if (frame == 1){
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 0
+				framesAmount = 0
+			}
+		}
+		else{
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 1
+				framesAmount = 0
+			}
+		}
+	}
 
 	// Draw player
 	var draw = function(ctx) {
