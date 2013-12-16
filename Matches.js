@@ -40,7 +40,8 @@ var Matches = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		setOn: setOn,
-		id: id
+		id: id,
+		onPlayer: onPlayer
 	}
 };
 

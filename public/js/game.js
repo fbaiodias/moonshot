@@ -6,8 +6,6 @@ var canvas,			// Canvas DOM element
 	keys,			// Keyboard input
 	localPlayer,	// Local player
 	remotePlayers,	// Remote players
-	guns,			// Remote guns
-	matches,		// Remote matches
 	objects,		// Remote objects
 	socket,			// Socket connection
 	moon;
@@ -42,8 +40,6 @@ function init() {
 
 	// Initialise remote players array
 	remotePlayers = [];
-	guns = [];
-	matches = [];
 	objects = [];
 
 	moon = new Image();
@@ -75,10 +71,7 @@ var setEventHandlers = function() {
 	socket.on("new player", onNewPlayer);
 
 	// New gun message received
-	socket.on("new gun", onNewGun);
-
-	// New gun message received
-	socket.on("new matches", onNewMatches);
+	socket.on("new object", onNewObject);
 
 	// Player move message received
 	socket.on("move player", onMovePlayer);
@@ -136,30 +129,29 @@ function onNewPlayer(data) {
 	remotePlayers.push(newPlayer);
 };
 
-// New gun
-function onNewGun(data) {
-	console.log("New gun!", data.id);
-	// Initialise the new gun
-	var newGun = new Gun(data.x, data.y);
-	newGun.setOnPlayer = data.onPlayer;
-	newGun.id = data.id;
+// New object
+function onNewObject(data) {
+	console.log("New object!")
+	if(data.id.charAt(0) == "G") {
+		console.log("New gun!", data.id);
+		// Initialise the new gun
+		var newGun = new Gun(data.x, data.y);
+		newGun.setOn(data.onPlayer);
+		newGun.id = data.id;
 
-	// Add new gun to the guns array
-	guns.push(newGun);
-	objects.push(newGun);
-};
+		// Add new gun to the objects array
+		objects.push(newGun);
+	} 
+	else if(data.id.charAt(0) == "M") {
+		console.log("New matches!", data.id);
+		// Initialise the new gun
+		var newMatches = new Matches(data.x, data.y);
+		newMatches.setOn(data.onPlayer);
+		newMatches.id = data.id;
 
-// New gun
-function onNewMatches(data) {
-	console.log("New matches!", data.id);
-	// Initialise the new gun
-	var newMatches = new Matches(data.x, data.y);
-	newMatches.setOnPlayer = data.onPlayer;
-	newMatches.id = data.id;
-
-	// Add new gun to the guns array
-	matches.push(newMatches);
-	objects.push(newMatches);
+		// Add new gun to the objects array
+		objects.push(newMatches);
+	}
 };
 
 // Move player
@@ -180,6 +172,7 @@ function onMovePlayer(data) {
 // Catch Object
 function onCatchObject(data) {
 	// Find player in array
+
 	var catchPlayer = playerById(data.id);
 	var catchObject = objectById(data.objectId);
 	// Player not found
@@ -188,6 +181,11 @@ function onCatchObject(data) {
 		return;
 	};
 
+	if(!catchObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+	
 	catchObject.setOn(true);
 };
 
@@ -233,11 +231,8 @@ function update() {
 	for (i = 0; i < remotePlayers.length; i++) {
 		//remotePlayers[i].drawAsRemote(ctx, localPlayer);
 	};
-	for (i = 0; i < guns.length; i++) {
-		checkColision(localPlayer, guns[i]);
-	};
-	for (i = 0; i < matches.length; i++) {
-		checkColision(localPlayer, matches[i]);
+	for (i = 0; i < objects.length; i++) {
+		checkColision(localPlayer, objects[i]);
 	};
 };
 
@@ -270,11 +265,8 @@ function draw() {
 	for (i = 0; i < remotePlayers.length; i++) {
 		remotePlayers[i].drawAsRemote(ctx, localPlayer);
 	};
-	for (i = 0; i < guns.length; i++) {
-		guns[i].draw(ctx, localPlayer);
-	};
-	for (i = 0; i < matches.length; i++) {
-		matches[i].draw(ctx, localPlayer);
+	for (i = 0; i < objects.length; i++) {
+		objects[i].draw(ctx, localPlayer);
 	};
 };
 

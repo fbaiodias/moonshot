@@ -13,8 +13,6 @@ var util = require("util"),					// Utility resources (logging, object inspection
 **************************************************/
 var socket,		// Socket controller
 	guns,	// Array of guns
-	matches,	// Array of matches
-	players,	// Array of connected players
 	objects;	// Array of game objects
 
 
@@ -26,8 +24,6 @@ function init() {
 	players = [];
 
 	// Create empty arrays to store objects
-	guns = [];
-	matches = [];
 	objects = [];
 
 	// Set up Socket.IO to listen on port 8000
@@ -46,18 +42,17 @@ function init() {
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
 		var newGun = new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
 		newGun.id = "G"+i;
-		guns.push(newGun);
+		objects.push(newGun);
 	}
 
 	// Place matches randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
 		var newMatches = new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
 		newMatches.id = "M"+i;
-		matches.push(newMatches);
+		objects.push(newMatches);
 	}
 
-	objects.push(guns);
-	objects.push(matches);
+	util.log(JSON.stringify(objects));
 
 
 	// Start listening for events
@@ -125,18 +120,12 @@ function onNewPlayer(data) {
 		this.emit("new player", {id: existingPlayer.id, x: existingPlayer.getX(), y: existingPlayer.getY()});
 	};
 	
-	var existingGun;
-	for (i = 0; i < guns.length; i++) {
-		existingGun = guns[i];
-		this.emit("new gun", {id: existingGun.id, x: existingGun.getX(), y: existingGun.getY(), onPlayer: existingGun.isOnPlayer()});
+	var existingObject;
+	for (i = 0; i < objects.length; i++) {
+		existingObject = objects[i];
+		this.emit("new object", {id: existingObject.id, x: existingObject.getX(), y: existingObject.getY(), onPlayer: existingObject.onPlayer});
 	};
 	
-	var existingMatches;
-	for (i = 0; i < matches.length; i++) {
-		existingMatches = matches[i];
-		this.emit("new matches", {id: existingMatches.id, x: existingMatches.getX(), y: existingMatches.getY(), onPlayer: existingMatches.isOnPlayer()});
-	};
-
 	// Add new player to the players array
 	players.push(newPlayer);
 };
@@ -171,7 +160,12 @@ function onCatchObject(data) {
 		return;
 	};
 
-	catchObject.setOn(true);
+	if(!catchObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+	
+	catchObject.onPlayer = true;
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("catch object", {id: catchPlayer.id, objectId: catchObject.id});
