@@ -13,6 +13,13 @@ var Player = function(startX, startY) {
 		frame = 0,
 		framesAmount = 0,
 		playerXposition = 100,
+		
+		jumpTime = 200,
+		jumpTicks = 200,
+		jumpSpeed = 20,
+		jumpAcceleration = 2,
+		baseY = startY,
+		
 		back = false; 
 	
     frame0 = new Image();
@@ -79,6 +86,24 @@ var Player = function(startX, startY) {
 			back = false;
 			x += moveAmount;
 		};
+
+		if (keys.space){
+			if (jumpTicks >= jumpTime){
+      			jumpTicks = 0
+      			baseY = y;
+    		}
+		};
+
+		if (jumpTicks < jumpTime){
+      		if (y <= baseY){
+        		y = (baseY - (jumpSpeed * jumpTicks) + (0.5 * jumpAcceleration * jumpTicks * jumpTicks))
+        		jumpTicks++;
+      		}
+      		else{
+        		y = baseY
+        		jumpTicks = jumpTime;
+      			}
+    	}
 
 		if (prevX != x || prevY != y){
 			if (frame == 1){

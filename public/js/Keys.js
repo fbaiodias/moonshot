@@ -24,6 +24,9 @@ var Keys = function(up, left, right, down) {
 			case 40: // Down
 				that.down = true;
 				break;
+			case 32: // Down
+				that.space = true;
+				break;
 		};
 	};
 	
@@ -42,6 +45,9 @@ var Keys = function(up, left, right, down) {
 				break;
 			case 40: // Down
 				that.down = false;
+				break;
+			case 32: // Down
+				that.space = false;
 				break;
 		};
 	};
