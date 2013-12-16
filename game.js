@@ -14,7 +14,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 var socket,		// Socket controller
 	guns,	// Array of guns
 	matches,	// Array of matches
-	players;	// Array of connected players
+	players,	// Array of connected players
+	objects;	// Array of game objects
 
 
 /**************************************************
@@ -27,6 +28,7 @@ function init() {
 	// Create empty arrays to store objects
 	guns = [];
 	matches = [];
+	objects = [];
 
 	// Set up Socket.IO to listen on port 8000
 	socket = io.listen(8000);
@@ -42,14 +44,21 @@ function init() {
 
 	// Place guns randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		guns.push(new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
+		var newGun = new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newGun.id = "G"+i;
+		guns.push(newGun);
 	}
 
 	// Place matches randomly
 	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		matches.push(new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
+		var newMatches = new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+		newMatches.id = "M"+i;
+		matches.push(newMatches);
 	}
-	
+
+	objects.push(guns);
+	objects.push(matches);
+
 
 	// Start listening for events
 	setEventHandlers();
@@ -76,6 +85,9 @@ function onSocketConnection(client) {
 
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
+
+	// Listen for catch object message
+	client.on("catch object", onCatchObject);
 };
 
 // Socket client has disconnected
@@ -116,13 +128,13 @@ function onNewPlayer(data) {
 	var existingGun;
 	for (i = 0; i < guns.length; i++) {
 		existingGun = guns[i];
-		this.emit("new gun", {x: existingGun.getX(), y: existingGun.getY(), onPlayer: existingGun.isOnPlayer()});
+		this.emit("new gun", {id: existingGun.id, x: existingGun.getX(), y: existingGun.getY(), onPlayer: existingGun.isOnPlayer()});
 	};
 	
 	var existingMatches;
 	for (i = 0; i < matches.length; i++) {
 		existingMatches = matches[i];
-		this.emit("new matches", {x: existingMatches.getX(), y: existingMatches.getY(), onPlayer: existingMatches.isOnPlayer()});
+		this.emit("new matches", {id: existingMatches.id, x: existingMatches.getX(), y: existingMatches.getY(), onPlayer: existingMatches.isOnPlayer()});
 	};
 
 	// Add new player to the players array
@@ -148,6 +160,23 @@ function onMovePlayer(data) {
 	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
 };
 
+// Player has moved
+function onCatchObject(data) {
+	// Find player in array
+	var catchPlayer = playerById(this.id);
+	var catchObject = objectById(data.objectId);
+	// Player not found
+	if (!catchPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	catchObject.setOn(true);
+
+	// Broadcast updated position to connected socket clients
+	this.broadcast.emit("catch object", {id: catchPlayer.id, objectId: catchObject.id});
+};
+
 
 /**************************************************
 ** GAME HELPER FUNCTIONS
@@ -158,6 +187,17 @@ function playerById(id) {
 	for (i = 0; i < players.length; i++) {
 		if (players[i].id == id)
 			return players[i];
+	};
+	
+	return false;
+};
+
+// Find object by ID
+function objectById(id) {
+	var i;
+	for (i = 0; i < objects.length; i++) {
+		if (objects[i].id == id)
+			return objects[i];
 	};
 	
 	return false;

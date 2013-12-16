@@ -28,7 +28,7 @@ var Matches = function(startX, startY) {
 		y = newY;
 	};
 
-	var setOnPlayer = function(newState) {
+	var setOn = function(newState) {
 		onPlayer = newState;
 	};
 
@@ -39,7 +39,7 @@ var Matches = function(startX, startY) {
 		isOnPlayer: isOnPlayer,
 		setX: setX,
 		setY: setY,
-		setOnPlayer: setOnPlayer,
+		setOn: setOn,
 		id: id
 	}
 };

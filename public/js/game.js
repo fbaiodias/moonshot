@@ -8,6 +8,7 @@ var canvas,			// Canvas DOM element
 	remotePlayers,	// Remote players
 	guns,			// Remote guns
 	matches,		// Remote matches
+	objects,		// Remote objects
 	socket,			// Socket connection
 	moon;
 
@@ -43,6 +44,7 @@ function init() {
 	remotePlayers = [];
 	guns = [];
 	matches = [];
+	objects = [];
 
 	moon = new Image();
 	moon.src = "images/moon.png";
@@ -83,6 +85,9 @@ var setEventHandlers = function() {
 
 	// Player removed message received
 	socket.on("remove player", onRemovePlayer);
+
+	// Player move message received
+	socket.on("catch object", onCatchObject);
 };
 
 // Keyboard key down
@@ -133,24 +138,28 @@ function onNewPlayer(data) {
 
 // New gun
 function onNewGun(data) {
-	console.log("New gun!");
+	console.log("New gun!", data.id);
 	// Initialise the new gun
 	var newGun = new Gun(data.x, data.y);
 	newGun.setOnPlayer = data.onPlayer;
+	newGun.id = data.id;
 
 	// Add new gun to the guns array
 	guns.push(newGun);
+	objects.push(newGun);
 };
 
 // New gun
 function onNewMatches(data) {
-	console.log("New matches!");
+	console.log("New matches!", data.id);
 	// Initialise the new gun
 	var newMatches = new Matches(data.x, data.y);
 	newMatches.setOnPlayer = data.onPlayer;
+	newMatches.id = data.id;
 
 	// Add new gun to the guns array
 	matches.push(newMatches);
+	objects.push(newMatches);
 };
 
 // Move player
@@ -166,6 +175,20 @@ function onMovePlayer(data) {
 	// Update player position
 	movePlayer.setX(data.x);
 	movePlayer.setY(data.y);
+};
+
+// Catch Object
+function onCatchObject(data) {
+	// Find player in array
+	var catchPlayer = playerById(data.id);
+	var catchObject = objectById(data.objectId);
+	// Player not found
+	if (!catchPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	catchObject.setOn(true);
 };
 
 // Remove player
@@ -265,6 +288,17 @@ function playerById(id) {
 	for (i = 0; i < remotePlayers.length; i++) {
 		if (remotePlayers[i].id == id)
 			return remotePlayers[i];
+	};
+	
+	return false;
+};
+
+// Find object by ID
+function objectById(id) {
+	var i;
+	for (i = 0; i < objects.length; i++) {
+		if (objects[i].id == id)
+			return objects[i];
 	};
 	
 	return false;
