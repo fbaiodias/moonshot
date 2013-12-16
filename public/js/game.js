@@ -6,6 +6,7 @@ var canvas,			// Canvas DOM element
 	keys,			// Keyboard input
 	localPlayer,	// Local player
 	remotePlayers,	// Remote players
+	guns,			// Remote guns
 	socket,			// Socket connection
 	moon;
 
@@ -39,6 +40,7 @@ function init() {
 
 	// Initialise remote players array
 	remotePlayers = [];
+	guns = [];
 
 	moon = new Image();
 	moon.src = "images/moon.png";
@@ -67,6 +69,9 @@ var setEventHandlers = function() {
 
 	// New player message received
 	socket.on("new player", onNewPlayer);
+
+	// New gun message received
+	socket.on("new gun", onNewGun);
 
 	// Player move message received
 	socket.on("move player", onMovePlayer);
@@ -119,6 +124,17 @@ function onNewPlayer(data) {
 
 	// Add new player to the remote players array
 	remotePlayers.push(newPlayer);
+};
+
+// New gun
+function onNewGun(data) {
+	console.log("New gun!");
+	// Initialise the new gun
+	var newGun = new Gun(data.x, data.y);
+	newGun.setOnPlayer = data.onPlayer;
+
+	// Add new gun to the guns array
+	guns.push(newGun);
 };
 
 // Move player
@@ -202,6 +218,9 @@ function draw() {
 	var i;
 	for (i = 0; i < remotePlayers.length; i++) {
 		remotePlayers[i].drawAsRemote(ctx, localPlayer);
+	};
+	for (i = 0; i < guns.length; i++) {
+		guns[i].draw(ctx, localPlayer);
 	};
 };
 

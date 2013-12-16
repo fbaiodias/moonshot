@@ -38,7 +38,7 @@ function init() {
 	});
 
 	// Place guns randomly
-	for(var i=0; i < Math.round(Math.random()*(10)); i++) {
+	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
 		guns.push(new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000))));
 	}
 	
