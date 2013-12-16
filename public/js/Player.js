@@ -10,6 +10,9 @@ var Player = function(startX, startY) {
 		frame1,
 		frameBack0,
 		frameBack1,
+		frameJump,
+		frameBackJump,
+		frameDead,
 		frame = 0,
 		framesAmount = 0,
 		//playerXposition = 666,
@@ -28,14 +31,16 @@ var Player = function(startX, startY) {
     	frameBack0 = new Image();
     	frameBack1 = new Image();
     	frameJump = new Image();
-    	frameBackJump = new Image(); 
+    	frameBackJump = new Image();
+    	frameDead = new Image(); 
 	
 		frame0.src = "images/astronaut1.png";
 		frame1.src = "images/astronaut2.png";
 		frameBack0.src = "images/astronautBack1.png";
 		frameBack1.src = "images/astronautBack2.png";
 		frameJump.src = "images/astronautJump.png";
-		frameBackJump.src = "images/astronautBackJump.png";  
+		frameBackJump.src = "images/astronautBackJump.png";
+		frameDead.src = "images/deadPlayer.png"  ;
 
 	var width = 70,
 		height = 100;
@@ -207,6 +212,13 @@ var Player = function(startX, startY) {
 		}
 	};
 
+	var drawDead = function(ctx){
+		var imageX = playerXposition-frameDead.width/2,
+			imageY = y-frameDead.height/2;
+		
+		ctx.drawImage(frameDead, imageX, imageY);
+	};
+
 	// Define which variables and methods can be accessed
 	return {
 		getX: getX,
@@ -215,6 +227,7 @@ var Player = function(startX, startY) {
 		setY: setY,
 		update: update,
 		draw: draw,
+		drawDead: drawDead,
 		drawAsRemote: drawAsRemote,
 		height: height,
 		width: width,

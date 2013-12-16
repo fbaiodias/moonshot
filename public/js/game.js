@@ -8,7 +8,8 @@ var canvas,			// Canvas DOM element
 	remotePlayers,	// Remote players
 	objects,		// Remote objects
 	socket,			// Socket connection
-	moon;
+	moon,
+	plyerDead = false;
 
 var playerXposition = 666;
 
@@ -250,11 +251,15 @@ function animate() {
 **************************************************/
 function update() {
 	// Update local player and check for change
-	if (localPlayer.update(keys)) {
+	if (!(hunger <= 0 || oxygenTank <=0) && localPlayer.update(keys)) {
 		// Send local player data to the game server
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
-		hunger--;
-		oxygenTank--;
+		if (hunger > 0){
+			hunger--;
+		}
+		if (oxygenTank >0 ){
+			oxygenTank--;
+		}
 	};
 
 	var i;
@@ -262,7 +267,9 @@ function update() {
 		checkCollision(localPlayer, objects[i]);
 	};
 
-	oxygenTank--;
+	if (oxygenTank >0 ){
+			oxygenTank--;
+		}
 
 	switch(localPlayer.objectId.charAt(0)) {
 		case "O":
@@ -273,6 +280,11 @@ function update() {
 			break;
 		case "A":
 			hunger = 1000;
+			break;
+		case "G":
+			if (keys.shift){
+				shoot == true;
+			}
 			break;
 	}
 };
@@ -309,7 +321,13 @@ function draw() {
 	drawBackground(localPlayer)
 	drawInformation(50,50)
 	// Draw the local player
-	localPlayer.draw(ctx);
+	if (!(hunger <= 0 || oxygenTank <=0)) {
+		localPlayer.draw(ctx);
+	}
+	else{
+		localPlayer.drawDead(ctx);
+	}
+
 
 	// Draw the remote players
 	var i;

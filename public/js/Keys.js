@@ -7,7 +7,7 @@ var Keys = function(up, left, right, down) {
 		right = right || false,
 		down = down || false,
 		space = space || false,
-		shift = shift !! false;
+		shift = shift || false;
 		
 	var onKeyDown = function(e) {
 		var that = this,
@@ -74,7 +74,7 @@ var Keys = function(up, left, right, down) {
 		right: right,
 		down: down,
 		space: space,
-		shift: shift
+		shift: shift,
 		onKeyDown: onKeyDown,
 		onKeyUp: onKeyUp
 	};
