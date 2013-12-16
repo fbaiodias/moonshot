@@ -189,9 +189,7 @@ function drawBackground(player) {
 		var moonX = -player.getX()+i*moon.width;
 		var moonY = canvas.height - moon.height;
 		ctx.drawImage(moon,moonX,moonY);		
-	}
-
-	
+	}	
 }
 
 function draw() {
@@ -203,7 +201,7 @@ function draw() {
 	// Draw the remote players
 	var i;
 	for (i = 0; i < remotePlayers.length; i++) {
-		remotePlayers[i].draw(ctx);
+		remotePlayers[i].drawAsRemote(ctx, localPlayer);
 	};
 };
 

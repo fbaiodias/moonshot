@@ -52,6 +52,12 @@ var Player = function(startX, startY) {
 		ctx.fillRect(100, y-5, 10, 10);
 	};
 
+	// Draw player
+	var drawAsRemote = function(ctx, localPlayer) {
+
+		ctx.fillRect(100-(localPlayer.getX()-x), y-5, 10, 10);
+	};
+
 	// Define which variables and methods can be accessed
 	return {
 		getX: getX,
@@ -59,6 +65,7 @@ var Player = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		update: update,
-		draw: draw
+		draw: draw,
+		drawAsRemote: drawAsRemote
 	}
 };
