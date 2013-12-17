@@ -28,6 +28,10 @@ var Gun = function(startX, startY) {
 		return y;
 	};
 
+	var getBullet = function() {
+		return bullet;
+	};
+
 	var isOnPlayer = function() {
 		return onPlayer;
 	};
@@ -78,6 +82,7 @@ var Gun = function(startX, startY) {
 		shoot: shoot,
 		height: height,
 		width: width,
+		getBullet: getBullet,
 		id: id
 	}
 };

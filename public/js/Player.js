@@ -239,6 +239,7 @@ var Player = function(startX, startY) {
 		width: width,
 		objectId: objectId,
 		playerXposition: playerXposition,
-		dead: dead
+		dead: dead,
+		id: id
 	}
 };

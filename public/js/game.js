@@ -88,6 +88,18 @@ var setEventHandlers = function() {
 	// Player dead message received
 	socket.on("dead player", onDeadPlayer);
 
+	// Player dead message received
+	socket.on("player shot", function(data){
+		if(data.shotId == localPlayer.id) {
+			life -= 10;
+		}
+	});
+
+	// Player dead message received
+	socket.on("your id", function(data){
+		localPlayer.id = data.id;
+	});
+
 	// Player move message received
 	socket.on("highscores", function(data){
 		finalScores = data.scores;
@@ -285,13 +297,21 @@ function update() {
 	// Send local player data to the game server
 	if (localPlayer.update(keys)) {
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
+		hunger--;
+		oxygenTank--;
 	}
-	hunger--;
-	oxygenTank--;
 
 	var i;
 	for (i = 0; i < objects.length; i++) {
-		checkCollision(localPlayer, objects[i]);
+		if(checkCollision(localPlayer, objects[i])) {
+			objects[i].setOn(true);
+			localPlayer.objectId = objects[i].id;
+
+			//console.log(JSON.stringify(player))
+
+			// Send local player data to the game server
+			socket.emit("catch object", {objectId: objects[i].id});	
+		};
 	};
 
 	oxygenTank--;
@@ -310,6 +330,16 @@ function update() {
 			if (keys.shift){
 				objectById(localPlayer.objectId).shoot(localPlayer);
 			}
+
+			var gun = objectById(localPlayer.objectId);
+				
+			for (i = 0; i < remotePlayers.length; i++) {
+				if(gun.getBullet()){
+					if(checkCollision(remotePlayers[i], gun.getBullet())) {
+						socket.emit("player shot", {shotId: remotePlayers[i].id});	
+					}
+				}
+			};
 			break;
 	}
 };
@@ -404,13 +434,8 @@ function checkCollision(player, object) {
 	if (!object.isOnPlayer() && player.getX() < object.getX() + object.width  && player.getX() + player.width  > object.getX() &&
     player.getY() < object.getY() + object.height && player.getY() + player.height > object.getY()) {
 		// The objects are touching
-		object.setOn(true);
-		player.objectId = object.id;
-
-		//console.log(JSON.stringify(player))
-
-		// Send local player data to the game server
-		socket.emit("catch object", {objectId: object.id});
+		return true;
 	}
+	return false;
 }
 

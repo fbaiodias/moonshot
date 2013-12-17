@@ -110,6 +110,9 @@ function onSocketConnection(client) {
 	// Listen for new player message
 	client.on("player score", onPlayerScore);
 
+	// Listen for new player message
+	client.on("player shot", onPlayerShot);
+
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
 
@@ -144,6 +147,8 @@ function onNewPlayer(data) {
 
 	// Broadcast new player to connected socket clients
 	this.broadcast.emit("new player", {id: newPlayer.id, x: newPlayer.getX(), y: newPlayer.getY()});
+
+	this.emit("your id", {id: this.id});
 
 	// Send existing players to the new player
 	var i, existingPlayer;
@@ -194,6 +199,21 @@ function onDeadPlayer(data) {
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("dead player", {id: deadPlayer.id});
+};
+
+// Player has moved
+function onPlayerShot(data) {
+	// Find player in array
+	var playerShot = playerById(this.shotId);
+
+	// Player not found
+	if (!playerShot) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	// Broadcast updated position to connected socket clients
+	this.broadcast.emit("dead player", {id: playerShot.id});
 };
 
 // Player has moved

@@ -42,6 +42,10 @@ var Bullet = function(startX, startY) {
 		}
 	};
 
+	var isOnPlayer = function() {
+		return false;
+	};
+
 	var draw = function(ctx, localPlayer) {
 		if(ticks < time) {
 			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
@@ -57,6 +61,7 @@ var Bullet = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		update: update,
+		isOnPlayer: isOnPlayer,
 		draw: draw,
 		height: height,
 		width: width,
