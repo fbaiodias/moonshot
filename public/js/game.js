@@ -85,6 +85,9 @@ var setEventHandlers = function() {
 	// Player move message received
 	socket.on("move player", onMovePlayer);
 
+	// Player dead message received
+	socket.on("dead player", onDeadPlayer);
+
 	// Player move message received
 	socket.on("highscores", function(data){
 		finalScores = data.scores;
@@ -191,6 +194,20 @@ function onMovePlayer(data) {
 	// Update player position
 	movePlayer.setX(data.x);
 	movePlayer.setY(data.y);
+};
+
+// Dead player
+function onDeadPlayer(data) {
+	var deadPlayer = playerById(data.id);
+
+	// Player not found
+	if (!deadPlayer) {
+		console.log("Player not found: "+data.id);
+		return;
+	};
+	console.log("DEEEEAD");
+	deadPlayer.dead = true;
+	console.log(JSON.stringify(remotePlayers));
 };
 
 // Catch Object

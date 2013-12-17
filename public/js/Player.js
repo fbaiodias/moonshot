@@ -15,6 +15,7 @@ var Player = function(startX, startY) {
 		frameDead,
 		frame = 0,
 		framesAmount = 0,
+		dead = false,
 		//playerXposition = 666,
 		objectId = "",
 		
@@ -180,9 +181,14 @@ var Player = function(startX, startY) {
 
 	// Draw player
 	var drawAsRemote = function(ctx, localPlayer) {
-
 		var imageX = playerXposition-(localPlayer.getX()-x)-frame0.width/2,
 			imageY = y-frame0.height/2;
+
+		if(dead == true){
+			console.log("DEEEEEEAD2");
+			ctx.drawImage(frameDead, imageX, imageY)
+			return;
+		}
 
 		if (jumpTicks < jumpTime){
 			if (back == false){
@@ -232,6 +238,7 @@ var Player = function(startX, startY) {
 		height: height,
 		width: width,
 		objectId: objectId,
-		playerXposition: playerXposition
+		playerXposition: playerXposition,
+		dead: dead
 	}
 };
