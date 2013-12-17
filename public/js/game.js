@@ -50,7 +50,9 @@ function init() {
 	objects = [];
 
 	moon = new Image();
+	rocket = new Image();
 	moon.src = "images/moon.png";
+	rocket.src = "images/rocket.png";
 
 	playerXposition = canvas.width/3;
 
@@ -359,7 +361,10 @@ function drawBackground(player) {
 		var moonX = -player.getX()+i*moon.width;
 		var moonY = canvas.height - moon.height;
 		ctx.drawImage(moon,moonX,moonY);		
-	}	
+	}
+
+	ctx.drawImage(rocket, playerXposition-(player.getX()), 0);
+
 }
 
 function drawInformation(x,y) {

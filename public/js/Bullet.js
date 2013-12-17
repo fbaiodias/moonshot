@@ -12,7 +12,9 @@ var Bullet = function(startX, startY) {
 		id;
 
 	image = new Image();
+	imageBack = new Image();
 	image.src = "images/bullet.png";
+	imageBack.src = "images/bulletBack.png";
 
 	var width = 60,
 		height = 60;
@@ -36,9 +38,17 @@ var Bullet = function(startX, startY) {
 	};
 
 	var update = function() {
-		if(ticks < time) {
-			x += speed; 
-			ticks++;
+		if(localPlayer.back == false){
+			if(ticks < time) {
+				x += speed; 
+				ticks++;
+			}
+		}
+		else{
+			if(ticks < time) {
+				x -= speed; 
+				ticks++;
+			}
 		}
 	};
 
@@ -48,9 +58,14 @@ var Bullet = function(startX, startY) {
 
 	var draw = function(ctx, localPlayer) {
 		if(ticks < time) {
-			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
-
-			ctx.drawImage(image, imageX, y);	
+			if(localPlayer.back == false){
+				var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
+				ctx.drawImage(image, imageX, y);
+			}
+			else{
+				var imageXx = playerXposition+(localPlayer.getX()+x)+image.width/2;
+				ctx.drawImage(imageBack, imageXx, y);
+			}	
 		}
 	};	
 

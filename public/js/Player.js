@@ -233,6 +233,7 @@ var Player = function(startX, startY) {
 		setY: setY,
 		update: update,
 		draw: draw,
+		back: back,
 		drawDead: drawDead,
 		drawAsRemote: drawAsRemote,
 		height: height,
