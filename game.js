@@ -204,16 +204,19 @@ function onDeadPlayer(data) {
 // Player has moved
 function onPlayerShot(data) {
 	// Find player in array
-	var playerShot = playerById(this.shotId);
+	var deadPlayer = playerById(this.id);
 
 	// Player not found
-	if (!playerShot) {
+	if (!deadPlayer) {
 		util.log("Player not found: "+this.id);
-		return;
+		console.log(JSON.stringify(players));
+		//return;
 	};
 
+	console.log("SHOOOOOOT");
+
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit("dead player", {id: playerShot.id});
+	this.broadcast.emit("player shot", {id: deadPlayer.id});
 };
 
 // Player has moved

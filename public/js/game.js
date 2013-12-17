@@ -92,7 +92,7 @@ var setEventHandlers = function() {
 
 	// Player dead message received
 	socket.on("player shot", function(data){
-		if(data.shotId == localPlayer.id) {
+		if(data.id == localPlayer.id) {
 			life -= 10;
 		}
 	});
@@ -338,7 +338,8 @@ function update() {
 			for (i = 0; i < remotePlayers.length; i++) {
 				if(gun.getBullet()){
 					if(checkCollision(remotePlayers[i], gun.getBullet())) {
-						socket.emit("player shot", {shotId: remotePlayers[i].id});	
+						socket.emit("player shot", {id: remotePlayers[i].id});	
+						console.log("SHOT");
 					}
 				}
 			};
