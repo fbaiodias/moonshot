@@ -16,7 +16,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 **************************************************/
 var socket,		// Socket controller
 	guns,	// Array of guns
-	objects;	// Array of game objects
+	objects,
+	scores;	// Array of game objects
 
 
 /**************************************************
@@ -25,6 +26,7 @@ var socket,		// Socket controller
 function init() {
 	// Create an empty array to store players
 	players = [];
+	scores = [];
 
 	// Create empty arrays to store objects
 	objects = [];
@@ -102,6 +104,12 @@ function onSocketConnection(client) {
 	// Listen for new player message
 	client.on("new player", onNewPlayer);
 
+	// Listen for new player message
+	client.on("dead player", onDeadPlayer);
+
+	// Listen for new player message
+	client.on("player score", onPlayerScore);
+
 	// Listen for move player message
 	client.on("move player", onMovePlayer);
 
@@ -171,6 +179,40 @@ function onMovePlayer(data) {
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("move player", {id: movePlayer.id, x: movePlayer.getX(), y: movePlayer.getY()});
+};
+
+// Player has moved
+function onDeadPlayer(data) {
+	// Find player in array
+	var deadPlayer = playerById(this.id);
+
+	// Player not found
+	if (!deadPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	// Broadcast updated position to connected socket clients
+	this.broadcast.emit("dead player", {id: deadPlayer.id});
+};
+
+// Player has moved
+function onPlayerScore(data) {
+	scores.push({
+		name: data.playerName,
+		score: data.score
+	});
+
+	scores.sort(function (a,b) {
+	  if (a.score > b.score)
+	     return -1;
+	  if (a.score < b.score)
+	    return 1;
+	  return 0;
+	});
+
+	// Broadcast updated position to connected socket clients
+	this.emit("highscores", {scores: scores});
 };
 
 // Player has moved

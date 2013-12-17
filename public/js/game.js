@@ -9,7 +9,8 @@ var canvas,			// Canvas DOM element
 	objects,		// Remote objects
 	socket,			// Socket connection
 	moon,
-	plyerDead = false;
+	previouslyDead = false,
+	finalScores;
 
 var playerXposition = 666;
 
@@ -83,6 +84,12 @@ var setEventHandlers = function() {
 
 	// Player move message received
 	socket.on("move player", onMovePlayer);
+
+	// Player move message received
+	socket.on("highscores", function(data){
+		finalScores = data.scores;
+		console.log(JSON.stringify(data.scores));
+	});
 
 	// Player removed message received
 	socket.on("remove player", onRemovePlayer);
@@ -238,7 +245,14 @@ function onRemovePlayer(data) {
 ** GAME ANIMATION LOOP
 **************************************************/
 function animate() {
-	update();
+	if (!(hunger <= 0 || oxygenTank <=0 || life <=0)) {
+		update();
+	} else if(!previouslyDead) {
+		socket.emit("dead player", {x: localPlayer.getX(), y: localPlayer.getY()});
+		var name = prompt("What's your name?");
+		socket.emit("player score", {score: localPlayer.getX(), playerName: name});
+		previouslyDead = true;
+	}
 	draw();
 
 	// Request a new animation frame using Paul Irish's shim
@@ -251,26 +265,20 @@ function animate() {
 **************************************************/
 function update() {
 	// Update local player and check for change
-	if (!(hunger <= 0 || oxygenTank <=0) && localPlayer.update(keys)) {
-		// Send local player data to the game server
+	// Send local player data to the game server
+	if (localPlayer.update(keys)) {
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
-		if (hunger > 0){
-			hunger--;
-		}
-		if (oxygenTank >0 ){
-			oxygenTank--;
-		}
-	};
+	}
+	hunger--;
+	oxygenTank--;
 
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		checkCollision(localPlayer, objects[i]);
 	};
 
-	if (oxygenTank >0 ){
-			oxygenTank--;
-		}
-
+	oxygenTank--;
+	
 	switch(localPlayer.objectId.charAt(0)) {
 		case "O":
 			oxygenTank = 1000;
@@ -321,7 +329,7 @@ function draw() {
 	drawBackground(localPlayer)
 	drawInformation(50,50)
 	// Draw the local player
-	if (!(hunger <= 0 || oxygenTank <=0)) {
+	if (!(hunger <= 0 || oxygenTank <=0 || life <=0)) {
 		localPlayer.draw(ctx);
 	}
 	else{
@@ -337,6 +345,15 @@ function draw() {
 	for (i = 0; i < objects.length; i++) {
 		objects[i].draw(ctx, localPlayer);
 	};
+
+	if(finalScores) {
+		ctx.font="30px Roboto";
+		ctx.fillText("Highscores",canvas.width/2-200,200);
+
+		for(var i=0; i<finalScores.length && i<10; i++) {
+			ctx.fillText(finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-200,300+40*i);	
+		}
+	}
 };
 
 
