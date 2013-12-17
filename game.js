@@ -10,6 +10,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	FirstAid = require("./FirstAid").FirstAid,	// FirstAid class
 	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
+var fs = require('fs');
 
 /**************************************************
 ** GAME VARIABLES
@@ -43,37 +44,47 @@ function init() {
 		socket.set("log level", 2);
 	});
 
+	var content;
+    fs.readFile('./highscores.json', function read(err, data) {
+        if (err) {
+            console.log(err);
+        }
+        content = data;
+    });
+    console.log(content);
+    //scores = JSON.parse(content);
+
 	// Place guns randomly
-	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newObject = new Gun(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < Math.round(Math.random()*(100))+10; i++) {
+		var newObject = new Gun(Math.round(Math.random()*(50000)), Math.round(Math.random()*(1000)));
 		newObject.id = "G"+i;
 		objects.push(newObject);
 	}
 
 	// Place matches randomly
-	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newObject = new Matches(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < Math.round(Math.random()*(100))+10; i++) {
+		var newObject = new Matches(Math.round(Math.random()*(50000)), Math.round(Math.random()*(1000)));
 		newObject.id = "M"+i;
 		objects.push(newObject);
 	}
 
 	// Place Apple randomly
-	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newObject = new Apple(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < Math.round(Math.random()*(100))+10; i++) {
+		var newObject = new Apple(Math.round(Math.random()*(50000)), Math.round(Math.random()*(1000)));
 		newObject.id = "A"+i;
 		objects.push(newObject);
 	}
 
 	// Place FirstAid randomly
-	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newObject = new FirstAid(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < Math.round(Math.random()*(100))+10; i++) {
+		var newObject = new FirstAid(Math.round(Math.random()*(50000)), Math.round(Math.random()*(1000)));
 		newObject.id = "F"+i;
 		objects.push(newObject);
 	}
 
 	// Place Oxygen randomly
-	for(var i=0; i < Math.round(Math.random()*(10))+5; i++) {
-		var newObject = new Oxygen(Math.round(Math.random()*(10000)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < Math.round(Math.random()*(100))+10; i++) {
+		var newObject = new Oxygen(Math.round(Math.random()*(50000)), Math.round(Math.random()*(1000)));
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
@@ -233,6 +244,15 @@ function onPlayerScore(data) {
 	    return 1;
 	  return 0;
 	});
+
+	fs.writeFile("highscores.json", JSON.stringify(scores), function(err) {
+	    if(err) {
+	        console.log(err);
+	    } else {
+	        console.log("The file was saved!");
+	    }
+	}); 
+
 
 	// Broadcast updated position to connected socket clients
 	this.emit("highscores", {scores: scores});

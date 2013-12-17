@@ -93,9 +93,9 @@ var setEventHandlers = function() {
 	// Player dead message received
 	socket.on("player shot", function(data){
 		console.log("I've been shoot!!!")
-		life -= 10;
+		life -= 50;
 		if(data.id == localPlayer.id) {
-			life -= 10;
+			life -= 50;
 		}
 	});
 
@@ -221,9 +221,9 @@ function onDeadPlayer(data) {
 		console.log("Player not found: "+data.id);
 		return;
 	};
-	console.log("DEEEEAD");
+	//console.log("DEEEEAD");
 	deadPlayer.dead = true;
-	console.log(JSON.stringify(remotePlayers));
+	//console.log(JSON.stringify(remotePlayers));
 };
 
 // Catch Object
@@ -282,7 +282,7 @@ function animate() {
 		update();
 	} else if(!previouslyDead) {
 		socket.emit("dead player", {x: localPlayer.getX(), y: localPlayer.getY()});
-		var name = prompt("What's your name?");
+		var name = prompt("You got "+localPlayer.getX()+" away from the ship. \n What's your name?");
 		socket.emit("player score", {score: localPlayer.getX(), playerName: name});
 		previouslyDead = true;
 	}
