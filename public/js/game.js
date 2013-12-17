@@ -92,6 +92,8 @@ var setEventHandlers = function() {
 
 	// Player dead message received
 	socket.on("player shot", function(data){
+		console.log("I've been shoot!!!")
+		life -= 10;
 		if(data.id == localPlayer.id) {
 			life -= 10;
 		}

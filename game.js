@@ -210,7 +210,7 @@ function onPlayerShot(data) {
 	if (!deadPlayer) {
 		util.log("Player not found: "+this.id);
 		console.log(JSON.stringify(players));
-		//return;
+		return;
 	};
 
 	console.log("SHOOOOOOT");
