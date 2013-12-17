@@ -234,17 +234,18 @@ function onCatchObject(data) {
 	var catchObject = objectById(data.objectId);
 	// Player not found
 	if (!catchPlayer) {
-		util.log("Player not found: "+this.id);
+		console.log("Player not found: "+this.id);
 		return;
 	};
 
 	if(!catchObject) {
-		util.log("Object not found: "+data.objectId);
+		console.log("Object not found: "+data.objectId);
 		return;
 	};
 	catchPlayer.objectId = catchObject.id;
 	catchObject.setOn(true);
 
+	//
 	console.log(JSON.stringify(catchObject));
 };
 
