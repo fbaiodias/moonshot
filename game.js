@@ -95,21 +95,21 @@ function init() {
 
 	// Place PillFood randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new  PillFood(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
 		newObject.id = "PF"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillLife randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillLife(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new  PillLife(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
 		newObject.id = "PL"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillOxygen randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillOxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new  PillOxygen(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
 		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
