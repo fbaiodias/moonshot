@@ -7,7 +7,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Gun = require("./Gun").Gun;				// Gun class
 	Matches = require("./Matches").Matches,	// Matches class
 	Apple = require("./Apple").Apple,		// Apple class
-	FirstAid = require("./FirstAid").FirstAid,	// FirstAid class
+	FirstAid = require("./FirstAid").FirstAid, // FirstAid class
+	PillFood = require("./PillFood").PillFood,	
 	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
 var fs = require('fs');
@@ -89,6 +90,12 @@ function init() {
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
+
+	// Place PillFood
+	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
+		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		newObject.id = "PF"+i;
+		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));
 

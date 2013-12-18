@@ -1,7 +1,7 @@
 {
   "name": "ludumdare28",
   "version": "0.0.0",
-  "description": "A strange game",
+  "description": "A strange game... no it's not!",
   "main": "game.js",
   "scripts": {
     "start": "node_modules/.bin/nodemon game.js",
