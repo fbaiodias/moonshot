@@ -16,10 +16,12 @@ var playerXposition = 666,
 	newPlayerTicks = 200,
 	newPlayerTime = 200;
 
-var life = 1000,
-	oxygenTank = 1000,
-	hunger = 1000;
-
+var lifeBooster = 1000.
+	life = lifeBooster,
+	oxygenBooster = 1000,
+	oxygenTank = oxygenBooster,
+	hungerBooster = 1000,
+	hunger = hungerBooster;
 /**************************************************
 ** GAME INITIALISATION
 **************************************************/
@@ -197,6 +199,15 @@ function onNewObject(data) {
 		case "O":
 			newObject = new Oxygen(data.x, data.y);
 			break;
+		case "PF":
+			newObject = new PillFood(data.x, data.y);
+			break;
+		case "PO":
+			newObject = new PillOxygen(data.x, data.y);
+			break;
+		case "PL":
+			newObject = new PillLife(data.x, data.y);
+			break;
 	}
 
 	newObject.setOn(data.onPlayer);
@@ -332,13 +343,22 @@ function update() {
 	
 	switch(localPlayer.objectId.charAt(0)) {
 		case "O":
-			oxygenTank = 1000;
+			oxygenTank = oxygenBooster;
 			break;
 		case "F":
-			life = 1000;
+			life = lifeBooster;
 			break;
 		case "A":
-			hunger = 1000;
+			hunger = hungerBooster;
+			break;
+		case "PF":
+			hungerBooster = 2000;
+			break;
+		case "PL":
+			lifeBooster = 2000;
+			break;
+		case "PO":
+			oxygenBooster = 2000;
 			break;
 		case "G":
 			if (keys.shift){
