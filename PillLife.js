@@ -1,7 +1,7 @@
 /**************************************************
-** GAME Pill Food CLASS
+** GAME Pill Life CLASS
 **************************************************/
-var PillFood = function(startX, startY) {
+var PillLife = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
@@ -49,4 +49,4 @@ var PillFood = function(startX, startY) {
 
 // Export the Player class so you can use it in
 // other files by using require("Player").Player
-exports.PillFood = PillFood;
+exports.PillLife = PillLife;

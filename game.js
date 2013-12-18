@@ -9,6 +9,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Apple = require("./Apple").Apple,		// Apple class
 	FirstAid = require("./FirstAid").FirstAid, // FirstAid class
 	PillFood = require("./PillFood").PillFood, // PillFood class
+	PillLife = require("./PillLife").PillFood, // PillLife class
+	PillOxygen = require("./PillOxygen").PillFood, // PillOxygen class
 	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
 var fs = require('fs');
@@ -95,6 +97,20 @@ function init() {
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
 		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
 		newObject.id = "PF"+i;
+		objects.push(newObject);
+	}
+
+	// Place PillLife randomly
+	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
+		var newObject = new  PillLife(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		newObject.id = "PL"+i;
+		objects.push(newObject);
+	}
+
+	// Place PillOxygen randomly
+	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
+		var newObject = new  PillOxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
 	//util.log(JSON.stringify(objects));
