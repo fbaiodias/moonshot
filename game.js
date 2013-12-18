@@ -9,8 +9,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Apple = require("./Apple").Apple,		// Apple class
 	FirstAid = require("./FirstAid").FirstAid, // FirstAid class
 	PillFood = require("./PillFood").PillFood, // PillFood class
-	PillLife = require("./PillLife").PillFood, // PillLife class
-	PillOxygen = require("./PillOxygen").PillFood, // PillOxygen class
+	PillLife = require("./PillLife").PillLife, // PillLife class
+	PillOxygen = require("./PillOxygen").PillOxygen, // PillOxygen class
 	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
 var fs = require('fs');
