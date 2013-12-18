@@ -94,9 +94,9 @@ function init() {
 	// Place PillFood
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
 		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
-		newObject.id = "PF"+i;
+		newObject.id = "P"+i;
 		objects.push(newObject);
-
+	}
 	//util.log(JSON.stringify(objects));
 
 

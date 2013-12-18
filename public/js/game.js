@@ -14,7 +14,7 @@ var canvas,			// Canvas DOM element
 
 var playerXposition = 666;
 
-var lifeBooster = 1000.
+var lifeBooster = 1000,
 	life = lifeBooster,
 	oxygenBooster = 1000,
 	oxygenTank = oxygenBooster,
@@ -189,15 +189,18 @@ function onNewObject(data) {
 		case "O":
 			newObject = new Oxygen(data.x, data.y);
 			break;
-		case "PF":
-			newObject = new PillFood(data.x, data.y);
-			break;
-		case "PO":
-			newObject = new PillOxygen(data.x, data.y);
-			break;
-		case "PL":
-			newObject = new PillLife(data.x, data.y);
-			break;
+		case "P":
+			switch(data.id.charAt(4)){
+			case "F":
+				newObject = new PillFood(data.x, data.y);
+				break;
+			case "O":
+				newObject = new PillOxygen(data.x, data.y);
+				break;
+			case "L":
+				newObject = new PillLife(data.x, data.y);
+				break;}
+		break;
 	}
 
 	newObject.setOn(data.onPlayer);
