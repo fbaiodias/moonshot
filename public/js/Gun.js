@@ -6,6 +6,7 @@ var Gun = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		image,
+		imageBalon,
 		bullet,
 		//playerXposition = 666,
 		id;

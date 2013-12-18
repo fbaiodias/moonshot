@@ -6,6 +6,7 @@ var Oxygen = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		image,
+		imageBalon,
 		id;
 
 	image = new Image();
