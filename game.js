@@ -60,56 +60,56 @@ function init() {
 
 	// Place guns randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Gun(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new Gun(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "G"+i;
 		objects.push(newObject);
 	}
 
 	// Place matches randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Matches(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new Matches(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "M"+i;
 		objects.push(newObject);
 	}
 
 	// Place Apple randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Apple(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new Apple(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "A"+i;
 		objects.push(newObject);
 	}
 
 	// Place FirstAid randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new FirstAid(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new FirstAid(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "F"+i;
 		objects.push(newObject);
 	}
 
 	// Place Oxygen randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Oxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(1000)));
+		var newObject = new Oxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillFood randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillFood(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < 10; i++) {
+		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "PF"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillLife randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillLife(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < 10; i++) {
+		var newObject = new  PillLife(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "PL"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillOxygen randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new  PillOxygen(Math.round(Math.random()*(10)), Math.round(Math.random()*(1000)));
+	for(var i=0; i < 10; i++) {
+		var newObject = new  PillOxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
