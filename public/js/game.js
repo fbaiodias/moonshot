@@ -358,14 +358,16 @@ function update() {
 		case "P":
 			switch(localPlayer.objectId.charAt(1)) {
 				case "F":
-					hunger = 2000;
-					hungerBooster = 2000;
+					hunger = 1300;
+					hungerBooster = 1300;
 					break;
 				case "L":
-					lifeBooster = 2000;
+					life = 1300;
+					lifeBooster = 1300;
 					break;
 				case "O":
-					oxygenBooster = 2000;
+					oxygenTank = 1300;
+					oxygenBooster = 1300;
 					break;
 			}
 			break;		
