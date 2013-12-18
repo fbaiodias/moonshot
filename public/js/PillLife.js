@@ -10,7 +10,7 @@ var PillLife = function(startX, startY) {
 		id;
 
 	image = new Image();
-	imageBalon = new Image();
+	//imageBalon = new Image();
 	image.src = "images/pillLife.png";
 	//imageBalon.src = "images/balon.png";
 

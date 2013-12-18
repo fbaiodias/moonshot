@@ -10,7 +10,7 @@ var PillFood = function(startX, startY) {
 		id;
 
 	image = new Image();
-	imageBalon = new Image();
+	//imageBalon = new Image();
 	image.src = "images/pillFood.png";
 	//imageBalon.src = "images/balon.png";
 

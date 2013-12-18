@@ -204,12 +204,12 @@ function onNewObject(data) {
 			case "F":
 				newObject = new PillFood(data.x, data.y);
 				break;
-			/*case "O":
+			case "O":
 				newObject = new PillOxygen(data.x, data.y);
 				break;
 			case "L":
 				newObject = new PillLife(data.x, data.y);
-				break;*/
+				break;
 			}
 		break;
 	}
@@ -361,12 +361,12 @@ function update() {
 					hunger = 2000;
 					hungerBooster = 2000;
 					break;
-				/*case "L":
+				case "L":
 					lifeBooster = 2000;
 					break;
 				case "O":
 					oxygenBooster = 2000;
-					break;*/
+					break;
 			}
 			break;		
 		case "G":
