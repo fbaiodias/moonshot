@@ -49,10 +49,10 @@ var PillFood = function(startX, startY) {
 
 			ctx.drawImage(image, imageX, imageY);
 		}
-		//else if(localPlayer.objectId == this.id){
-		//	ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
-		//	ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
-		//}
+		/*else if(localPlayer.objectId == this.id){
+			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
+		}*/
 	};	
 
 	// Define which variables and methods can be accessed

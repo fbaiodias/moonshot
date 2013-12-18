@@ -16,7 +16,7 @@ var playerXposition = 666,
 	newPlayerTicks = 200,
 	newPlayerTime = 200;
 
-var lifeBooster = 1000.
+var lifeBooster = 1000,
 	life = lifeBooster,
 	oxygenBooster = 1000,
 	oxygenTank = oxygenBooster,
@@ -199,15 +199,19 @@ function onNewObject(data) {
 		case "O":
 			newObject = new Oxygen(data.x, data.y);
 			break;
-		case "PF":
-			newObject = new PillFood(data.x, data.y);
-			break;
-		case "PO":
-			newObject = new PillOxygen(data.x, data.y);
-			break;
-		case "PL":
-			newObject = new PillLife(data.x, data.y);
-			break;
+		case "P":
+			switch(data.id.charAt(1)){
+			case "F":
+				newObject = new PillFood(data.x, data.y);
+				break;
+			/*case "O":
+				newObject = new PillOxygen(data.x, data.y);
+				break;
+			case "L":
+				newObject = new PillLife(data.x, data.y);
+				break;*/
+			}
+		break;
 	}
 
 	newObject.setOn(data.onPlayer);
@@ -351,15 +355,20 @@ function update() {
 		case "A":
 			hunger = hungerBooster;
 			break;
-		case "PF":
-			hungerBooster = 2000;
-			break;
-		case "PL":
-			lifeBooster = 2000;
-			break;
-		case "PO":
-			oxygenBooster = 2000;
-			break;
+		case "P":
+			switch(localPlayer.objectId.charAt(1)) {
+				case "F":
+					hunger = 2000;
+					hungerBooster = 2000;
+					break;
+				/*case "L":
+					lifeBooster = 2000;
+					break;
+				case "O":
+					oxygenBooster = 2000;
+					break;*/
+			}
+			break;		
 		case "G":
 			if (keys.shift){
 				objectById(localPlayer.objectId).shoot(localPlayer);
