@@ -46,7 +46,7 @@ function init() {
 	});
 
 	var content;
-    fs.readFile('./highscores.json', function read(err, data) {
+    fs.readFile('./../highscores.json', function read(err, data) {
         if (err) {
             console.log(err);
         }
@@ -253,7 +253,7 @@ function onPlayerScore(data) {
 	  return 0;
 	});
 
-	fs.writeFile("highscores.json", JSON.stringify(scores), function(err) {
+	fs.writeFile("../highscores.json", JSON.stringify(scores), function(err) {
 	    if(err) {
 	        console.log(err);
 	    } else {
