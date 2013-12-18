@@ -12,7 +12,9 @@ var canvas,			// Canvas DOM element
 	previouslyDead = false,
 	finalScores;
 
-var playerXposition = 666;
+var playerXposition = 666,
+	newPlayerTicks = 200,
+	newPlayerTime = 200;
 
 var life = 1000,
 	oxygenTank = 1000,
@@ -92,10 +94,10 @@ var setEventHandlers = function() {
 
 	// Player dead message received
 	socket.on("player shot", function(data){
-		console.log("I've been shoot!!!")
-		life -= 50;
+		alert("You've been shoot!!!")
+		life -= 1000;
 		if(data.id == localPlayer.id) {
-			life -= 50;
+			life -= 1000;
 		}
 	});
 
@@ -107,7 +109,13 @@ var setEventHandlers = function() {
 	// Player move message received
 	socket.on("highscores", function(data){
 		finalScores = data.scores;
-		console.log(JSON.stringify(data.scores));
+
+		var count = 1;
+		for(var i=0; i<finalScores.length; i++){
+			if(finalScores[i].name != null && finalScores[i].name != "null" && finalScores[i].name != "") {
+				console.log(count++, finalScores[i].score, finalScores[i].name);
+			}
+		}
 	});
 
 	// Player removed message received
@@ -158,6 +166,8 @@ function onSocketDisconnect() {
 function onNewPlayer(data) {
 	console.log("New player connected: "+data.id);
 
+	newPlayerTicks = 0;
+	
 	// Initialise the new player
 	var newPlayer = new Player(data.x, data.y);
 	newPlayer.id = data.id;
@@ -168,7 +178,7 @@ function onNewPlayer(data) {
 
 // New object
 function onNewObject(data) {
-	console.log("New object!", data.id);
+	//console.log("New object!", data.id);
 	var newObject;
 
 	switch(data.id.charAt(0)) {
@@ -245,8 +255,7 @@ function onCatchObject(data) {
 	catchPlayer.objectId = catchObject.id;
 	catchObject.setOn(true);
 
-	//
-	console.log(JSON.stringify(catchObject));
+	//console.log(JSON.stringify(catchObject));
 };
 
 // Drop Object
@@ -378,6 +387,23 @@ function drawInformation(x,y) {
   	ctx.fillRect(x, y+30, life/5, 20);
 	ctx.fillStyle = "rgb(255,255,0)";
   	ctx.fillRect(x, y+60, hunger/5, 20);
+
+  	if(newPlayerTicks < newPlayerTime) {
+		ctx.font="30px Roboto";
+		ctx.fillText("New player connected",canvas.width/2-200,50);
+
+  		newPlayerTicks++;
+  	}
+
+	if(finalScores) {
+		ctx.font="30px Roboto";
+		ctx.fillText("Highscores",canvas.width/2-200,100);
+
+		for(var i=0; i<finalScores.length && i<10; i++) {
+			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-200,200+40*i);	
+		}
+	}
+
 }
 
 function draw() {
@@ -401,15 +427,6 @@ function draw() {
 	for (i = 0; i < objects.length; i++) {
 		objects[i].draw(ctx, localPlayer);
 	};
-
-	if(finalScores) {
-		ctx.font="30px Roboto";
-		ctx.fillText("Highscores",canvas.width/2-200,200);
-
-		for(var i=0; i<finalScores.length && i<10; i++) {
-			ctx.fillText(finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-200,300+40*i);	
-		}
-	}
 };
 
 
