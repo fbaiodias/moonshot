@@ -417,10 +417,18 @@ function drawBackground(player) {
 function drawInformation(x,y) {
 	ctx.fillStyle = "rgb(0,0,255)";
   	ctx.fillRect(x, y, oxygenTank/5, 20);
+  	ctx.fillStyle = "rgb(0,0,0)";
+  	ctx.font="bold 20px Roboto";
+  	ctx.fillText("OXYGEN",x,y+18);
 	ctx.fillStyle = "rgb(255,0,0)";
   	ctx.fillRect(x, y+30, life/5, 20);
+  	ctx.fillStyle = "rgb(0,0,0)";
+  	ctx.fillText("LIFE",x,y+48);
 	ctx.fillStyle = "rgb(255,255,0)";
   	ctx.fillRect(x, y+60, hunger/5, 20);
+  	ctx.fillStyle = "rgb(0,0,0)";
+  	ctx.fillText("HUNGER",x,y+78);
+  	ctx.fillStyle = "rgb(255,255,0)";
 
   	ctx.font="30px Roboto";
 	if(newPlayerTicks < newPlayerTime) {
