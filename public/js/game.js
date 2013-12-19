@@ -24,6 +24,9 @@ var lifeBooster = 1000,
 	oxygenTank = oxygenBooster,
 	hungerBooster = 1000,
 	hunger = hungerBooster;
+
+var lowLevelLimit = 300,
+	lowLevelAlertSent = false;
 /**************************************************
 ** GAME INITIALISATION
 **************************************************/
@@ -126,6 +129,9 @@ var setEventHandlers = function() {
 
 	// Player drop object received
 	socket.on("drop object", onDropObject);
+
+	// Player low level received
+	socket.on("low level", onLowLevel);
 };
 
 // Keyboard key down
@@ -319,6 +325,18 @@ function onRemovePlayer(data) {
 	remotePlayers.splice(remotePlayers.indexOf(removePlayer), 1);
 };
 
+// Low level
+function onLowLevel(data) {
+	var lowPlayer = playerById(data.id);
+
+	// Player not found
+	if (!lowPlayer) {
+		console.log("Player not found: "+data.id);
+		return;
+	};
+
+	console.log("received low level of", data.kind, "from", lowPlayer.id);
+};
 
 /**************************************************
 ** GAME ANIMATION LOOP
@@ -430,6 +448,23 @@ function update() {
 				}
 			};
 			break;
+	}
+
+	if ((hunger <= lowLevelLimit || oxygenTank <= lowLevelLimit || life <= lowLevelLimit)) {
+		if(lowLevelAlertSent == false) {
+			lowLevelAlertSent = true;
+			
+			if(oxygenTank <= lowLevelLimit) {
+				socket.emit("low level", {kind:"oxygenTank"});
+			} else if(hunger <= lowLevelLimit) {
+				socket.emit("low level", {kind:"hunger"});
+			} else if(life <= lowLevelLimit) {
+				socket.emit("low level", {kind:"life"});
+			}
+		}
+	}
+	else {
+		lowLevelAlertSent = false;
 	}
 
 };

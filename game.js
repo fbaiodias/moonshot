@@ -94,7 +94,7 @@ function init() {
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
-
+	/*
 	// Place PillFood randomly
 	for(var i=0; i < 10; i++) {
 		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
@@ -115,7 +115,7 @@ function init() {
 		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
-
+	*/
 	for(var i=0; i < 10; i++) {
 		var newObject = new  Compass(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "C"+i;
@@ -170,6 +170,9 @@ function onSocketConnection(client) {
 
 	// Listen for catch object message
 	client.on("drop object", onDropObject);
+
+	// Listen for low level message
+	client.on("low level", onLowLevel);
 };
 
 // Socket client has disconnected
@@ -370,6 +373,21 @@ function onDropObject(data) {
 
 	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
 	this.broadcast.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: data.x, y: data.y});
+};
+
+// Player has low level
+function onLowLevel(data) {
+	// Find player in array
+	var lowPlayer = playerById(this.id);
+
+	// Player not found
+	if (!lowPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+	console.log("LOW LEVEL OF", data.kind);
+	// Broadcast updated position to connected socket clients
+	this.broadcast.emit("low level", {id: lowPlayer.id, kind: data.kind});
 };
 
 
