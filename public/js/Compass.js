@@ -14,10 +14,12 @@ var Compass = function(startX, startY) {
 		id;
 
 	image = new Image();
+	imageBalon = new Image();
 	//frame0 = new Image();
    	//frame1 = new Image();
 
 	image.src = "images/compass.png";
+	imageBalon.src = "images/balon.png";
 	//frame0.src = "images/compassRigth.png";
 	//frame1.src = "images/compassLeft.png";
 
@@ -75,8 +77,15 @@ var Compass = function(startX, startY) {
 			ctx.drawImage(image, imageX, imageY);
 		}
 		else if(localPlayer.objectId == this.id){
+			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
 			ctx.drawImage(image, 500, 10);
 		}
+	};
+
+	var drawOn = function(ctx, imageX, imageY) {
+		ctx.drawImage(imageBalon, imageX-45, imageY-70);
+		ctx.drawImage(image, imageX-40, imageY-60);
 	};	
 
 	// Define which variables and methods can be accessed
