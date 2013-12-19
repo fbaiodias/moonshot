@@ -55,6 +55,8 @@ var Instructions = function(startX, startY) {
 		else if(localPlayer.objectId == this.id){
 			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
 			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
+			ctx.strokeStyle = 'black';
+    		ctx.lineWidth = 8;
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.fillRect(canvas.width/2 -250-60, 100-60 ,620, 620 )
 			ctx.fillStyle = "rgb(150,150,150)";
@@ -65,12 +67,18 @@ var Instructions = function(startX, startY) {
 			ctx.fillRect(canvas.width/2 -250-20, 100-20 ,540, 540 )
 			ctx.font="Bold 70px Courier";
 			ctx.fillStyle = "rgb(25,243,50)";
+			ctx.strokeText("Instructions:",canvas.width/2 -272,125);
 			ctx.fillText("Instructions:",canvas.width/2 -272,125);
 			ctx.font="Bold 30px Courier";
+			ctx.strokeText("MOVE: ",canvas.width/2 -260,200); 
 			ctx.fillText("MOVE: ",canvas.width/2 -260,200); 
+			ctx.strokeText("Up, Down, Left, Right keys",canvas.width/2 -260,245);
 			ctx.fillText("Up, Down, Left, Right keys",canvas.width/2 -260,245);
+			ctx.strokeText("or W, S, A, D",canvas.width/2 -180,290)
 			ctx.fillText("or W, S, A, D",canvas.width/2 -180,290)
+			ctx.strokeText("SHOOT: SHIFT key",canvas.width/2 -260,380);
 			ctx.fillText("SHOOT: SHIFT key",canvas.width/2 -260,380);
+			ctx.strokeText("DROP OBJECT: X key",canvas.width/2 -260,450);
 			ctx.fillText("DROP OBJECT: X key",canvas.width/2 -260,450);
 		}
 	};	

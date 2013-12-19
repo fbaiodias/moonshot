@@ -528,8 +528,8 @@ function drawInformation(x,y) {
     ctx.lineWidth = 8;
   	ctx.fillStyle = "rgb(25,243,50)";
 	if(finalScores) {
-		ctx.strokeText("Highscores",canvas.width/2-215,100);
-		ctx.fillText("Highscores",canvas.width/2-215,100);
+		ctx.strokeText("Highscores",canvas.width/2-215,150);
+		ctx.fillText("Highscores",canvas.width/2-215,150);
 		for(var i=0; i<finalScores.length && i<10; i++) {
     		ctx.strokeText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);
 			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);	
