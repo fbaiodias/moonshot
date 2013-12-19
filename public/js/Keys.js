@@ -70,7 +70,7 @@ var Keys = function(up, left, right, down) {
 				that.shift = false;
 				break;
 			case 88: // X (drop)
-				that.x = true;
+				that.x = false;
 				break;
 		};
 	};

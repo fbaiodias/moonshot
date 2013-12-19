@@ -347,10 +347,11 @@ function update() {
 			// Send local player data to the game server
 			socket.emit("catch object", {objectId: objects[i].id});	
 		};
-		if (localPlayer.objectId && keys.x){
-			socket.emit("drop object", {objectId: objects[i].id});	
-	}
 	};
+
+	if (localPlayer.objectId && keys.x){
+		socket.emit("drop object", {objectId: localPlayer.objectId});	
+	}
 
 	oxygenTank--;
 	
