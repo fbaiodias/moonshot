@@ -97,6 +97,7 @@ var Compass = function(startX, startY) {
 		setY: setY,
 		setOn: setOn,
 		draw: draw,
+		drawOn: drawOn,
 		height: height,
 		width: width,
 		id: id

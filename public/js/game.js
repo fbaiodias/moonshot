@@ -533,7 +533,6 @@ function drawInformation(x,y) {
 function draw() {
 	// Draw the background
 	drawBackground(localPlayer)
-	drawInformation(50,50)
 	// Draw the local player
 	if (!(hunger <= 0 || oxygenTank <=0 || life <=0)) {
 		localPlayer.draw(ctx);
@@ -551,6 +550,8 @@ function draw() {
 	for (i = 0; i < objects.length; i++) {
 		objects[i].draw(ctx, localPlayer);
 	};
+	
+	drawInformation(50,50)
 };
 
 
