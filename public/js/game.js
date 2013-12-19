@@ -96,9 +96,9 @@ var setEventHandlers = function() {
 
 	// Player dead message received
 	socket.on("player shot", function(data){
-		alert("You've been shoot!!!")
-		life -= 1000;
+		console.log("I'm", localPlayer.id, "and", data.id, "was shot");
 		if(data.id == localPlayer.id) {
+			alert("You've been shoot!!!")
 			life -= 1000;
 		}
 	});
@@ -381,7 +381,7 @@ function update() {
 			for (i = 0; i < remotePlayers.length; i++) {
 				if(gun.getBullet()){
 					if(checkCollision(remotePlayers[i], gun.getBullet())) {
-						socket.emit("player shot", {id: remotePlayers[i].id});	
+						socket.emit("player shot", {shotId: remotePlayers[i].id, shooterId: localPlayer.id});	
 						console.log("SHOT");
 					}
 				}
