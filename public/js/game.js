@@ -557,7 +557,7 @@ function draw() {
 	};
 	for (i = 0; i < objects.length; i++) {
 		objects[i].draw(ctx, localPlayer);
-	};
+	}
 	
 	if(localPlayer.objectId.charAt(0)=="I"){
 		objectById(localPlayer.objectId).draw(ctx, localPlayer);
