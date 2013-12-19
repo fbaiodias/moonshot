@@ -113,14 +113,9 @@ var setEventHandlers = function() {
 
 	// Player move message received
 	socket.on("highscores", function(data){
-		finalScores = data.scores;
-		/*
-		var count = 1;
-		for(var i=0; i<finalScores.length; i++){
-			if(finalScores[i].name != null && finalScores[i].name != "null" && finalScores[i].name != "") {
-				console.log(count++, finalScores[i].score, finalScores[i].name);
-			}
-		}*/
+		finalScores = data.scores.filter(function(element){
+			return element.name != null && element.name != "null" && element.name != "";
+		});
 	});
 
 	// Player removed message received
@@ -561,5 +556,12 @@ function checkCollision(player, object) {
 		return true;
 	}
 	return false;
+}
+
+function printScores() {
+	var count = 1;
+	for(var i=0; i<finalScores.length; i++){
+		console.log(count++, finalScores[i].score, finalScores[i].name);
+	}
 }
 
