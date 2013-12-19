@@ -418,22 +418,27 @@ function drawBackground(player) {
 }
 
 function drawInformation(x,y) {
+
+  	ctx.font="20px Arial";
+
+	ctx.fillStyle = "rgb(255,255,255)";
+  	ctx.fillText(remotePlayers.length+" other player(s) in game rigth now.",x,y-10);
+  	
 	ctx.fillStyle = "rgb(0,0,255)";
   	ctx.fillRect(x, y, oxygenTank/5, 20);
-  	ctx.fillStyle = "rgb(0,0,0)";
-  	ctx.font="bold 20px Roboto";
-  	ctx.fillText("OXYGEN",x,y+18);
-	ctx.fillStyle = "rgb(255,0,0)";
+  	ctx.fillStyle = "rgb(255,0,0)";
   	ctx.fillRect(x, y+30, life/5, 20);
-  	ctx.fillStyle = "rgb(0,0,0)";
-  	ctx.fillText("LIFE",x,y+48);
-	ctx.fillStyle = "rgb(255,255,0)";
-  	ctx.fillRect(x, y+60, hunger/5, 20);
-  	ctx.fillStyle = "rgb(0,0,0)";
-  	ctx.fillText("HUNGER",x,y+78);
   	ctx.fillStyle = "rgb(255,255,0)";
+  	ctx.fillRect(x, y+60, hunger/5, 20);
+  	
+	ctx.fillStyle = "rgb(150,150,150)";
+  	ctx.fillText("OXYGEN",x,y+18);
+	ctx.fillText("LIFE",x,y+48);
+	ctx.fillText("HUNGER",x,y+78);
 
-  	ctx.font="30px Roboto";
+
+  	ctx.fillStyle = "rgb(255,255,0)";
+  	ctx.font="30px Arial";
 	if(newPlayerTicks < newPlayerTime) {
 		ctx.fillText("New player connected",canvas.width/2-200,50);
   		newPlayerTicks++;
