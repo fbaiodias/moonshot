@@ -7,6 +7,7 @@ var Keys = function(up, left, right, down) {
 		right = right || false,
 		down = down || false,
 		space = space || false,
+		x = x || false,
 		shift = shift || false;
 		
 	var onKeyDown = function(e) {
@@ -35,6 +36,9 @@ var Keys = function(up, left, right, down) {
 				break;
 			case 16: // Down
 				that.shift = true;
+				break;
+			case 88: // X (drop)
+				that.x = true;
 				break;
 		};
 	};
@@ -65,6 +69,9 @@ var Keys = function(up, left, right, down) {
 			case 16: // Down
 				that.shift = false;
 				break;
+			case 88: // X (drop)
+				that.x = true;
+				break;
 		};
 	};
 
@@ -75,6 +82,7 @@ var Keys = function(up, left, right, down) {
 		down: down,
 		space: space,
 		shift: shift,
+		x: x,
 		onKeyDown: onKeyDown,
 		onKeyUp: onKeyUp
 	};
