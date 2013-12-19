@@ -521,10 +521,16 @@ function drawInformation(x,y) {
   		shotTicks++;
   	}
 
+  	ctx.font="Bold 30px Courier";
+  	ctx.strokeStyle = 'black';
+    ctx.lineWidth = 8;
+  	ctx.fillStyle = "rgb(25,243,50)";
 	if(finalScores) {
-		ctx.fillText("Highscores",canvas.width/2-200,100);
+		ctx.strokeText("Highscores",canvas.width/2-215,100);
+		ctx.fillText("Highscores",canvas.width/2-215,100);
 		for(var i=0; i<finalScores.length && i<10; i++) {
-			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-200,200+40*i);	
+    		ctx.strokeText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);
+			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);	
 		}
 	}
 
@@ -551,6 +557,10 @@ function draw() {
 		objects[i].draw(ctx, localPlayer);
 	};
 	
+	if(localPlayer.objectId.charAt(0)=="I"){
+		objectById(localPlayer.objectId).draw(ctx, localPlayer);
+	}
+
 	drawInformation(50,50)
 };
 
