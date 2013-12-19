@@ -122,8 +122,8 @@ function init() {
 		objects.push(newObject);
 	}
 
-	for(var i=0; i < 10; i++) {
-		var newObject = new  Instructions(Math.round(Math.random()*(1000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < 5; i++) {
+		var newObject = new  Instructions(-Math.round(Math.random()*(100)+100), Math.round(Math.random()*(500))+200);
 		newObject.id = "I"+i;
 		objects.push(newObject);
 	}
