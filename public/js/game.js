@@ -281,12 +281,26 @@ function onCatchObject(data) {
 
 // Drop Object
 function onDropObject(data) {
+	console.log("DROP", data.objectId)
+
 	var dropObject = objectById(data.objectId);
 
 	if(dropObject) {
 		dropObject.setOn(false);
 		dropObject.setX(data.x);
 		dropObject.setY(data.y);
+
+		if(data.id == localPlayer.id) {
+			if(localPlayer.objectId == dropObject.id){
+				localPlayer.objectId = "";
+			}
+		} else {
+			var dropPlayer = playerByObjectId(dropObject.id);
+			if(dropPlayer.objectId == dropObject.id){
+				dropPlayer.objectId = "";		
+			}
+		}
+
 	};
 };
 
@@ -350,7 +364,20 @@ function update() {
 	};
 
 	if (localPlayer.objectId && keys.x){
-		socket.emit("drop object", {objectId: localPlayer.objectId});	
+		var dropObject = objectById(localPlayer.objectId);
+		
+		if(dropObject) {
+			dropObject.setOn(false);
+			dropObject.setX(localPlayer.getX()+150);
+			dropObject.setY(localPlayer.getY());
+		}
+
+		console.log("emmiting drop object", localPlayer.objectId)
+
+		socket.emit("drop object", {id: localPlayer.id, objectId: localPlayer.objectId, x: localPlayer.getX()+150, y: localPlayer.getY()  });	
+
+		localPlayer.objectId = "";
+		keys.x = false;
 	}
 
 	oxygenTank--;
@@ -494,6 +521,16 @@ function playerById(id) {
 	var i;
 	for (i = 0; i < remotePlayers.length; i++) {
 		if (remotePlayers[i].id == id)
+			return remotePlayers[i];
+	};
+	
+	return false;
+};
+// Find player by objectId
+function playerByObjectId(id) {
+	var i;
+	for (i = 0; i < remotePlayers.length; i++) {
+		if (remotePlayers[i].objectId == id)
 			return remotePlayers[i];
 	};
 	

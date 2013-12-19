@@ -333,7 +333,7 @@ function onCatchObject(data) {
 // Player has moved
 function onDropObject(data) {
 	// Find player in array
-	var dropPlayer = playerById(this.id);
+	var dropPlayer = playerById(data.id);
 	var dropObject = objectById(data.objectId);
 	// Player not found
 	if (!dropPlayer) {
@@ -346,17 +346,16 @@ function onDropObject(data) {
 		return;
 	};
 
+	dropPlayer.objectId = "";
 	dropObject.onPlayer = false;
-	var tmpX = dropPlayer.getX()+100;
-	var tmpY = dropPlayer.getY();
 
-	dropObject.setX(tmpX);
-	dropObject.setY(tmpY);
+	dropObject.setX(data.x);
+	dropObject.setY(data.y);
 
-	console.log("DROP THE", dropObject.id, "IN", tmpX, tmpY);
+	console.log("DROP THE", dropObject.id, "IN", data.x, data.y);
 
-	this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
-	this.broadcast.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	this.broadcast.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: data.x, y: data.y});
 };
 
 
