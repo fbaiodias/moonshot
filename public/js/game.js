@@ -288,7 +288,7 @@ function onCatchObject(data) {
 
 // Drop Object
 function onDropObject(data) {
-	console.log("DROP", data.objectId)
+	//console.log("DROP", data.objectId)
 
 	var dropObject = objectById(data.objectId);
 
@@ -486,7 +486,7 @@ function drawBackground(player) {
 		ctx.drawImage(moon,moonX,moonY);		
 	}
 
-	ctx.drawImage(rocket, playerXposition-(player.getX()), 0);
+	ctx.drawImage(rocket, playerXposition-(player.getX()), canvas.height-600);
 
 }
 
