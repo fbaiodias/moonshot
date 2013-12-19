@@ -203,6 +203,9 @@ function onNewObject(data) {
 		case "O":
 			newObject = new Oxygen(data.x, data.y);
 			break;
+		case "C":
+			newObject = new Compass(data.x, data.y);
+			break;
 		case "P":
 			switch(data.id.charAt(1)){
 			case "F":

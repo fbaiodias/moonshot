@@ -1,18 +1,25 @@
 /**************************************************
-** GAME PillFood CLASS
+** GAME Compass CLASS
 **************************************************/
-var PillFood = function(startX, startY) {
+var Compass = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
 		image,
 		imageBalon,
+		frame0,
+		frame1,
+		frame = 0,
+		framesAmount = 0,
 		id;
 
 	image = new Image();
-	//imageBalon = new Image();
-	image.src = "images/pillFood.png";
-	//imageBalon.src = "images/balon.png";
+	//frame0 = new Image();
+   	//frame1 = new Image();
+
+	image.src = "images/compass.png";
+	//frame0.src = "images/compassRigth.png";
+	//frame1.src = "images/compassLeft.png";
 
 	var width = 60,
 		height = 60;
@@ -43,6 +50,23 @@ var PillFood = function(startX, startY) {
 		onPlayer = newState;
 	};
 
+	/*var updateFrames = function() {
+		if (frame == 1){
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 0
+				framesAmount = 0
+			}
+		}
+		else{
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 1
+				framesAmount = 0
+			}
+		}
+	}*/
+
 	var draw = function(ctx, localPlayer) {
 		if (onPlayer == false){
 			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
@@ -50,10 +74,9 @@ var PillFood = function(startX, startY) {
 
 			ctx.drawImage(image, imageX, imageY);
 		}
-		/*else if(localPlayer.objectId == this.id){
-			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
-			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
-		}*/
+		else if(localPlayer.objectId == this.id){
+			ctx.drawImage(image, 500, 10);
+		}
 	};	
 
 	// Define which variables and methods can be accessed

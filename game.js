@@ -10,7 +10,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	FirstAid = require("./FirstAid").FirstAid, // FirstAid class
 	PillFood = require("./PillFood").PillFood, // PillFood class
 	PillLife = require("./PillLife").PillLife, // PillLife class
-	PillOxygen = require("./PillOxygen").PillOxygen, // PillOxygen class
+	PillOxygen = require("./PillOxygen").PillOxygen,// PillOxygen class 
+	Compass = require("./Compass").Compass,	// Compass class
 	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
 
 var fs = require('fs');
@@ -110,6 +111,12 @@ function init() {
 	// Place PillOxygen randomly
 	for(var i=0; i < 10; i++) {
 		var newObject = new  PillOxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+		newObject.id = "PO"+i;
+		objects.push(newObject);
+	}
+
+	for(var i=0; i < 10; i++) {
+		var newObject = new  Compass(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
