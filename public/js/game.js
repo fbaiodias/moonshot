@@ -176,6 +176,7 @@ function onNewPlayer(data) {
 	// Initialise the new player
 	var newPlayer = new Player(data.x, data.y);
 	newPlayer.id = data.id;
+	newPlayer.dead = data.dead;
 
 	// Add new player to the remote players array
 	remotePlayers.push(newPlayer);
@@ -244,6 +245,8 @@ function onMovePlayer(data) {
 function onDeadPlayer(data) {
 	var deadPlayer = playerById(data.id);
 
+	console.log("I'm", localPlayer.id, "and", data.id, "is");
+		
 	// Player not found
 	if (!deadPlayer) {
 		console.log("Player not found: "+data.id);

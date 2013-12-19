@@ -184,7 +184,7 @@ var Player = function(startX, startY) {
 		var imageX = playerXposition-(localPlayer.getX()-x)-frame0.width/2,
 			imageY = y-frame0.height/2;
 
-		if(dead == true){
+		if(this.dead == true){
 			console.log("DEEEEEEAD2");
 			ctx.drawImage(frameDead, imageX, imageY)
 			return;
