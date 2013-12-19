@@ -49,4 +49,4 @@ var PillOxygen = function(startX, startY) {
 
 // Export the Player class so you can use it in
 // other files by using require("Player").Player
-exports.PillOxygen = PillOxygen;
+exports.Oxygen = Oxygen;
