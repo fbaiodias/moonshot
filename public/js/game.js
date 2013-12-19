@@ -15,6 +15,8 @@ var canvas,			// Canvas DOM element
 var playerXposition = 666,
 	newPlayerTicks = 200,
 	newPlayerTime = 200;
+	shotTicks = 200,
+	shotTime = 200;
 
 var lifeBooster = 1000,
 	life = lifeBooster,
@@ -96,10 +98,11 @@ var setEventHandlers = function() {
 
 	// Player dead message received
 	socket.on("player shot", function(data){
-		console.log("I'm", localPlayer.id, "and", data.id, "was shot");
-		if(data.id == localPlayer.id) {
-			alert("You've been shoot!!!")
-			life -= 1000;
+		//console.log("I'm", localPlayer.id, "and", data.shotId, "was shot");
+		if(data.shotId == localPlayer.id) {
+			//console.log("You've been shoot!!!")
+			life -= 100;
+			shotTicks = 0;
 		}
 	});
 
@@ -111,13 +114,13 @@ var setEventHandlers = function() {
 	// Player move message received
 	socket.on("highscores", function(data){
 		finalScores = data.scores;
-
+		/*
 		var count = 1;
 		for(var i=0; i<finalScores.length; i++){
 			if(finalScores[i].name != null && finalScores[i].name != "null" && finalScores[i].name != "") {
 				console.log(count++, finalScores[i].score, finalScores[i].name);
 			}
-		}
+		}*/
 	});
 
 	// Player removed message received
@@ -419,17 +422,18 @@ function drawInformation(x,y) {
 	ctx.fillStyle = "rgb(255,255,0)";
   	ctx.fillRect(x, y+60, hunger/5, 20);
 
-  	if(newPlayerTicks < newPlayerTime) {
-		ctx.font="30px Roboto";
+  	ctx.font="30px Roboto";
+	if(newPlayerTicks < newPlayerTime) {
 		ctx.fillText("New player connected",canvas.width/2-200,50);
-
   		newPlayerTicks++;
+  	}
+	if(shotTicks < shotTime) {
+		ctx.fillText("You've been shot!!!",canvas.width/2-200,50);
+  		shotTicks++;
   	}
 
 	if(finalScores) {
-		ctx.font="30px Roboto";
 		ctx.fillText("Highscores",canvas.width/2-200,100);
-
 		for(var i=0; i<finalScores.length && i<10; i++) {
 			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-200,200+40*i);	
 		}
