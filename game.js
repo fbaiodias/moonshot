@@ -306,8 +306,8 @@ function onCatchObject(data) {
 
 	if(dropObject) {
 		dropObject.onPlayer = false;
-		var tmpX = catchPlayer.getX()-100;
-		var tmpY = catchPlayer.getY();
+		var tmpX = catchObject.getX();
+		var tmpY = catchObject.getY();
 
 		dropObject.setX(tmpX);
 		dropObject.setY(tmpY);

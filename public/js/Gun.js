@@ -71,6 +71,11 @@ var Gun = function(startX, startY) {
 		}	
 	};	
 
+	var drawOn = function(ctx, imageX, imageY) {
+		ctx.drawImage(imageBalon, imageX-45, imageY-70);
+		ctx.drawImage(image, imageX-40, imageY-60);
+	};	
+
 	// Define which variables and methods can be accessed
 	return {
 		getX: getX,
@@ -80,6 +85,7 @@ var Gun = function(startX, startY) {
 		setY: setY,
 		setOn: setOn,
 		draw: draw,
+		drawOn: drawOn,
 		shoot: shoot,
 		height: height,
 		width: width,
