@@ -76,7 +76,8 @@ var Instructions = function(startX, startY) {
 	};	
 
 	var drawOn = function(ctx, imageX, imageY) {
-		//ctx.drawImage(image, imageX-40, imageY-60);
+		ctx.drawImage(imageBalon, imageX-45, imageY-70);
+		ctx.drawImage(image, imageX-40, imageY-60);
 	};	
 
 	// Define which variables and methods can be accessed
