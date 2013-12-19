@@ -153,6 +153,9 @@ function onSocketConnection(client) {
 
 	// Listen for catch object message
 	client.on("catch object", onCatchObject);
+
+	// Listen for catch object message
+	client.on("drop object", onDropObject);
 };
 
 // Socket client has disconnected
@@ -325,6 +328,35 @@ function onCatchObject(data) {
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("catch object", {id: catchPlayer.id, objectId: catchObject.id});
+};
+
+// Player has moved
+function onDropObject(data) {
+	// Find player in array
+	var dropPlayer = playerById(this.id);
+	var dropObject = objectById(data.objectId);
+	// Player not found
+	if (!dropPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	if(!dropObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+
+	dropObject.onPlayer = false;
+	var tmpX = dropPlayer.getX()+100;
+	var tmpY = dropPlayer.getY();
+
+	dropObject.setX(tmpX);
+	dropObject.setY(tmpY);
+
+	console.log("DROP THE", dropObject.id, "IN", tmpX, tmpY);
+
+	this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	this.broadcast.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
 };
 
 
