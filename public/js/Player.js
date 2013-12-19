@@ -6,13 +6,13 @@ var Player = function(startX, startY) {
 		y = startY,
 		id,
 		moveAmount = 10,
-		frame0,
-		frame1,
-		frameBack0,
-		frameBack1,
-		frameJump,
-		frameBackJump,
-		frameDead,
+    	frame0 = new Image(),
+   		frame1 = new Image(),
+    	frameBack0 = new Image(),
+    	frameBack1 = new Image(),
+    	frameJump = new Image(),
+    	frameBackJump = new Image(),
+    	frameDead = new Image(),
 		frame = 0,
 		framesAmount = 0,
 		dead = false,
@@ -24,16 +24,13 @@ var Player = function(startX, startY) {
 		jumpSpeed = 10,
 		jumpAcceleration = 0.5,
 		baseY = startY,
+
+		lowLevelKind = "",
+		lowLevelTicks = 400,
+		lowLevelTime = 400,
+		lowLevelFrame = 0,
 		
 		back = false; 
-	
-    	frame0 = new Image();
-   		frame1 = new Image();
-    	frameBack0 = new Image();
-    	frameBack1 = new Image();
-    	frameJump = new Image();
-    	frameBackJump = new Image();
-    	frameDead = new Image(); 
 	
 		frame0.src = "images/astronaut1.png";
 		frame1.src = "images/astronaut2.png";
@@ -219,6 +216,33 @@ var Player = function(startX, startY) {
 				}
 			}
 		}
+
+		if(this.lowLevelTicks < lowLevelTime) {
+			if(lowLevelFrame == 0) {
+				switch(this.lowLevelKind) {
+					case "oxygenTank":
+					ctx.fillStyle = "rgb(0,0,255,150)";
+					ctx.fillRect(imageX, imageY, 70, 100);
+					break;
+					case "life":
+					ctx.fillStyle = "rgb(255,0,0,150)";
+					ctx.fillRect(imageX, imageY, 70, 100);
+					break;
+					case "hunger":
+					ctx.fillStyle = "rgb(255,255,0,150)";
+					ctx.fillRect(imageX, imageY, 70, 100);
+					break;
+				}
+
+				lowLevelFrame++;
+			}
+			else
+			{
+				lowLevelFrame = 0;
+			}
+
+			this.lowLevelTicks++;
+		}
 	};
 
 	var drawDead = function(ctx){
@@ -243,6 +267,8 @@ var Player = function(startX, startY) {
 		width: width,
 		objectId: objectId,
 		playerXposition: playerXposition,
+		lowLevelTicks: lowLevelTicks,
+		lowLevelKind: lowLevelKind,
 		dead: dead,
 		id: id
 	}
