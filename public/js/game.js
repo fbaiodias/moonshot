@@ -10,13 +10,16 @@ var canvas,			// Canvas DOM element
 	socket,			// Socket connection
 	moon,
 	previouslyDead = false,
-	finalScores;
+	finalScores,
+	youCanTake = true;
 
 var playerXposition = 666,
 	newPlayerTicks = 200,
 	newPlayerTime = 200;
 	shotTicks = 200,
-	shotTime = 200;
+	shotTime = 200,
+	count = 2,
+	counter = setInterval(timer, 100); // chama a função timer de 0,10 a 0,10 segundos
 
 var lifeBooster = 1000,
 	life = lifeBooster,
@@ -376,6 +379,7 @@ function animate() {
 function update() {
 	// Update local player and check for change
 	// Send local player data to the game server
+
 	if (localPlayer.update(keys)) {
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
 		hunger--;
@@ -384,9 +388,11 @@ function update() {
 
 	var i;
 	for (i = 0; i < objects.length; i++) {
-		if(checkCollision(localPlayer, objects[i])) {
+		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
 			objects[i].setOn(true);
 			localPlayer.objectId = objects[i].id;
+			youCanTake = false;
+			count = 5;
 
 			//console.log(JSON.stringify(player))
 
@@ -618,4 +624,13 @@ function printScores() {
 		console.log(count++, finalScores[i].score, finalScores[i].name);
 	}
 }
+
+function timer() { //timer usado para poder apanhar os objectos mais lentamente 
+  count=count-1;
+  if (count <= 0){
+     youCanTake = true;
+     count = 5;
+  }
+}
+
 
