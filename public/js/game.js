@@ -245,7 +245,7 @@ function onMovePlayer(data) {
 function onDeadPlayer(data) {
 	var deadPlayer = playerById(data.id);
 
-	console.log("I'm", localPlayer.id, "and", data.id, "is");
+	//console.log("I'm", localPlayer.id, "and", data.id, "is dead");
 		
 	// Player not found
 	if (!deadPlayer) {
@@ -327,6 +327,16 @@ function animate() {
 		update();
 	} else if(!previouslyDead) {
 		socket.emit("dead player", {x: localPlayer.getX(), y: localPlayer.getY()});
+
+		var dropObject = objectById(localPlayer.objectId);
+		if(dropObject) {
+			dropObject.setOn(false);
+			dropObject.setX(localPlayer.getX());
+			dropObject.setY(localPlayer.getY()-50);
+		}
+		socket.emit("drop object", {id: localPlayer.id, objectId: localPlayer.objectId, x: localPlayer.getX()+150, y: localPlayer.getY()  });	
+		localPlayer.objectId = "";
+
 		var name = prompt("You got "+localPlayer.getX()+" away from the ship. \n What's your name?");
 		socket.emit("player score", {score: localPlayer.getX(), playerName: name});
 		previouslyDead = true;
@@ -365,17 +375,12 @@ function update() {
 
 	if (localPlayer.objectId && keys.x){
 		var dropObject = objectById(localPlayer.objectId);
-		
 		if(dropObject) {
 			dropObject.setOn(false);
 			dropObject.setX(localPlayer.getX()+150);
 			dropObject.setY(localPlayer.getY());
 		}
-
-		console.log("emmiting drop object", localPlayer.objectId)
-
 		socket.emit("drop object", {id: localPlayer.id, objectId: localPlayer.objectId, x: localPlayer.getX()+150, y: localPlayer.getY()  });	
-
 		localPlayer.objectId = "";
 		keys.x = false;
 	}
