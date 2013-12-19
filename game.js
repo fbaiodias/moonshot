@@ -123,7 +123,7 @@ function init() {
 	}
 
 	for(var i=0; i < 10; i++) {
-		var newObject = new  Instructions(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+		var newObject = new  Instructions(Math.round(Math.random()*(1000)), Math.round(Math.random()*(500))+200);
 		newObject.id = "I"+i;
 		objects.push(newObject);
 	}
@@ -320,7 +320,7 @@ function onCatchObject(data) {
 		return;
 	};
 
-	console.log("CATCHED THE", catchObject.id);
+	//console.log("CATCHED THE", catchObject.id);
 
 	var dropObject = objectById(catchPlayer.objectId);
 
@@ -332,7 +332,7 @@ function onCatchObject(data) {
 		dropObject.setX(tmpX);
 		dropObject.setY(tmpY);
 
-		console.log("DROP THE", dropObject.id, "IN", tmpX, tmpY);
+		//console.log("DROP THE", dropObject.id, "IN", tmpX, tmpY);
 
 		this.emit("drop object", {id: catchPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
 		this.broadcast.emit("drop object", {id: catchPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});

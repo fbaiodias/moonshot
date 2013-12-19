@@ -335,6 +335,9 @@ function onLowLevel(data) {
 		return;
 	};
 
+	lowPlayer.lowLevelTicks = 0;
+	lowPlayer.lowLevelKind = data.kind;
+
 	console.log("received low level of", data.kind, "from", lowPlayer.id);
 };
 
@@ -401,7 +404,6 @@ function update() {
 		}
 		socket.emit("drop object", {id: localPlayer.id, objectId: localPlayer.objectId, x: localPlayer.getX()+150, y: localPlayer.getY()  });	
 		localPlayer.objectId = "";
-		keys.x = false;
 	}
 
 	oxygenTank--;
