@@ -348,7 +348,7 @@ function onLowLevel(data) {
 ** GAME ANIMATION LOOP
 **************************************************/
 function animate() {
-	if (!(hunger <= 0 || oxygenTank <=0 || life <=0)) {
+	if (!(life <=0)) {
 		update();
 	} else if(!previouslyDead) {
 		socket.emit("dead player", {x: localPlayer.getX(), y: localPlayer.getY()});
@@ -382,9 +382,14 @@ function update() {
 
 	if (localPlayer.update(keys)) {
 		socket.emit("move player", {x: localPlayer.getX(), y: localPlayer.getY()});
-		hunger--;
-		oxygenTank--;
+		if(hunger>0) hunger--;
+		if(oxygenTank>0) oxygenTank--;
 	}
+
+	if(oxygenTank>0) oxygenTank--;
+
+	if(oxygenTank<=0 || hunger<=0) life--;
+
 
 	var i;
 	for (i = 0; i < objects.length; i++) {
@@ -412,7 +417,6 @@ function update() {
 		localPlayer.objectId = "";
 	}
 
-	oxygenTank--;
 	
 	switch(localPlayer.objectId.charAt(0)) {
 		case "O":
@@ -548,7 +552,7 @@ function draw() {
 	// Draw the background
 	drawBackground(localPlayer)
 	// Draw the local player
-	if (!(hunger <= 0 || oxygenTank <=0 || life <=0)) {
+	if (!(life <=0)) {
 		localPlayer.draw(ctx);
 	}
 	else{
