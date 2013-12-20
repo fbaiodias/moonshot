@@ -13,6 +13,9 @@ var Player = function(startX, startY) {
     	frameJump = new Image(),
     	frameBackJump = new Image(),
     	frameDead = new Image(),
+    	lifeNeed = new Image(),
+    	foodNeed = new Image(),
+    	oxygenNeed = new Image(),
 		frame = 0,
 		framesAmount = 0,
 		dead = false,
@@ -39,6 +42,9 @@ var Player = function(startX, startY) {
 		frameJump.src = "images/astronautJump.png";
 		frameBackJump.src = "images/astronautBackJump.png";
 		frameDead.src = "images/deadPlayer.png"  ;
+		lifeNeed.src = "images/lifeNeed.png";
+		foodNeed.src = "images/foodNeed.png";
+		oxygenNeed.src = "images/oxygenNeed.png";
 
 	var width = 70,
 		height = 100;
@@ -221,16 +227,19 @@ var Player = function(startX, startY) {
 			if(lowLevelFrame == 0) {
 				switch(this.lowLevelKind) {
 					case "oxygenTank":
-					ctx.fillStyle = "rgb(0,0,255,150)";
-					ctx.fillRect(imageX, imageY, 70, 100);
+					//ctx.fillStyle = "rgb(0,0,255,150)";
+					//ctx.fillRect(imageX, imageY, 70, 100);
+					ctx.drawImage(oxygenNeed, imageX-10, imageY-10);
 					break;
 					case "life":
-					ctx.fillStyle = "rgb(255,0,0,150)";
-					ctx.fillRect(imageX, imageY, 70, 100);
+					//ctx.fillStyle = "rgb(255,0,0,150)";
+					//ctx.fillRect(imageX, imageY, 70, 100);
+					ctx.drawImage(lifeNeed, imageX-10, imageY-10);
 					break;
 					case "hunger":
-					ctx.fillStyle = "rgb(255,255,0,150)";
-					ctx.fillRect(imageX, imageY, 70, 100);
+					//ctx.fillStyle = "rgb(255,255,0,150)";
+					//ctx.fillRect(imageX, imageY, 70, 100);
+					ctx.drawImage(foodNeed, imageX-10, imageY-10);
 					break;
 				}
 
