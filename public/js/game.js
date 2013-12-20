@@ -392,7 +392,7 @@ function update() {
 			objects[i].setOn(true);
 			localPlayer.objectId = objects[i].id;
 			youCanTake = false;
-			count = 5;
+			count = 4;
 
 			//console.log(JSON.stringify(player))
 
@@ -629,7 +629,7 @@ function timer() { //timer usado para poder apanhar os objectos mais lentamente
   count=count-1;
   if (count <= 0){
      youCanTake = true;
-     count = 5;
+     count = 4;
   }
 }
 
