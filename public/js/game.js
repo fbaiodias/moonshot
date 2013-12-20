@@ -423,7 +423,7 @@ function update() {
 			oxygenTank = oxygenBooster;
 			break;
 		case "F":
-			life = lifeBooster;
+			if(oxygenTank>0 && hunger>0) life = lifeBooster;
 			break;
 		case "A":
 			hunger = hungerBooster;
