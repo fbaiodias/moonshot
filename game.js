@@ -141,7 +141,7 @@ function newServer() {
 	}
 
 	// Place SpaceShipEnding
-	var newObject = new  SpaceShipEnding(2000, 200);
+	var newObject = new  SpaceShipEnding(-2000, 200);
 		newObject.id = "S0";
 		objects.push(newObject);
 

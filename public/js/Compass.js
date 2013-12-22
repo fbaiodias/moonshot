@@ -5,23 +5,20 @@ var Compass = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		image,
-		imageBalon,
+		image = new Image(),
+		imageLeft = new Image(),
+		imageRight = new Image(),
+		imageBalon = new Image(),
 		frame0,
 		frame1,
 		frame = 0,
 		framesAmount = 0,
 		id;
 
-	image = new Image();
-	imageBalon = new Image();
-	//frame0 = new Image();
-   	//frame1 = new Image();
-
 	image.src = "images/compass.png";
 	imageBalon.src = "images/balon.png";
-	//frame0.src = "images/compassRigth.png";
-	//frame1.src = "images/compassLeft.png";
+	imageRight.src = "images/compassRight.png";
+	imageLeft.src = "images/compassLeft.png";
 
 	var width = 60,
 		height = 60;
@@ -77,9 +74,17 @@ var Compass = function(startX, startY) {
 			ctx.drawImage(image, imageX, imageY);
 		}
 		else if(localPlayer.objectId == this.id){
-			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
-			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-115);
-			ctx.drawImage(image, 500, 10);
+			
+			if(objectById("S0").getX() > 0) {
+				ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+				ctx.drawImage(imageRight, playerXposition-81, localPlayer.getY()-115);
+				ctx.drawImage(imageRight, 500, 10);
+			}
+			else {
+				ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
+				ctx.drawImage(imageLeft, playerXposition-81, localPlayer.getY()-115);
+				ctx.drawImage(imageLeft, 500, 10);
+			}
 		}
 	};
 
