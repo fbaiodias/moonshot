@@ -58,8 +58,19 @@ function init() {
         content = data;
         scores = JSON.parse(data);
     });
-    console.log(content);
-    //scores = JSON.parse(content);
+
+    newServer();
+
+	// Start listening for events
+	setEventHandlers();
+};
+
+
+/**************************************************
+** NEW SERVER
+**************************************************/
+function newServer() {
+	objects = [];
 
 	// Place guns randomly
 	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
@@ -135,12 +146,7 @@ function init() {
 		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));
-
-
-	// Start listening for events
-	setEventHandlers();
-};
-
+}
 
 /**************************************************
 ** GAME EVENT HANDLERS
@@ -180,6 +186,9 @@ function onSocketConnection(client) {
 
 	// Listen for low level message
 	client.on("low level", onLowLevel);
+
+	// Listen for low level message
+	client.on("the end", onTheEnd);
 };
 
 // Socket client has disconnected
@@ -395,6 +404,14 @@ function onLowLevel(data) {
 	console.log("LOW LEVEL OF", data.kind);
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("low level", {id: lowPlayer.id, kind: data.kind});
+};
+
+// Player has low level
+function onTheEnd(data) {
+	newServer();
+
+	// Broadcast updated position to connected socket clients
+	this.broadcast.emit("the end", {});
 };
 
 
