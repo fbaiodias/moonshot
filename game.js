@@ -12,8 +12,9 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	PillLife = require("./PillLife").PillLife, // PillLife class
 	PillOxygen = require("./PillOxygen").PillOxygen,// PillOxygen class 
 	Compass = require("./Compass").Compass,	// Compass class
-	Oxygen = require("./Oxygen").Oxygen;	// FirstAid class
-	Instructions = require("./Instructions").Instructions //Instructions class
+	Oxygen = require("./Oxygen").Oxygen,	// FirstAid class
+	Instructions = require("./Instructions").Instructions, //Instructions class
+	SpaceShipEnding = SpaceShipEnding("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
 
 var fs = require('fs');
 
@@ -127,6 +128,12 @@ function init() {
 		newObject.id = "I"+i;
 		objects.push(newObject);
 	}
+
+	// Place SpaceShipEnding
+	var newObject = new  SpaceShipEnding(2000, 200);
+		newObject.id = "S"+i;
+		objects.push(newObject);
+
 	//util.log(JSON.stringify(objects));
 
 

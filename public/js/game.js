@@ -213,6 +213,9 @@ function onNewObject(data) {
 		case "I":
 			newObject = new Instructions(data.x, data.y);
 			break;
+		case "S":
+			newObject = new SpaceShipEnding(data.x, data.y);
+			break;
 		case "P":
 			switch(data.id.charAt(1)){
 			case "F":
