@@ -9,7 +9,7 @@ var SpaceShipEnding = function(startX, startY) {
 		id;
 
 	image = new Image();
-	image.src = "images/rocketEnd";
+	image.src = "images/rocketEnd.png";
 
 	var width = 60,
 		height = 60;
@@ -42,7 +42,11 @@ var SpaceShipEnding = function(startX, startY) {
 
 	var draw = function(ctx, localPlayer) {
 		if (onPlayer == false){
-			ctx.drawImage(image, 2000, canvas.height-600);
+			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
+				//imageY = y-image.height/2;
+				imageY = canvas.height-600;
+
+			ctx.drawImage(image, imageX, imageY);
 		}
 		else if(localPlayer.objectId == this.id){
 

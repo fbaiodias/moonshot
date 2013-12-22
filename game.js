@@ -14,7 +14,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Compass = require("./Compass").Compass,	// Compass class
 	Oxygen = require("./Oxygen").Oxygen,	// FirstAid class
 	Instructions = require("./Instructions").Instructions, //Instructions class
-	SpaceShipEnding = SpaceShipEnding("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
+	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
 
 var fs = require('fs');
 
@@ -131,7 +131,7 @@ function init() {
 
 	// Place SpaceShipEnding
 	var newObject = new  SpaceShipEnding(2000, 200);
-		newObject.id = "S"+i;
+		newObject.id = "S0";
 		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));
