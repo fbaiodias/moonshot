@@ -45,8 +45,8 @@ var SpaceShipEnding = function(startX, startY) {
 	};
 
 	var draw = function(ctx, localPlayer) {
-		var imageX = playerXposition-(localPlayer.getX()-x)-rocketEnd.width/2,
-			imageY = canvas.height-600;
+		var imageX = playerXposition-(localPlayer.getX()-x),
+			imageY = startY;
 
 		if (this.coco == false){
 			ctx.drawImage(rocketEnd, imageX, imageY);
