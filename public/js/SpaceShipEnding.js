@@ -5,14 +5,17 @@ var SpaceShipEnding = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		image,
+		rocketEnd,
+		rocketGo,
 		id;
 
-	image = new Image();
-	image.src = "images/rocketEnd.png";
+	rocketEnd = new Image();
+	rocketGo = new Image();
+	rocketEnd.src = "images/rocketEnd.png";
+	rocketGo.src = "images/rocketGo.png";
 
-	var width = 60,
-		height = 60;
+	var width = 500,
+		height = 500;
 	
 
 	// Getters and setters
@@ -41,20 +44,18 @@ var SpaceShipEnding = function(startX, startY) {
 	};
 
 	var draw = function(ctx, localPlayer) {
+		var imageX = playerXposition-(localPlayer.getX()-x)-rocketEnd.width/2,
+			imageY = canvas.height-600;
+
 		if (onPlayer == false){
-			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
-				//imageY = y-image.height/2;
-				imageY = canvas.height-600;
-
-			ctx.drawImage(image, imageX, imageY);
+			ctx.drawImage(rocketEnd, imageX, imageY);
 		}
-		else if(localPlayer.objectId == this.id){
-
+		else{
+			ctx.drawImage(rocketGo, imageX, imageY);
 		}	
 	};	
 
 	var drawOn = function(ctx, imageX, imageY) {
-
 	};	
 
 	// Define which variables and methods can be accessed
