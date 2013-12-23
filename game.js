@@ -15,6 +15,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Oxygen = require("./Oxygen").Oxygen,	// FirstAid class
 	Instructions = require("./Instructions").Instructions, //Instructions class
 	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
+	Ravine = require("./Ravine").Ravine; //SpaceShipEnding class 
 
 var fs = require('fs');
 
@@ -141,7 +142,7 @@ function newServer() {
 	}
 
 	// Place SpaceShipEnding
-	var newObject = new  SpaceShipEnding(-2000, 200);
+	var newObject = new  SpaceShipEnding(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
 		newObject.id = "S0";
 		objects.push(newObject);
 
@@ -152,6 +153,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getRandomPlusOrMinus() {
+	return Math.random() < 0.5 ? -1 : 1;
+}
 /**************************************************
 ** GAME EVENT HANDLERS
 **************************************************/

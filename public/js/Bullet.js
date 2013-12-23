@@ -14,7 +14,7 @@ var Bullet = function(startX, startY) {
 	image = new Image();
 	imageBack = new Image();
 	image.src = "images/bullet.png";
-	imageBack.src = "images/bulletBack.png";
+	imageBack.src = "images/bullet.png";
 
 	var width = 60,
 		height = 60;
