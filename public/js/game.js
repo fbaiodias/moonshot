@@ -217,7 +217,7 @@ function onNewObject(data) {
 			newObject = new SpaceShipEnding(data.x, data.y);
 			break;
 		case "B":
-			switch(data.id.charAt(1)){
+			switch(data.id.charAt(1)){	
 			case "R":
 				newObject = new Ravine(data.x, data.y);
 				break;

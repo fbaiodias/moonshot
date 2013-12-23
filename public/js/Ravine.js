@@ -49,19 +49,19 @@ var Ravine = function(startX, startY) {
 	var draw = function(ctx, localPlayer) {
 		var imageX = playerXposition-(localPlayer.getX()-x)-ravine.width/2,
 			imageY = canvas.height-600-up;
-
+			console.log(this.coco)
 		if (this.coco == false){
+			console.log("pio")
 			ctx.drawImage(ravine, imageX, imageY);
-		}
-		else{
-			ctx.drawImage(ravineRope, imageX, imageY);
-
 			ctx.font="Bold 30px Courier";
   			ctx.strokeStyle = 'black';
     		ctx.lineWidth = 8;
   			ctx.fillStyle = "rgb(25,243,50)";
   			ctx.strokeText("Press X to tie the rope!",canvas.width/2-215,150);
   			ctx.fillText("Press X to tie the rope!",canvas.width/2-215,150);
+		}
+		else{
+			ctx.drawImage(ravineRope, imageX, imageY);
 		}	
 	};	
 
@@ -75,7 +75,6 @@ var Ravine = function(startX, startY) {
 		isOnPlayer: isOnPlayer,
 		setX: setX,
 		setY: setY,
-		update: update,
 		setOn: setOn,
 		draw: draw,
 		drawOn: drawOn,
