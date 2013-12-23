@@ -46,10 +46,17 @@ var Ravine = function(startX, startY) {
 		onPlayer = newState;
 	};	
 
+	var update = function() {
+		console.log("UPDATE")
+	};
+
 	var draw = function(ctx, localPlayer) {
+		console.log("MAMAMASMS");
+
 		var imageX = playerXposition-(localPlayer.getX()-x)-ravine.width/2,
 			imageY = canvas.height-600-up;
-			console.log(this.coco)
+		
+
 		if (this.coco == false){
 			console.log("pio")
 			ctx.drawImage(ravine, imageX, imageY);
@@ -66,6 +73,7 @@ var Ravine = function(startX, startY) {
 	};	
 
 	var drawOn = function(ctx, imageX, imageY) {
+
 	};	
 
 	// Define which variables and methods can be accessed
@@ -77,6 +85,7 @@ var Ravine = function(startX, startY) {
 		setY: setY,
 		setOn: setOn,
 		draw: draw,
+		update: update,
 		drawOn: drawOn,
 		height: height,
 		width: width,

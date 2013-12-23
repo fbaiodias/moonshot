@@ -218,9 +218,9 @@ function onNewObject(data) {
 			break;
 		case "B":
 			switch(data.id.charAt(1)){	
-			case "R":
-				newObject = new Ravine(data.x, data.y);
-				break;
+				case "R":
+					newObject = new Ravine(data.x, data.y);
+					break;
 			}
 		case "E":
 			switch(data.id.charAt(1)){

@@ -411,6 +411,35 @@ function onDropObject(data) {
 	this.broadcast.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: data.x, y: data.y});
 };
 
+// Object used
+function onObjectUsed(data) {
+	// Find player in array
+	var dropPlayer = playerById(data.id);
+	var usedObject = objectById(data.objectId);
+	// Player not found
+	if (!dropPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	if(!usedObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+
+	dropPlayer.objectId = "";
+	usedObject.onPlayer = false;
+
+	usedObject.setX(data.x);
+	usedObject.setY(data.y);
+	usedObject.used = true;
+
+	console.log("USED THE", usedObject.id);
+
+	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	this.broadcast.emit("object used", {id: dropPlayer.id, objectId: usedObject.id, x: data.x, y: data.y});
+};
+
 // Player has low level
 function onLowLevel(data) {
 	// Find player in array
