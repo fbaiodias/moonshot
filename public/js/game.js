@@ -216,7 +216,13 @@ function onNewObject(data) {
 		case "S":
 			newObject = new SpaceShipEnding(data.x, data.y);
 			break;
-		case "P":
+		case "B":
+			switch(data.id.charAt(1)){
+			case "R":
+				newObject = new Ravine(data.x, data.y);
+				break;
+			}
+		case "E":
 			switch(data.id.charAt(1)){
 			case "F":
 				newObject = new PillFood(data.x, data.y);
@@ -226,6 +232,9 @@ function onNewObject(data) {
 				break;
 			case "L":
 				newObject = new PillLife(data.x, data.y);
+				break;
+			case "R":
+				newObject = new Rope(data.x, data.y);
 				break;
 			}
 		break;
@@ -397,7 +406,7 @@ function update() {
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
-			if(objects[i].id != "S0") {
+			if(objects[i].id != "S0" && objects[i].id != "BR") {
 				objects[i].setOn(true);
 				localPlayer.objectId = objects[i].id;
 				youCanTake = false;
@@ -406,13 +415,15 @@ function update() {
 				// Send local player data to the game server
 				socket.emit("catch object", {objectId: objects[i].id});					
 			}
-			else {
-				objects[i].coco = true;
-				if (keys.x){
+			else if(objects[i].id == "S0" && (keys.x)){
+						objects[i].coco = true;
 						objects[i].update();
 						objects[i].draw(ctx, localPlayer);
+			}
+			else if (keys.x){
+					objects[i].coco = true;
+					objects[i].draw(ctx, localPlayer);
 				}
-			};
 		};
 	}
 	
