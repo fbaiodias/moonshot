@@ -75,7 +75,7 @@ var Compass = function(startX, startY) {
 		}
 		else if(localPlayer.objectId == this.id){
 			
-			if(objectById("S0").getX() > localPlayer.getX()) {
+			if(objectById("S0").getX()+250 > localPlayer.getX()) {
 				ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
 				ctx.drawImage(imageRight, playerXposition-81, localPlayer.getY()-115);
 				ctx.drawImage(imageRight, 500, 10);
