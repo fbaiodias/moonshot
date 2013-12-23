@@ -393,7 +393,7 @@ function update() {
 
 	if(oxygenTank<=0 || hunger<=0) life--;
 
-
+	objectById("S0").coco=false;
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
@@ -402,12 +402,13 @@ function update() {
 				localPlayer.objectId = objects[i].id;
 				youCanTake = false;
 				count = 4;
+				objects[i].coco = false;
 
 				// Send local player data to the game server
 				socket.emit("catch object", {objectId: objects[i].id});					
 			}
 			else {
-				
+				objects[i].coco = true;
 			}
 		};
 	};

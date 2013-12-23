@@ -7,6 +7,7 @@ var SpaceShipEnding = function(startX, startY) {
 		onPlayer = false,
 		rocketEnd,
 		rocketGo,
+		coco = false,
 		id;
 
 	rocketEnd = new Image();
@@ -47,11 +48,18 @@ var SpaceShipEnding = function(startX, startY) {
 		var imageX = playerXposition-(localPlayer.getX()-x)-rocketEnd.width/2,
 			imageY = canvas.height-600;
 
-		if (onPlayer == false){
+		if (this.coco == false){
 			ctx.drawImage(rocketEnd, imageX, imageY);
 		}
 		else{
 			ctx.drawImage(rocketGo, imageX, imageY);
+
+			ctx.font="Bold 30px Courier";
+  			ctx.strokeStyle = 'black';
+    		ctx.lineWidth = 8;
+  			ctx.fillStyle = "rgb(25,243,50)";
+  			ctx.strokeText("Press Space to Go!",canvas.width/2-215,150);
+  			ctx.fillText("Press Space to Go!",canvas.width/2-215,150);
 		}	
 	};	
 
@@ -70,6 +78,7 @@ var SpaceShipEnding = function(startX, startY) {
 		drawOn: drawOn,
 		height: height,
 		width: width,
+		coco: coco,
 		id: id
 	}
 };
