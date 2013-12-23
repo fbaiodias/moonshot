@@ -16,6 +16,7 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Instructions = require("./Instructions").Instructions, //Instructions class
 	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
 	Ravine = require("./Ravine").Ravine; //SpaceShipEnding class 
+	Rope = require("./Rope").Rope; //Rope class 
 
 var fs = require('fs');
 
@@ -111,21 +112,21 @@ function newServer() {
 	// Place PillFood randomly
 	for(var i=0; i < 10; i++) {
 		var newObject = new  PillFood(getRandomInt(-2000, 2000), getRandomInt(200, 700));
-		newObject.id = "PF"+i;
+		newObject.id = "EF"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillLife randomly
 	for(var i=0; i < 10; i++) {
 		var newObject = new  PillLife(getRandomInt(-2000, 2000), getRandomInt(200, 700));
-		newObject.id = "PL"+i;
+		newObject.id = "EL"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillOxygen randomly
 	for(var i=0; i < 10; i++) {
 		var newObject = new  PillOxygen(getRandomInt(-2000, 2000), getRandomInt(200, 700));
-		newObject.id = "PO"+i;
+		newObject.id = "EO"+i;
 		objects.push(newObject);
 	}
 	*/
@@ -141,9 +142,20 @@ function newServer() {
 		objects.push(newObject);
 	}
 
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new  Rope(getRandomInt(-100, 100), getRandomInt(200, 700));
+		newObject.id = "ER"+i;
+		objects.push(newObject);
+	}
+
 	// Place SpaceShipEnding
 	var newObject = new  SpaceShipEnding(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
 		newObject.id = "S0";
+		objects.push(newObject);
+
+	// Place Ravine
+	var newObject = new  Ravine(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
+		newObject.id = "BR0";
 		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));
@@ -239,7 +251,7 @@ function onNewPlayer(data) {
 	var existingObject;
 	for (i = 0; i < objects.length; i++) {
 		existingObject = objects[i];
-		this.emit("new object", {id: existingObject.id, x: existingObject.getX(), y: existingObject.getY(), onPlayer: existingObject.onPlayer});
+		this.emit("new object", {id: existingObject.id, x: existingObject.getX(), y: existingObject.getY(), onPlayer: existingObject.onPlayer, used: existingObject.used, fixed: existingObject.fixed });
 	};
 	
 	// Add new player to the players array
