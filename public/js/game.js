@@ -402,17 +402,20 @@ function update() {
 				localPlayer.objectId = objects[i].id;
 				youCanTake = false;
 				count = 4;
-				objects[i].coco = false;
 
 				// Send local player data to the game server
 				socket.emit("catch object", {objectId: objects[i].id});					
 			}
 			else {
 				objects[i].coco = true;
-			}
+				if (keys.x){
+						objects[i].update();
+						objects[i].draw(ctx, localPlayer);
+				}
+			};
 		};
-	};
-
+	}
+	
 	if (localPlayer.objectId && keys.x){
 		var dropObject = objectById(localPlayer.objectId);
 		if(dropObject) {
