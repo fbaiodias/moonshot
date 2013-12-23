@@ -73,69 +73,69 @@ function newServer() {
 	objects = [];
 
 	// Place guns randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Gun(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new Gun(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "G"+i;
 		objects.push(newObject);
 	}
 
 	// Place matches randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Matches(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new Matches(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "M"+i;
 		objects.push(newObject);
 	}
 
 	// Place Apple randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Apple(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new Apple(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "A"+i;
 		objects.push(newObject);
 	}
 
 	// Place FirstAid randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new FirstAid(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new FirstAid(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "F"+i;
 		objects.push(newObject);
 	}
 
 	// Place Oxygen randomly
-	for(var i=0; i < Math.round(Math.random()*(1000))+100; i++) {
-		var newObject = new Oxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new Oxygen(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
 	/*
 	// Place PillFood randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillFood(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+		var newObject = new  PillFood(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "PF"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillLife randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillLife(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+		var newObject = new  PillLife(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "PL"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillOxygen randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillOxygen(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+		var newObject = new  PillOxygen(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "PO"+i;
 		objects.push(newObject);
 	}
 	*/
-	for(var i=0; i < 10; i++) {
-		var newObject = new  Compass(Math.round(Math.random()*(30000)), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new  Compass(getRandomInt(-2000, 2000), getRandomInt(200, 700));
 		newObject.id = "C"+i;
 		objects.push(newObject);
 	}
 
-	for(var i=0; i < 5; i++) {
-		var newObject = new  Instructions(-Math.round(Math.random()*(100)+100), Math.round(Math.random()*(500))+200);
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new  Instructions(getRandomInt(-100, 100), getRandomInt(200, 700));
 		newObject.id = "I"+i;
 		objects.push(newObject);
 	}
@@ -146,6 +146,10 @@ function newServer() {
 		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**************************************************
