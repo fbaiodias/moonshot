@@ -397,15 +397,18 @@ function update() {
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
-			objects[i].setOn(true);
-			localPlayer.objectId = objects[i].id;
-			youCanTake = false;
-			count = 4;
+			if(objects[i].id != "S0") {
+				objects[i].setOn(true);
+				localPlayer.objectId = objects[i].id;
+				youCanTake = false;
+				count = 4;
 
-			//console.log(JSON.stringify(player))
-
-			// Send local player data to the game server
-			socket.emit("catch object", {objectId: objects[i].id});	
+				// Send local player data to the game server
+				socket.emit("catch object", {objectId: objects[i].id});					
+			}
+			else {
+				
+			}
 		};
 	};
 
