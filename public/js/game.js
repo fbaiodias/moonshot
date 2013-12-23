@@ -15,7 +15,7 @@ var canvas,			// Canvas DOM element
 
 var playerXposition = 666,
 	newPlayerTicks = 200,
-	newPlayerTime = 200;
+	newPlayerTime = 200,
 	shotTicks = 200,
 	shotTime = 200,
 	count = 2,

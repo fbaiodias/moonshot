@@ -14,8 +14,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Compass = require("./Compass").Compass,	// Compass class
 	Oxygen = require("./Oxygen").Oxygen,	// FirstAid class
 	Instructions = require("./Instructions").Instructions, //Instructions class
-	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding; //SpaceShipEnding class 
-	Ravine = require("./Ravine").Ravine; //SpaceShipEnding class 
+	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding, //SpaceShipEnding class 
+	Ravine = require("./Ravine").Ravine, //SpaceShipEnding class 
 	Rope = require("./Rope").Rope; //Rope class 
 
 var fs = require('fs');
