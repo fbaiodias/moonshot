@@ -516,14 +516,22 @@ function update() {
 
 			var gun = objectById(localPlayer.objectId);
 				
-			for (i = 0; i < remotePlayers.length; i++) {
-				if(gun.getBullet()){
+			if(gun.getBullet()){
+				for (i = 0; i < remotePlayers.length; i++) {
 					if(checkCollision(remotePlayers[i], gun.getBullet())) {
 						socket.emit("player shot", {shotId: remotePlayers[i].id, shooterId: localPlayer.id});	
 						console.log("SHOT");
 					}
 				}
-			};
+
+				var monster = objectById("BM0");
+				if(monster && !monster.fixed && checkCollision(monster, gun.getBullet())) {
+					monster.fixed = true;
+
+					socket.emit("object used", {id: localPlayer.id, objectId: localPlayer.objectId});
+					socket.emit("object fixed", {id: localPlayer.id, objectId: monster.id});
+				}
+			}
 			break;
 	}
 

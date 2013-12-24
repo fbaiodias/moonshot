@@ -57,14 +57,14 @@ var Bullet = function(startX, startY) {
 	};
 
 	var draw = function(ctx, localPlayer) {
+		var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
+		
 		if(ticks < time) {
 			if(localPlayer.back == false){
-				var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2;
 				ctx.drawImage(image, imageX, y);
 			}
 			else{
-				var imageXx = playerXposition+(localPlayer.getX()+x)+image.width/2;
-				ctx.drawImage(imageBack, imageXx, y);
+				ctx.drawImage(imageBack, imageX, y);
 			}	
 		}
 	};	
