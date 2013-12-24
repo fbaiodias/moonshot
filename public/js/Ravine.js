@@ -15,7 +15,7 @@ var Ravine = function(startX, startY) {
 	imageFixed.src = "images/ravineRope.png";
 	imageBalon.src = "images/balon.png";
 	
-	var width = 640,
+	var width = 500,
 		height = 480;
 
 	console.log("NEW RAVE");
