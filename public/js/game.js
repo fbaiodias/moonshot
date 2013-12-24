@@ -432,12 +432,13 @@ function update() {
 					// Send local player data to the game server
 					socket.emit("catch object", {objectId: objects[i].id});					
 				}
-				else if(objects[i].id == "S0" && (keys.x)){
+				else if(objects[i].id == "S0"){
 					objects[i].coco = true;
-					objects[i].update();
 					objects[i].draw(ctx, localPlayer);
-
-					socket.emit("the end");
+					if(keys.x){
+						objects[i].update();
+						socket.emit("the end");
+					}
 				}
 				else if (keys.x){
 					objects[i].coco = true;
