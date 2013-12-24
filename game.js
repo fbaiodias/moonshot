@@ -108,6 +108,12 @@ function newServer() {
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
+
+	// Place Ravine
+	var newObject = new  Ravine(getRandomPlusOrMinus()*getRandomInt(100, 1000), 200);
+		newObject.id = "BR0";
+		objects.push(newObject);
+
 	/*
 	// Place PillFood randomly
 	for(var i=0; i < 10; i++) {
@@ -151,11 +157,6 @@ function newServer() {
 	// Place SpaceShipEnding
 	var newObject = new  SpaceShipEnding(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
 		newObject.id = "S0";
-		objects.push(newObject);
-
-	// Place Ravine
-	var newObject = new  Ravine(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
-		newObject.id = "BR0";
 		objects.push(newObject);
 
 	//util.log(JSON.stringify(objects));

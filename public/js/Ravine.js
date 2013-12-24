@@ -1,25 +1,22 @@
 /**************************************************
-** GAME Ravina CLASS
+** GAME Ravine CLASS
 **************************************************/
 var Ravine = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		rocketEnd,
-		rocketGo,
-		coco = false,
-		go = false,
-		up = 0,
+		image,
 		id;
 
-	ravine = new Image();
-	ravineRope = new Image();
-	ravine.src = "images/ravine.png";
-	ravineRope.src = "images/ravineRope.png";
-
-	var width = 500,
-		height = 500;
+	image = new Image();
+	imageBalon = new Image();
+	image.src = "images/ravine.png";
+	imageBalon.src = "images/balon.png";
 	
+	var width = 60,
+		height = 60;
+
+	console.log("NEW RAVE");
 
 	// Getters and setters
 	var getX = function() {
@@ -42,38 +39,19 @@ var Ravine = function(startX, startY) {
 		y = newY;
 	};
 
-	var setOn = function(newState) {
-		onPlayer = newState;
-	};	
-
-	var update = function() {
-		console.log("UPDATE")
+	var setOn = function(newY) {
+		onPlayer = newY;
 	};
 
 	var draw = function(ctx, localPlayer) {
-		console.log("MAMAMASMS");
-
-		var imageX = playerXposition-(localPlayer.getX()-x)-ravine.width/2,
-			imageY = canvas.height-600-up;
-		
-
-		if (this.coco == false){
-			console.log("pio")
-			ctx.drawImage(ravine, imageX, imageY);
-			ctx.font="Bold 30px Courier";
-  			ctx.strokeStyle = 'black';
-    		ctx.lineWidth = 8;
-  			ctx.fillStyle = "rgb(25,243,50)";
-  			ctx.strokeText("Press X to tie the rope!",canvas.width/2-215,150);
-  			ctx.fillText("Press X to tie the rope!",canvas.width/2-215,150);
-		}
-		else{
-			ctx.drawImage(ravineRope, imageX, imageY);
-		}	
+		console.log("MAMAMAS");
+		ctx.drawImage(image, imageX, imageY);
 	};	
 
 	var drawOn = function(ctx, imageX, imageY) {
-
+		console.log("MAMAMAS");
+		//ctx.drawImage(imageBalon, imageX-45, imageY-70);
+		//ctx.drawImage(image, imageX-40, imageY-60);
 	};	
 
 	// Define which variables and methods can be accessed
@@ -85,12 +63,9 @@ var Ravine = function(startX, startY) {
 		setY: setY,
 		setOn: setOn,
 		draw: draw,
-		update: update,
 		drawOn: drawOn,
 		height: height,
 		width: width,
-		coco: coco,
-		go: go,
 		id: id
 	}
 };
