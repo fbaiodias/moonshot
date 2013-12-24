@@ -65,7 +65,6 @@ var SpaceShipEnding = function(startX, startY) {
 		}
 		else{
 			ctx.drawImage(rocketGo, imageX, imageY);
-
 			ctx.font="Bold 30px Courier";
   			ctx.strokeStyle = 'black';
     		ctx.lineWidth = 8;
