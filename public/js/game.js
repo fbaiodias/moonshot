@@ -19,6 +19,7 @@ var playerXposition = 666,
 	shotTicks = 200,
 	shotTime = 200,
 	count = 2,
+	inShip = false,
 	counter = setInterval(timer, 100); // chama a função timer de 0,10 a 0,10 segundos
 
 var lifeBooster = 1000,
@@ -410,6 +411,7 @@ function update() {
 	if(oxygenTank<=0 || hunger<=0) life--;
 
 	objectById("S0").coco=false;
+	inShip = false;
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(objects[i].id.indexOf("BM") != -1) {
@@ -455,6 +457,7 @@ function update() {
 				}
 				else if(objects[i].id == "S0"){
 					objects[i].coco = true;
+					inShip = true;
 					objects[i].draw(ctx, localPlayer);
 					if(keys.x){
 						objects[i].update();
@@ -642,7 +645,9 @@ function draw() {
 
 	// Draw the local player
 	if (!(life <=0)) {
-		localPlayer.draw(ctx);
+		if(!inShip) {
+			localPlayer.draw(ctx);
+		}
 	}
 	else{
 		localPlayer.drawDead(ctx);
