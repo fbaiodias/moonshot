@@ -5,16 +5,18 @@ var Ravine = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
-		image,
+		fixed = false,
+		image = new Image(),
+		imageFixed = new Image(),
+		imageBalon = new Image(),
 		id;
 
-	image = new Image();
-	imageBalon = new Image();
 	image.src = "images/ravine.png";
+	imageFixed.src = "images/ravineRope.png";
 	imageBalon.src = "images/balon.png";
 	
-	var width = 60,
-		height = 60;
+	var width = 640,
+		height = 480;
 
 	console.log("NEW RAVE");
 
@@ -44,14 +46,26 @@ var Ravine = function(startX, startY) {
 	};
 
 	var draw = function(ctx, localPlayer) {
-		console.log("MAMAMAS");
-		ctx.drawImage(image, imageX, imageY);
+		var imageX = playerXposition-(localPlayer.getX()-x),
+			imageY = y;
+
+		if(this.fixed) {
+			ctx.drawImage(imageFixed, imageX, imageY);
+		}
+		else {
+			ctx.drawImage(image, imageX, imageY);	
+		}
+
 	};	
 
 	var drawOn = function(ctx, imageX, imageY) {
-		console.log("MAMAMAS");
-		//ctx.drawImage(imageBalon, imageX-45, imageY-70);
-		//ctx.drawImage(image, imageX-40, imageY-60);
+		/*
+		var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
+			imageY = y-image.height/2;
+
+		ctx.drawImage(imageBalon, imageX-45, imageY-70);
+		ctx.drawImage(image, imageX-40, imageY-60);
+		*/
 	};	
 
 	// Define which variables and methods can be accessed
@@ -66,6 +80,7 @@ var Ravine = function(startX, startY) {
 		drawOn: drawOn,
 		height: height,
 		width: width,
+		fixed: fixed,
 		id: id
 	}
 };

@@ -5,6 +5,7 @@ var Rope = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
+		used = false,
 		image,
 		id;
 
@@ -42,6 +43,8 @@ var Rope = function(startX, startY) {
 	};
 
 	var draw = function(ctx, localPlayer) {
+		if(this.id == "BR0") console.log("OOOPS");
+
 		if (onPlayer == false){
 			var imageX = playerXposition-(localPlayer.getX()-x)-image.width/2,
 				imageY = y-image.height/2;
@@ -68,6 +71,7 @@ var Rope = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		setOn: setOn,
+		used: used,
 		draw: draw,
 		drawOn: drawOn,
 		height: height,

@@ -219,23 +219,26 @@ function onNewObject(data) {
 		case "B":
 			switch(data.id.charAt(1)){	
 				case "R":
-					newObject = new Ravine(data.x, data.y);
+					newObject = new Ravine(data.x, canvas.height-480);
+					newObject.fixed = data.fixed;
 					break;
 			}
+			break;
 		case "E":
 			switch(data.id.charAt(1)){
-			case "F":
-				newObject = new PillFood(data.x, data.y);
-				break;
-			case "O":
-				newObject = new PillOxygen(data.x, data.y);
-				break;
-			case "L":
-				newObject = new PillLife(data.x, data.y);
-				break;
-			case "R":
-				newObject = new Rope(data.x, data.y);
-				break;
+				/*case "F":
+					newObject = new PillFood(data.x, data.y);
+					break;
+				case "O":
+					newObject = new PillOxygen(data.x, data.y);
+					break;
+				case "L":
+					newObject = new PillLife(data.x, data.y);
+					break;*/
+				case "R":
+					newObject = new Rope(data.x, data.y);
+					newObject.used = data.used;
+					break;
 			}
 		break;
 	}
@@ -406,24 +409,39 @@ function update() {
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
-			if(objects[i].id != "S0" && objects[i].id != "BR") {
-				objects[i].setOn(true);
-				localPlayer.objectId = objects[i].id;
-				youCanTake = false;
-				count = 4;
+			if(objects[i].id == "BR0") {
+				if(localPlayer.objectId && localPlayer.objectId.indexOf("ER") != -1 && !objects[i].fixed) {
+					//objectById(localPlayer.objectId).used = true;
+					//localPlayer.objectId = false;
+					//objectById(localPlayer.objectId).setOn(false);
+					objects[i].fixed = true;
 
-				// Send local player data to the game server
-				socket.emit("catch object", {objectId: objects[i].id});					
+					socket.emit("object used", {id: localPlayer.id, objectId: localPlayer.objectId});
+					socket.emit("object fixed", {id: localPlayer.id, objectId: objects[i].id});
+				} 
+
+				if(!objects[i].fixed && localPlayer.getX() > objects[i].getX()+100) life = 0;
 			}
-			else if(objects[i].id == "S0" && (keys.x)){
-						objects[i].coco = true;
-						objects[i].update();
-						objects[i].draw(ctx, localPlayer);
-			}
-			else if (keys.x){
+			else {
+				if(objects[i].id != "S0") {
+					objects[i].setOn(true);
+					localPlayer.objectId = objects[i].id;
+					youCanTake = false;
+					count = 4;
+
+					// Send local player data to the game server
+					socket.emit("catch object", {objectId: objects[i].id});					
+				}
+				else if(objects[i].id == "S0" && (keys.x)){
+					objects[i].coco = true;
+					objects[i].update();
+					objects[i].draw(ctx, localPlayer);
+				}
+				else if (keys.x){
 					objects[i].coco = true;
 					objects[i].draw(ctx, localPlayer);
 				}
+			}
 		};
 	}
 	
@@ -449,7 +467,8 @@ function update() {
 		case "A":
 			hunger = hungerBooster;
 			break;
-		case "P":
+		/*
+		case "E":
 			switch(localPlayer.objectId.charAt(1)) {
 				case "F":
 					hunger = 1300;
@@ -464,7 +483,8 @@ function update() {
 					oxygenBooster = 1300;
 					break;
 			}
-			break;		
+			break;	
+		*/	
 		case "G":
 			if (keys.shift){
 				objectById(localPlayer.objectId).shoot(localPlayer);
@@ -572,13 +592,6 @@ function drawInformation(x,y) {
 function draw() {
 	// Draw the background
 	drawBackground(localPlayer)
-	// Draw the local player
-	if (!(life <=0)) {
-		localPlayer.draw(ctx);
-	}
-	else{
-		localPlayer.drawDead(ctx);
-	}
 
 
 	// Draw the remote players
@@ -586,8 +599,21 @@ function draw() {
 	for (i = 0; i < remotePlayers.length; i++) {
 		remotePlayers[i].drawAsRemote(ctx, localPlayer);
 	};
+
+	if(objectById("BR0")) objectById("BR0").draw(ctx, localPlayer);
+
 	for (i = 0; i < objects.length; i++) {
-		objects[i].draw(ctx, localPlayer);
+		if(objects[i].id != "BR0"){
+			objects[i].draw(ctx, localPlayer);
+		}
+	}
+
+	// Draw the local player
+	if (!(life <=0)) {
+		localPlayer.draw(ctx);
+	}
+	else{
+		localPlayer.drawDead(ctx);
 	}
 	
 	if(localPlayer.objectId.charAt(0)=="I"){

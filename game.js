@@ -73,71 +73,71 @@ function init() {
 **************************************************/
 function newServer() {
 	objects = [];
+	var side = getRandomPlusOrMinus();
+	// Place Ravine
+	var newObject = new  Ravine(side*getRandomInt(2000, 3000), 200);
+		newObject.id = "BR0";
+		objects.push(newObject);
 
 	// Place guns randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new Gun(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new Gun(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "G"+i;
 		objects.push(newObject);
 	}
 
 	// Place matches randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new Matches(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new Matches(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "M"+i;
 		objects.push(newObject);
 	}
 
 	// Place Apple randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new Apple(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new Apple(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "A"+i;
 		objects.push(newObject);
 	}
 
 	// Place FirstAid randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new FirstAid(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new FirstAid(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "F"+i;
 		objects.push(newObject);
 	}
 
 	// Place Oxygen randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new Oxygen(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new Oxygen(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}
 
-	// Place Ravine
-	var newObject = new  Ravine(getRandomPlusOrMinus()*getRandomInt(100, 1000), 200);
-		newObject.id = "BR0";
-		objects.push(newObject);
-
 	/*
 	// Place PillFood randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillFood(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new  PillFood(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "EF"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillLife randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillLife(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new  PillLife(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "EL"+i;
 		objects.push(newObject);
 	}
 
 	// Place PillOxygen randomly
 	for(var i=0; i < 10; i++) {
-		var newObject = new  PillOxygen(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new  PillOxygen(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "EO"+i;
 		objects.push(newObject);
 	}
 	*/
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new  Compass(getRandomInt(-2000, 2000), getRandomInt(200, 700));
+		var newObject = new  Compass(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "C"+i;
 		objects.push(newObject);
 	}
@@ -155,7 +155,7 @@ function newServer() {
 	}
 
 	// Place SpaceShipEnding
-	var newObject = new  SpaceShipEnding(getRandomPlusOrMinus()*getRandomInt(1000, 4000), 200);
+	var newObject = new  SpaceShipEnding(side*getRandomInt(4000, 6000), 200);
 		newObject.id = "S0";
 		objects.push(newObject);
 
@@ -204,6 +204,12 @@ function onSocketConnection(client) {
 
 	// Listen for catch object message
 	client.on("drop object", onDropObject);
+
+	// Listen for catch object message
+	client.on("object used", onObjectUsed);
+
+	// Listen for catch object message
+	client.on("object fixed", onObjectFixed);
 
 	// Listen for low level message
 	client.on("low level", onLowLevel);
@@ -439,6 +445,30 @@ function onObjectUsed(data) {
 
 	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
 	this.broadcast.emit("object used", {id: dropPlayer.id, objectId: usedObject.id, x: data.x, y: data.y});
+};
+
+// Object used
+function onObjectFixed(data) {
+	// Find player in array
+	var dropPlayer = playerById(data.id);
+	var fixedObject = objectById(data.objectId);
+	// Player not found
+	if (!dropPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	if(!fixedObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+
+	console.log("FIXED THE", fixedObject.id);
+
+	fixedObject.fixed = true;
+
+	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
+	this.broadcast.emit("object fixed", {id: dropPlayer.id, objectId: fixedObject.id});
 };
 
 // Player has low level
