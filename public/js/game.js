@@ -436,6 +436,8 @@ function update() {
 					objects[i].coco = true;
 					objects[i].update();
 					objects[i].draw(ctx, localPlayer);
+
+					socket.emit("the end");
 				}
 				else if (keys.x){
 					objects[i].coco = true;

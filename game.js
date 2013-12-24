@@ -149,7 +149,7 @@ function newServer() {
 	}
 
 	for(var i=0; i < getRandomInt(3, 10); i++) {
-		var newObject = new  Rope(getRandomInt(-100, 100), getRandomInt(200, 700));
+		var newObject = new  Rope(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "ER"+i;
 		objects.push(newObject);
 	}
