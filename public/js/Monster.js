@@ -6,17 +6,32 @@ var Monster = function(startX, startY) {
 		y = startY,
 		onPlayer = false,
 		fixed = false,
-		image = new Image(),
+		back = false,
+		frame0 = new Image(),
+		frame1 = new Image(),
+		frameBack0 = new Image(),
+		frameBack1 = new Image(),
 		imageFixed = new Image(),
 		imageBalon = new Image(),
+		frame = 0,
+		framesAmount = 0,
 		id;
 
-	image.src = "images/monster1.png";
+	frame0.src = "images/monster1.png";
+	frame1.src = "images/monster2.png";
+	frameBack0.src = "images/monsterBack1.png";
+	frameBack1.src = "images/monsterBack2.png";
 	imageFixed.src = "images/monsterDead.png";
 	imageBalon.src = "images/balon.png";
 	
 	var width = 500,
 		height = 480;
+
+	if (x < 0) {
+		back = true;
+	} else {
+		back = false;
+	};
 
 	// Getters and setters
 	var getX = function() {
@@ -43,15 +58,52 @@ var Monster = function(startX, startY) {
 		onPlayer = newY;
 	};
 
+	var updateFrames = function() {
+		if (frame == 1){
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 0
+				framesAmount = 0
+			}
+		}
+		else{
+			framesAmount ++
+			if ( framesAmount == 7){
+				frame = 1
+				framesAmount = 0
+			}
+		}
+	}
+
+	var update = function() {
+		updateFrames();
+	};	
+
 	var draw = function(ctx, localPlayer) {
 		var imageX = playerXposition-(localPlayer.getX()-x),
 			imageY = y;
+
 
 		if(this.fixed) {
 			ctx.drawImage(imageFixed, imageX, imageY);
 		}
 		else {
-			ctx.drawImage(image, imageX, imageY);	
+			if (frame == 1){
+				if (back == false){
+					ctx.drawImage(frame0, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack0, imageX, imageY)
+				}
+			}
+			else{
+				if (back == false){
+					ctx.drawImage(frame1, imageX, imageY)
+				}
+				else{
+					ctx.drawImage(frameBack1, imageX, imageY)
+				}
+			}
 		}
 
 	};	
@@ -74,6 +126,7 @@ var Monster = function(startX, startY) {
 		setX: setX,
 		setY: setY,
 		setOn: setOn,
+		update: update,
 		draw: draw,
 		drawOn: drawOn,
 		height: height,
