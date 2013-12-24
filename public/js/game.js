@@ -222,6 +222,10 @@ function onNewObject(data) {
 					newObject = new Ravine(data.x, canvas.height-480);
 					newObject.fixed = data.fixed;
 					break;
+				case "M":
+					newObject = new Monster(data.x, canvas.height-480);
+					newObject.fixed = data.fixed;
+					break;
 			}
 			break;
 		case "E":
@@ -409,8 +413,21 @@ function update() {
 	var i;
 	for (i = 0; i < objects.length; i++) {
 		if(checkCollision(localPlayer, objects[i]) && youCanTake) {
-			if(objects[i].id == "BR0") {
+			if(objects[i].id.indexOf("BR") != -1) {
 				if(localPlayer.objectId && localPlayer.objectId.indexOf("ER") != -1 && !objects[i].fixed) {
+					//objectById(localPlayer.objectId).used = true;
+					//localPlayer.objectId = false;
+					//objectById(localPlayer.objectId).setOn(false);
+					objects[i].fixed = true;
+
+					socket.emit("object used", {id: localPlayer.id, objectId: localPlayer.objectId});
+					socket.emit("object fixed", {id: localPlayer.id, objectId: objects[i].id});
+				} 
+
+				if(!objects[i].fixed && localPlayer.getX() > objects[i].getX()+100) life = 0;
+			}
+			else if(objects[i].id.indexOf("BM") != -1) {
+				if(localPlayer.objectId && localPlayer.objectId.indexOf("G") != -1 && !objects[i].fixed) {
 					//objectById(localPlayer.objectId).used = true;
 					//localPlayer.objectId = false;
 					//objectById(localPlayer.objectId).setOn(false);

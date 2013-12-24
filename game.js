@@ -15,8 +15,9 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	Oxygen = require("./Oxygen").Oxygen,	// FirstAid class
 	Instructions = require("./Instructions").Instructions, //Instructions class
 	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding, //SpaceShipEnding class 
-	Ravine = require("./Ravine").Ravine, //SpaceShipEnding class 
-	Rope = require("./Rope").Rope; //Rope class 
+	Ravine = require("./Ravine").Ravine, 	//Ravine class 
+	Monster = require("./Monster").Monster, //Monster class 
+	Rope = require("./Rope").Rope; 			//Rope class 
 
 var fs = require('fs');
 
@@ -77,6 +78,11 @@ function newServer() {
 	// Place Ravine
 	var newObject = new  Ravine(side*getRandomInt(2000, 3000), 200);
 		newObject.id = "BR0";
+		objects.push(newObject);
+
+	// Place Ravine
+	var newObject = new  Monster(side*getRandomInt(1000, 2000), 200);
+		newObject.id = "BM0";
 		objects.push(newObject);
 
 	// Place guns randomly
