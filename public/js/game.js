@@ -11,6 +11,7 @@ var canvas,			// Canvas DOM element
 	moon,
 	previouslyDead = false,
 	finalScores,
+	theEndSent = false,
 	youCanTake = true;
 
 var playerXposition = 666,
@@ -134,8 +135,17 @@ var setEventHandlers = function() {
 	// Player drop object received
 	socket.on("drop object", onDropObject);
 
-	// Player low level received
+	// Listen for catch object message
+	socket.on("object used", onObjectUsed);
+
+	// Listen for catch object message
+	socket.on("object fixed", onObjectFixed);
+
+	// Listen for low level message
 	socket.on("low level", onLowLevel);
+
+	// Listen for the end message
+	socket.on("the end", onTheEnd);
 };
 
 // Keyboard key down
@@ -364,6 +374,59 @@ function onLowLevel(data) {
 	console.log("received low level of", data.kind, "from", lowPlayer.id);
 };
 
+// Object used
+function onObjectUsed(data) {
+	// Find player in array
+	var dropPlayer = playerById(data.id);
+	var usedObject = objectById(data.objectId);
+	// Player not found
+	if (!dropPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	if(!usedObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+
+	dropPlayer.objectId = "";
+	usedObject.onPlayer = false;
+
+	usedObject.setX(data.x);
+	usedObject.setY(data.y);
+	usedObject.used = true;
+
+	console.log("USED THE", usedObject.id);
+};
+
+// Object fixed
+function onObjectFixed(data) {
+	// Find player in array
+	var dropPlayer = playerById(data.id);
+	var fixedObject = objectById(data.objectId);
+	// Player not found
+	if (!dropPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	if(!fixedObject) {
+		util.log("Object not found: "+data.objectId);
+		return;
+	};
+
+	console.log("FIXED THE", fixedObject.id);
+
+	fixedObject.fixed = true;
+};
+
+// The end
+function onTheEnd(data) {
+	alert("Someone just took the last ship remaining and left you to die...\n Let's start again!");
+	window.location.reload();
+};
+
 /**************************************************
 ** GAME ANIMATION LOOP
 **************************************************/
@@ -461,7 +524,10 @@ function update() {
 					objects[i].draw(ctx, localPlayer);
 					if(keys.x){
 						objects[i].update();
-						socket.emit("the end");
+						if(!theEndSent) {
+							socket.emit("the end");
+							theEndSent = true;
+						}
 					}
 				}
 				else if (keys.x){
@@ -628,13 +694,6 @@ function draw() {
 	// Draw the background
 	drawBackground(localPlayer)
 
-
-	// Draw the remote players
-	var i;
-	for (i = 0; i < remotePlayers.length; i++) {
-		remotePlayers[i].drawAsRemote(ctx, localPlayer);
-	};
-
 	if(objectById("BR0")) objectById("BR0").draw(ctx, localPlayer);
 
 	for (i = 0; i < objects.length; i++) {
@@ -653,6 +712,12 @@ function draw() {
 		localPlayer.drawDead(ctx);
 	}
 	
+	// Draw the remote players
+	var i;
+	for (i = 0; i < remotePlayers.length; i++) {
+		remotePlayers[i].drawAsRemote(ctx, localPlayer);
+	};
+
 	if(localPlayer.objectId.charAt(0)=="I"){
 		objectById(localPlayer.objectId).draw(ctx, localPlayer);
 	}
