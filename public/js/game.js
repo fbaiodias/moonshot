@@ -449,7 +449,7 @@ function animate() {
 		localPlayer.objectId = "";
 
 		var name = prompt("You got "+localPlayer.getX()+" away from the ship. \n What's your name?");
-		socket.emit("player score", {score: localPlayer.getX(), playerName: name});
+		socket.emit("player score", {score: localPlayer.getX(), playerName: name, id: localPlayer.id});
 		previouslyDead = true;
 	}
 	draw();
@@ -525,11 +525,16 @@ function update() {
 					objects[i].coco = true;
 					inShip = true;
 					objects[i].draw(ctx, localPlayer);
-					if(keys.x){
+					if(objects[i].getY() >= -600 && theEndSent){
 						objects[i].update();
+					}
+					if(keys.x){			
 						if(!theEndSent) {
 							socket.emit("the end");
 							theEndSent = true;
+							var name = prompt("You got away from the moon. You now are safe! \n What's your name?");
+							socket.emit("player score", {score: localPlayer.getX(), playerName: name, id: localPlayer.id});
+							previouslyDead = true;
 						}
 					}
 				}
