@@ -26,9 +26,10 @@ var fs = require('fs');
 ** GAME VARIABLES
 **************************************************/
 var socket,		// Socket controller
-	guns,	// Array of guns
-	objects,
-	scores;	// Array of game objects
+	guns,		// Array of guns
+	objects, 	// Array of game objects
+	scores,
+	stats;	
 
 
 /**************************************************
@@ -54,13 +55,20 @@ function init() {
 		socket.set("log level", 2);
 	});
 
-	var content;
-    fs.readFile('./../highscores.json', function read(err, data) {
+	fs.readFile('./../highscores.json', function read(err, data) {
         if (err) {
             console.log(err);
         }
-        content = data;
         scores = JSON.parse(data);
+    });
+
+    fs.readFile('./../stats.json', function read(err, data) {
+        if (err) {
+            console.log(err);
+            stats = [];
+            return;
+        }
+        stats = JSON.parse(data);
     });
 
     newServer();
@@ -309,6 +317,23 @@ function onDeadPlayer(data) {
 		return;
 	};
 
+	stats.push({
+		name: data.playerName,
+		exploration: deadPlayer.getExploration(),
+		moveAmount: deadPlayer.getMoveAmount(),
+		objectsCount: deadPlayer.objectsCount,
+		objectsFixed: deadPlayer.objectsFixed,
+		playersShotPoints: deadPlayer.playersShotPoints
+	});
+
+	fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
+	    if(err) {
+	        console.log(err);
+	    } else {
+	        console.log("The stats file was saved!");
+	    }
+	}); 
+
 	deadPlayer.dead = true;
 
 	// Broadcast updated position to connected socket clients
@@ -319,6 +344,7 @@ function onDeadPlayer(data) {
 function onPlayerShot(data) {
 	// Find player in array
 	var deadPlayer = playerById(data.shotId);
+	var shooterPlayer = playerById(data.shooterId);
 
 	// Player not found
 	if (!deadPlayer) {
@@ -328,6 +354,7 @@ function onPlayerShot(data) {
 	};
 
 	console.log(data.shooterId, "SHOOOOOOT", data.shotId);
+	shooterPlayer.playersShotPoints += 1;
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("player shot", {shotId: deadPlayer.id, shooterId: data.shooterId});
@@ -355,7 +382,6 @@ function onPlayerScore(data) {
 	        console.log("The file was saved!");
 	    }
 	}); 
-
 
 	// Broadcast updated position to connected socket clients
 	this.emit("highscores", {scores: scores});
@@ -397,6 +423,7 @@ function onCatchObject(data) {
 	
 	catchObject.onPlayer = true;
 	catchPlayer.objectId = catchObject.id;
+	catchPlayer.objectsCount += 1;
 
 	//console.log(JSON.stringify(catchPlayer));
 
@@ -480,6 +507,7 @@ function onObjectFixed(data) {
 	console.log("FIXED THE", fixedObject.id);
 
 	fixedObject.fixed = true;
+	dropPlayer.objectsFixed += 1;
 
 	//this.emit("drop object", {id: dropPlayer.id, objectId: dropObject.id, x: tmpX, y: tmpY});
 	this.broadcast.emit("object fixed", {id: dropPlayer.id, objectId: fixedObject.id});

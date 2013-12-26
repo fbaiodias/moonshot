@@ -6,7 +6,13 @@ var Player = function(startX, startY) {
 		y = startY,
 		id,
 		dead = false,
-		objectId = "";
+		objectId = "",
+		maxX = 0,
+		minX = 0,
+		moveAmount = 0,
+		objectsCount = 0,
+		objectsFixed = 0,
+		playersShotPoints = 0;
 
 	// Getters and setters
 	var getX = function() {
@@ -17,11 +23,29 @@ var Player = function(startX, startY) {
 		return y;
 	};
 
+	var getExploration = function() {
+		return Math.abs(minX) + maxX; 
+	};
+
+	var getMoveAmount = function() {
+		return moveAmount; 
+	};
+
 	var setX = function(newX) {
+		if(x>maxX) {
+			maxX = x;
+		} else if(x<minX) {
+			minX = x;
+		}
+
+		moveAmount += Math.abs(newX-x);
+
 		x = newX;
 	};
 
 	var setY = function(newY) {
+		moveAmount += Math.abs(newY-y);
+
 		y = newY;
 	};
 
@@ -29,11 +53,16 @@ var Player = function(startX, startY) {
 	return {
 		getX: getX,
 		getY: getY,
+		getExploration: getExploration,
+		getMoveAmount: getMoveAmount,
 		setX: setX,
 		setY: setY,
 		id: id,
 		dead: dead,
-		objectId: objectId
+		objectId: objectId,
+		objectsCount: objectsCount,
+		objectsFixed: objectsFixed,
+		playersShotPoints: playersShotPoints
 	}
 };
 
