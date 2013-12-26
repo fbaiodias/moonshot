@@ -124,7 +124,7 @@ function newServer() {
 	// Place Radio randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
 		var newObject = new Radio(getRandomInt(-1000, 1000), getRandomInt(200, 700));
-		newObject.id = "O"+i;
+		newObject.id = "R"+i;
 		objects.push(newObject);
 	}
 

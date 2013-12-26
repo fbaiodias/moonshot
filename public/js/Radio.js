@@ -1,7 +1,7 @@
 /**************************************************
 ** GAME Radio CLASS
 **************************************************/
-var Matches = function(startX, startY) {
+var Radio = function(startX, startY) {
 	var x = startX,
 		y = startY,
 		onPlayer = false,
