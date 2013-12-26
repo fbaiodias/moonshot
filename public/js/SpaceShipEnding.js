@@ -69,8 +69,8 @@ var SpaceShipEnding = function(startX, startY) {
   			ctx.strokeStyle = 'black';
     		ctx.lineWidth = 8;
   			ctx.fillStyle = "rgb(25,243,50)";
-  			ctx.strokeText("Press X to Go!",canvas.width/2-215,150);
-  			ctx.fillText("Press X to Go!",canvas.width/2-215,150);
+  			ctx.strokeText("Press X to Go!",canvas.width/2-215,imageY);
+  			ctx.fillText("Press X to Go!",canvas.width/2-215,imageY);
 		}	
 	};	
 

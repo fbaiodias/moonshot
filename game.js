@@ -17,7 +17,8 @@ var util = require("util"),					// Utility resources (logging, object inspection
 	SpaceShipEnding = require("./SpaceShipEnding").SpaceShipEnding, //SpaceShipEnding class 
 	Ravine = require("./Ravine").Ravine, 	//Ravine class 
 	Monster = require("./Monster").Monster, //Monster class 
-	Rope = require("./Rope").Rope; 			//Rope class 
+	Rope = require("./Rope").Rope, 			//Rope class 
+	Radio = require("./Radio").Radio;		//Radio class
 
 var fs = require('fs');
 
@@ -116,6 +117,13 @@ function newServer() {
 	// Place Oxygen randomly
 	for(var i=0; i < getRandomInt(3, 10); i++) {
 		var newObject = new Oxygen(getRandomInt(-1000, 1000), getRandomInt(200, 700));
+		newObject.id = "O"+i;
+		objects.push(newObject);
+	}
+
+	// Place Radio randomly
+	for(var i=0; i < getRandomInt(3, 10); i++) {
+		var newObject = new Radio(getRandomInt(-1000, 1000), getRandomInt(200, 700));
 		newObject.id = "O"+i;
 		objects.push(newObject);
 	}

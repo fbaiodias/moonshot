@@ -227,6 +227,9 @@ function onNewObject(data) {
 		case "S":
 			newObject = new SpaceShipEnding(data.x, data.y);
 			break;
+		case "R":
+			newObject = new Radio(data.x, data.y);
+			break;
 		case "B":
 			switch(data.id.charAt(1)){	
 				case "R":
