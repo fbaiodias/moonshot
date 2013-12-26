@@ -1,3 +1,5 @@
+var moment = require('moment')
+
 /**************************************************
 ** GAME PLAYER CLASS
 **************************************************/
@@ -12,7 +14,9 @@ var Player = function(startX, startY) {
 		moveAmount = 0,
 		objectsCount = 0,
 		objectsFixed = 0,
-		playersShotPoints = 0;
+		playersShotPoints = 0,
+		startTime = moment(),
+		finalStats;
 
 	// Getters and setters
 	var getX = function() {
@@ -62,7 +66,9 @@ var Player = function(startX, startY) {
 		objectId: objectId,
 		objectsCount: objectsCount,
 		objectsFixed: objectsFixed,
-		playersShotPoints: playersShotPoints
+		playersShotPoints: playersShotPoints,
+		startTime: startTime,
+		finalStats: finalStats
 	}
 };
 

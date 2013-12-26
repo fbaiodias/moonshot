@@ -3,6 +3,7 @@
 **************************************************/
 var util = require("util"),					// Utility resources (logging, object inspection, etc)
 	io = require("socket.io"),				// Socket.IO
+	moment = require('moment'),
 	Player = require("./Player").Player;	// Player class
 	Gun = require("./Gun").Gun;				// Gun class
 	Matches = require("./Matches").Matches,	// Matches class
@@ -317,14 +318,17 @@ function onDeadPlayer(data) {
 		return;
 	};
 
-	stats.push({
-		name: data.playerName,
+	deadPlayer.finalStats = {
 		exploration: deadPlayer.getExploration(),
 		moveAmount: deadPlayer.getMoveAmount(),
 		objectsCount: deadPlayer.objectsCount,
 		objectsFixed: deadPlayer.objectsFixed,
-		playersShotPoints: deadPlayer.playersShotPoints
-	});
+		playersShotPoints: deadPlayer.playersShotPoints,
+		startTime: deadPlayer.startTime,
+		playTime: moment().diff(deadPlayer.startTime, 'seconds')
+	}
+
+	stats.push(deadPlayer.finalStats);
 
 	fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
 	    if(err) {
@@ -337,7 +341,7 @@ function onDeadPlayer(data) {
 	deadPlayer.dead = true;
 
 	// Broadcast updated position to connected socket clients
-	this.broadcast.emit("dead player", {id: deadPlayer.id});
+	this.broadcast.emit("dead player", {id: deadPlayer.id, stats: deadPlayer.finalStats});
 };
 
 // Player has moved
@@ -382,7 +386,7 @@ function onPlayerScore(data) {
 	        console.log("The file was saved!");
 	    }
 	}); 
-
+	
 	// Broadcast updated position to connected socket clients
 	this.emit("highscores", {scores: scores});
 };
