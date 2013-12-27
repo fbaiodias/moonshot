@@ -9,16 +9,19 @@ var SpaceShipEnding = function(startX, startY) {
 		rocketGo,
 		ticks = 0,
 		time = 2000,
-		speed = 20,
+		speed = 10,
 		coco = false,
 		go = false,
 		up = 0,
+		fireOk = false,
 		id;
 
 	rocketEnd = new Image();
 	rocketGo = new Image();
+	fire = new Image();
 	rocketEnd.src = "images/rocketEnd.png";
 	rocketGo.src = "images/rocketGo.png";
+	fire.src = "images/fire.png";
 
 	var width = 500,
 		height = 500;
@@ -53,6 +56,7 @@ var SpaceShipEnding = function(startX, startY) {
 			if(ticks < time) {
 				up += speed; 
 				ticks++;
+				this.fireOk = true; 
 		}
 	}	
 
@@ -63,6 +67,13 @@ var SpaceShipEnding = function(startX, startY) {
 		if (this.coco == false){
 			ctx.drawImage(rocketEnd, imageX, imageY);
 		}
+
+		else if(this.fireOk && this.coco){
+			ctx.drawImage(fire,imageX+140,imageY+420);
+			ctx.drawImage(fire,imageX+290,imageY+420);
+			ctx.drawImage(rocketGo, imageX, imageY);
+		}	
+
 		else{
 			ctx.drawImage(rocketGo, imageX, imageY);
 			ctx.font="Bold 30px Courier";
@@ -91,6 +102,7 @@ var SpaceShipEnding = function(startX, startY) {
 		height: height,
 		width: width,
 		coco: coco,
+		fireOk: fireOk,
 		go: go,
 		id: id
 	}
