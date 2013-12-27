@@ -506,8 +506,8 @@ function update() {
 			}
 			else {
 				if(objects[i].id != "S0") {
-					objects[i].setOn(true);
 					localPlayer.objectId = objects[i].id;
+					objects[i].setOn(true);
 					youCanTake = false;
 					count = 4;
 

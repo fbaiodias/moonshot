@@ -9,8 +9,6 @@ var Radio = function(startX, startY) {
 		//playerXposition = 666,
 		id;
 
-	var clickSound = new Audio("dogemusic.mp3");
-
 	image = new Image();
 	imageBalon = new Image();
 	image.src = "images/radio.png";
@@ -42,6 +40,12 @@ var Radio = function(startX, startY) {
 
 	var setOn = function(newY) {
 		onPlayer = newY;
+
+		if(onPlayer) {
+			document.getElementById('dogemusic').play();
+		} else {
+			document.getElementById('dogemusic').pause();
+		}
 	};
 
 	var draw = function(ctx, localPlayer) {
@@ -50,12 +54,10 @@ var Radio = function(startX, startY) {
 				imageY = y-image.height/2;
 
 			ctx.drawImage(image, imageX, imageY);
-			clickSound.pause();
 		}
 		else if(localPlayer.objectId == this.id){
 			ctx.drawImage(imageBalon, playerXposition-90, localPlayer.getY()-120);
 			ctx.drawImage(image, playerXposition-81, localPlayer.getY()-117);
-			clickSound.play();
 		}
 
 	};	
