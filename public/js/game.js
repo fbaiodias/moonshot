@@ -533,7 +533,7 @@ function update() {
 					}
 					if(keys.x){			
 						if(!theEndSent) {
-							socket.emit("the end");
+							socket.emit("the end", {id: localPlayer.id});
 							theEndSent = true;
 							var name = prompt("You got away from the moon. You now are safe! \n What's your name?");
 							socket.emit("player score", {score: localPlayer.getX(), playerName: name, id: localPlayer.id});
@@ -566,7 +566,7 @@ function update() {
 			oxygenTank = oxygenBooster;
 			break;
 		case "F":
-			if(oxygenTank>0 && hunger>0) life = lifeBooster;
+			if(oxygenTank>0 && hunger>0 && !checkCollision(localPlayer, objectById("BM0")) && !checkCollision(localPlayer, objectById("BR0"))) life = lifeBooster;
 			break;
 		case "A":
 			hunger = hungerBooster;
@@ -660,7 +660,7 @@ function drawInformation(x,y) {
   	ctx.font="20px Arial";
 
 	ctx.fillStyle = "rgb(255,255,255)";
-  	ctx.fillText(remotePlayers.length+" other player(s) in game rigth now.",x,y-10);
+  	ctx.fillText(remotePlayers.length+" other player(s) in game right now.",x,y-10);
   	
 	ctx.fillStyle = "rgb(0,0,255)";
   	ctx.fillRect(x, y, oxygenTank/5, 20);
