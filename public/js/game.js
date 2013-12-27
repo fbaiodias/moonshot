@@ -502,16 +502,6 @@ function update() {
 				if(!objects[i].fixed && localPlayer.getX() > objects[i].getX()+100 && localPlayer.getX() < objects[i].getX()+objects[i].width-100) life = 0;
 			}
 			else if(objects[i].id.indexOf("BM") != -1) {
-				if(localPlayer.objectId && localPlayer.objectId.indexOf("G") != -1 && !objects[i].fixed) {
-					//objectById(localPlayer.objectId).used = true;
-					//localPlayer.objectId = false;
-					//objectById(localPlayer.objectId).setOn(false);
-					objects[i].fixed = true;
-
-					socket.emit("object used", {id: localPlayer.id, objectId: localPlayer.objectId});
-					socket.emit("object fixed", {id: localPlayer.id, objectId: objects[i].id});
-				} 
-
 				if(!objects[i].fixed && localPlayer.getX() > objects[i].getX()+100  && localPlayer.getX() < objects[i].getX()+objects[i].width-50) life = 0;
 			}
 			else {
