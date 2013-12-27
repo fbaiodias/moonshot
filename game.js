@@ -552,7 +552,7 @@ function onLowLevel(data) {
 function onTheEnd(data) {
 	newServer();
 
-	playerById(data.id).playTime = moment().diff(deadPlayer.startTime, 'seconds');
+	playerById(data.id).playTime = moment().diff(playerById(data.id).startTime, 'seconds');
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("the end", {});

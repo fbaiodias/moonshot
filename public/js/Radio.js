@@ -9,7 +9,7 @@ var Radio = function(startX, startY) {
 		//playerXposition = 666,
 		id;
 
-	var clickSound = new Audio("POL-rocket-station-short.wav");
+	var clickSound = new Audio("dogemusic.mp3");
 
 	image = new Image();
 	imageBalon = new Image();
