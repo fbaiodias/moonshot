@@ -40,6 +40,7 @@ function init() {
 	// Create an empty array to store players
 	players = [];
 	scores = [];
+	stats = [];
 
 	// Create empty arrays to store objects
 	objects = [];
@@ -59,6 +60,7 @@ function init() {
 	fs.readFile('./../highscores.json', function read(err, data) {
         if (err) {
             console.log(err);
+            return;
         }
         scores = JSON.parse(data);
     });
@@ -66,7 +68,6 @@ function init() {
     fs.readFile('./../stats.json', function read(err, data) {
         if (err) {
             console.log(err);
-            stats = [];
             return;
         }
         stats = JSON.parse(data);
@@ -318,27 +319,8 @@ function onDeadPlayer(data) {
 		return;
 	};
 
-	deadPlayer.finalStats = {
-		exploration: deadPlayer.getExploration(),
-		moveAmount: deadPlayer.getMoveAmount(),
-		objectsCount: deadPlayer.objectsCount,
-		objectsFixed: deadPlayer.objectsFixed,
-		playersShotPoints: deadPlayer.playersShotPoints,
-		startTime: deadPlayer.startTime,
-		playTime: moment().diff(deadPlayer.startTime, 'seconds')
-	}
-
-	stats.push(deadPlayer.finalStats);
-
-	fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
-	    if(err) {
-	        console.log(err);
-	    } else {
-	        console.log("The stats file was saved!");
-	    }
-	}); 
-
 	deadPlayer.dead = true;
+	deadPlayer.playTime = moment().diff(deadPlayer.startTime, 'seconds');
 
 	// Broadcast updated position to connected socket clients
 	this.broadcast.emit("dead player", {id: deadPlayer.id, stats: deadPlayer.finalStats});
@@ -366,9 +348,42 @@ function onPlayerShot(data) {
 
 // Player has moved
 function onPlayerScore(data) {
+	// Find player in array
+	var deadPlayer = playerById(this.id);
+
+	// Player not found
+	if (!deadPlayer) {
+		util.log("Player not found: "+this.id);
+		return;
+	};
+
+	var score = deadPlayer.getExploration()/2 + 70 * deadPlayer.objectsFixed + 200 * deadPlayer.playersShotPoints - deadPlayer.playTime - deadPlayer.objectsCount/2;
+
+	deadPlayer.finalStats = {
+		name: data.playerName,
+		exploration: deadPlayer.getExploration(),
+		moveAmount: deadPlayer.getMoveAmount(),
+		objectsCount: deadPlayer.objectsCount,
+		objectsFixed: deadPlayer.objectsFixed,
+		playersShotPoints: deadPlayer.playersShotPoints,
+		startTime: deadPlayer.startTime,
+		playTime: deadPlayer.playTime,
+		score: score
+	}
+
+	stats.push(deadPlayer.finalStats);
+
+	fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
+	    if(err) {
+	        console.log(err);
+	    } else {
+	        console.log("The stats file was saved!");
+	    }
+	}); 
+
 	scores.push({
 		name: data.playerName,
-		score: data.score
+		score: score
 	});
 
 	scores.sort(function (a,b) {
@@ -386,9 +401,10 @@ function onPlayerScore(data) {
 	        console.log("The file was saved!");
 	    }
 	}); 
+
 	
 	// Broadcast updated position to connected socket clients
-	this.emit("highscores", {scores: scores});
+	this.emit("highscores", {scores: scores, stats: deadPlayer.finalStats});
 };
 
 // Player has moved
