@@ -681,14 +681,16 @@ function drawInformation(x,y) {
     ctx.lineWidth = 8;
   	ctx.fillStyle = "rgb(25,243,50)";
 	if(finalScores) {
-		ctx.strokeText("Stats", canvas.width/2-430, 150);
-		ctx.fillText("Stats", canvas.width/2-430, 150);
-    	ctx.strokeText("Move Amount: " + finalStats.moveAmount + "m", canvas.width/2-430,200);
-		ctx.fillText("Move Amount: " + finalStats.moveAmount+ "m", canvas.width/2-430,200);
-		ctx.strokeText("PlayTime: " + finalStats.playTime + "s", canvas.width/2-430,200+40);
-		ctx.fillText("PlayTime: " + finalStats.playTime+ "s", canvas.width/2-430,200+40);
-		ctx.strokeText("Picked objects: " + finalStats.objectsCount, canvas.width/2-430,200+80);
-		ctx.fillText("Picked objects: " + finalStats.objectsCount, canvas.width/2-430,200+80);	
+		ctx.strokeText("Stats", canvas.width/2-440, 150);
+		ctx.fillText("Stats", canvas.width/2-440, 150);
+    	ctx.strokeText("Move Amount: " + finalStats.moveAmount + "m", canvas.width/2-440,200);
+		ctx.fillText("Move Amount: " + finalStats.moveAmount+ "m", canvas.width/2-440,200);
+		ctx.strokeText("PlayTime: " + finalStats.playTime + "s", canvas.width/2-440,200+40);
+		ctx.fillText("PlayTime: " + finalStats.playTime+ "s", canvas.width/2-440,200+40);
+		ctx.strokeText("Picked objects: " + finalStats.objectsCount, canvas.width/2-440,200+80);
+		ctx.fillText("Picked objects: " + finalStats.objectsCount, canvas.width/2-440,200+80);
+		ctx.strokeText("Your DOGE score: " + finalStats.score, canvas.width/2-440,200+120);
+		ctx.fillText("Your DOGE score: " + finalStats.score, canvas.width/2-440,200+120);	
 
 		ctx.strokeText("Highscores",canvas.width/2,150);
 		ctx.fillText("Highscores",canvas.width/2,150);
