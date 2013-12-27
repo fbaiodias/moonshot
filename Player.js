@@ -16,6 +16,7 @@ var Player = function(startX, startY) {
 		objectsFixed = 0,
 		playersShotPoints = 0,
 		startTime = moment(),
+		playTime = 0,
 		finalStats;
 
 	// Getters and setters
@@ -68,6 +69,7 @@ var Player = function(startX, startY) {
 		objectsFixed: objectsFixed,
 		playersShotPoints: playersShotPoints,
 		startTime: startTime,
+		playTime: playTime,
 		finalStats: finalStats
 	}
 };
