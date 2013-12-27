@@ -11,6 +11,7 @@ var canvas,			// Canvas DOM element
 	moon,
 	previouslyDead = false,
 	finalScores,
+	finalStats,
 	theEndSent = false,
 	youCanTake = true;
 
@@ -121,6 +122,8 @@ var setEventHandlers = function() {
 
 	// Player move message received
 	socket.on("highscores", function(data){
+		finalStats = data.stats;
+		console.log(data.stats);
 		finalScores = data.scores.filter(function(element){
 			return element.name != null && element.name != "null" && element.name != "";
 		});
@@ -688,11 +691,20 @@ function drawInformation(x,y) {
     ctx.lineWidth = 8;
   	ctx.fillStyle = "rgb(25,243,50)";
 	if(finalScores) {
-		ctx.strokeText("Highscores",canvas.width/2-215,150);
-		ctx.fillText("Highscores",canvas.width/2-215,150);
+		ctx.strokeText("Stats", canvas.width/2-430, 150);
+		ctx.fillText("Stats", canvas.width/2-430, 150);
+    	ctx.strokeText("Move Amount: " + finalStats.moveAmount + "m", canvas.width/2-430,200);
+		ctx.fillText("Move Amount: " + finalStats.moveAmount+ "m", canvas.width/2-430,200);
+		ctx.strokeText("PlayTime: " + finalStats.playTime + "s", canvas.width/2-430,200+40);
+		ctx.fillText("PlayTime: " + finalStats.playTime+ "s", canvas.width/2-430,200+40);
+		ctx.strokeText("Picked objects: " + finalStats.objectsCount, canvas.width/2-430,200+80);
+		ctx.fillText("Picked objects: " + finalStats.objectsCount, canvas.width/2-430,200+80);	
+
+		ctx.strokeText("Highscores",canvas.width/2,150);
+		ctx.fillText("Highscores",canvas.width/2,150);
 		for(var i=0; i<finalScores.length && i<10; i++) {
-    		ctx.strokeText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);
-			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2-215,200+40*i);	
+    		ctx.strokeText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2,200+40*i);
+			ctx.fillText((i+1) + " - " + finalScores[i].name + " - " + finalScores[i].score,canvas.width/2,200+40*i);	
 		}
 	}
 
