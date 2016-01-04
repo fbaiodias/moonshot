@@ -21,7 +21,7 @@ var Monster = require("./Monster").Monster;
 var Rope = require("./Rope").Rope;
 var Radio = require("./Radio").Radio;
 
-var fs = require('fs');
+// var fs = require('fs');
 
 /**************************************************
 ** GAME VARIABLES
@@ -386,13 +386,13 @@ function onPlayerScore(data) {
 
   stats.push(deadPlayer.finalStats);
 
-  fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
-      if(err) {
-          console.log(err);
-      } else {
-          console.log("The stats file was saved!");
-      }
-  });
+  // fs.writeFile("../stats.json", JSON.stringify(stats), function(err) {
+  //     if(err) {
+  //         console.log(err);
+  //     } else {
+  //         console.log("The stats file was saved!");
+  //     }
+  // });
 
   scores.push({
     name: data.playerName,
@@ -407,13 +407,13 @@ function onPlayerScore(data) {
     return 0;
   });
 
-  fs.writeFile("../highscores.json", JSON.stringify(scores), function(err) {
-      if(err) {
-          console.log(err);
-      } else {
-          console.log("The file was saved!");
-      }
-  });
+  // fs.writeFile("../highscores.json", JSON.stringify(scores), function(err) {
+  //     if(err) {
+  //         console.log(err);
+  //     } else {
+  //         console.log("The file was saved!");
+  //     }
+  // });
 
 
   // Broadcast updated position to connected socket clients
