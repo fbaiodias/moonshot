@@ -4,12 +4,15 @@
   "description": "A strange game... no it's not!",
   "main": "game.js",
   "scripts": {
-    "start": "node_modules/.bin/nodemon game.js",
+    "start": "node game.js",
+    "dev": "nodemon game.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Francisco Dias",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "ecstatic": "^1.4.0",
+    "moment": "^2.11.0",
     "socket.io": "~0.9.16"
   },
   "devDependencies": {
